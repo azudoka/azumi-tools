@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Azumi Tools | Central de Ferramentas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #0D2240;
+      --blue: #1A4080;
+      --blue-mid: #1E5799;
+      --accent: #2E7DD1;
+      --off-white: #F4F7FC;
+      --text: #1A2940;
+      --border: #CBD8EE;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--off-white);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background-color: var(--navy);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid var(--accent);
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    .hero {
+      margin-bottom: 48px;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero p {
+      font-size: 15px;
+      font-weight: 400;
+      color: #5a6f8a;
+    }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 28px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      box-shadow: 0 2px 8px rgba(13, 34, 64, 0.06);
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(13, 34, 64, 0.12);
+      border-color: var(--accent);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--off-white);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .card-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      font-weight: 400;
+      color: #6b7f99;
+      line-height: 1.6;
+    }
+
+    .card-arrow {
+      margin-top: auto;
+      padding-top: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      letter-spacing: 0.2px;
+    }
+
+    .card-arrow svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.2s;
+    }
+
+    .card:hover .card-arrow svg {
+      transform: translateX(3px);
+    }
+
+    @media (max-width: 560px) {
+      header { padding: 0 24px; }
+      .hero h1 { font-size: 24px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span style="font-weight:700; color:white; font-size:24px;">azumi<span style="color:var(--accent);">RH</span></span>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Central de Ferramentas</h1>
+      <p>Selecione a ferramenta desejada abaixo</p>
+    </div>
+
+    <div class="grid">
+
+      <!-- Card 1: Hunting & Atração -->
+      <a class="card" href="atracao-hunting.html">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            <line x1="11" y1="8" x2="11" y2="14"/>
+            <line x1="8" y1="11" x2="14" y2="11"/>
+          </svg>
+        </div>
+        <div class="card-title">Hunting & Atração</div>
+        <div class="card-desc">Gerador de relatório de processos seletivos.</div>
+        <div class="card-arrow">Acessar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+      <!-- Card 2: Calculadora HRaaS -->
+      <a class="card" href="calculadora-hraas.html">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="4" y="2" width="16" height="20" rx="2"/>
+            <line x1="8" y1="6" x2="16" y2="6"/>
+            <line x1="8" y1="10" x2="16" y2="10"/>
+            <line x1="8" y1="14" x2="12" y2="14"/>
+          </svg>
+        </div>
+        <div class="card-title">Calculadora HRaaS</div>
+        <div class="card-desc">Calculadora de precificação de pacotes e serviços.</div>
+        <div class="card-arrow">Acessar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+      <!-- Card 3: Relatório Geral -->
+      <a class="card" href="gerador-relatorios.html">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="8" y1="13" x2="16" y2="13"/>
+            <line x1="8" y1="17" x2="13" y2="17"/>
+          </svg>
+        </div>
+        <div class="card-title">Relatório Geral</div>
+        <div class="card-desc">Gerador padrão de relatórios de serviços.</div>
+        <div class="card-arrow">Acessar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+      <!-- Card 4: Diagnóstico Raio-X -->
+      <a class="card" href="https://raiox.azumirh.com.br/relatorioraiox.html" target="_blank">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <div class="card-title">Diagnóstico Raio-X</div>
+        <div class="card-desc">Gerador de diagnóstico de maturidade.</div>
+        <div class="card-arrow">Acessar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+
+    </div>
+  </main>
+
+</body>
+</html>
