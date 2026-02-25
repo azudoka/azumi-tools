@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Azumi Tools | Central de Ferramentas</title>
+  <title>Azumi Tools | Central do #TimeAzumiRH</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
   <style>
     :root {
       --navy: #0D2240;
@@ -12,6 +14,7 @@
       --accent: #2E7DD1;
       --off-white: #F4F7FC;
       --text: #1A2940;
+      --text-light: #6b7f99;
       --border: #CBD8EE;
     }
 
@@ -26,85 +29,143 @@
       background-color: var(--off-white);
       color: var(--text);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     /* ── HEADER ── */
     header {
       background-color: var(--navy);
       padding: 0 48px;
-      height: 64px;
+      height: 72px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       border-bottom: 3px solid var(--accent);
+      box-shadow: 0 4px 12px rgba(13, 34, 64, 0.1);
     }
 
-    /* ── MAIN ── */
+    .header-welcome {
+        color: white;
+        font-weight: 500;
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    /* ── MAIN CONTENT ── */
     main {
-      max-width: 960px;
+      flex: 1;
+      max-width: 1100px; /* Aumentei um pouco a largura para caber os 4 cards de cultura */
       margin: 0 auto;
-      padding: 64px 24px 80px;
+      padding: 64px 24px 40px;
+      width: 100%;
     }
 
+    /* ── HERO SECTION (Bem-vindos) ── */
     .hero {
-      margin-bottom: 48px;
+      text-align: center;
+      margin-bottom: 56px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
     }
 
     .hero h1 {
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 700;
       color: var(--navy);
-      margin-bottom: 8px;
+      margin-bottom: 16px;
       letter-spacing: -0.5px;
     }
 
-    .hero p {
-      font-size: 15px;
-      font-weight: 400;
-      color: #5a6f8a;
+    .hero h1 span {
+        color: var(--accent);
     }
 
-    /* ── GRID DE FERRAMENTAS ── */
+    .hero p.lead {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text);
+      max-width: 700px;
+      margin: 0 auto 24px;
+      line-height: 1.5;
+    }
+    
+    .hero p.sub {
+        font-size: 14px;
+        color: var(--text-light);
+    }
+
+    /* ── SEÇÃO DE FERRAMENTAS (GRID) ── */
+    .tools-section {
+        margin-bottom: 80px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--navy);
+        margin-bottom: 32px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .section-title::before {
+        content: '';
+        display: block;
+        width: 4px;
+        height: 24px;
+        background-color: var(--accent);
+        border-radius: 4px;
+    }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      /* Garante que fiquem 2 por linha em telas médias e 4 em telas grandes se couber */
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 24px;
-      margin-bottom: 64px;
     }
 
     .card {
       background: #ffffff;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 32px 28px;
+      border-radius: 16px;
+      padding: 32px;
       text-decoration: none;
       color: var(--text);
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-      box-shadow: 0 2px 8px rgba(13, 34, 64, 0.06);
+      gap: 16px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(13, 34, 64, 0.02);
+      position: relative;
+      overflow: hidden;
     }
 
     .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(13, 34, 64, 0.12);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(13, 34, 64, 0.1);
       border-color: var(--accent);
     }
 
     .card-icon {
-      width: 48px;
-      height: 48px;
+      width: 56px;
+      height: 56px;
       background: var(--off-white);
-      border-radius: 10px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      transition: background-color 0.3s ease;
+    }
+    
+    .card:hover .card-icon {
+        background-color: #EBF4FA; /* Azul bem clarinho ao passar o mouse */
     }
 
     .card-icon svg {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       stroke: var(--accent);
       fill: none;
       stroke-width: 1.8;
@@ -113,84 +174,183 @@
     }
 
     .card-title {
-      font-size: 15px;
+      font-size: 17px;
       font-weight: 700;
       color: var(--navy);
-      line-height: 1.3;
     }
 
     .card-desc {
-      font-size: 13px;
-      font-weight: 400;
-      color: #6b7f99;
-      line-height: 1.6;
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.5;
     }
 
     .card-arrow {
       margin-top: auto;
-      padding-top: 8px;
-      font-size: 12px;
+      padding-top: 12px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--accent);
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
     }
 
     .card:hover .card-arrow svg {
-      transform: translateX(3px);
+      transform: translateX(4px);
       transition: transform 0.2s;
     }
 
-    /* ── SESSÃO DE CULTURA (VALORES) ── */
+    /* ── SESSÃO DE CULTURA (Horizontal) ── */
     .culture-section {
-      border-top: 1px solid var(--border);
-      padding-top: 48px;
+      margin-bottom: 80px;
     }
 
-    .culture-section h2 {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 24px;
+    .culture-grid {
+        display: grid;
+        /* 4 Colunas em telas grandes */
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
     }
 
     .culture-card {
-      border-radius: 8px;
-      padding: 20px 24px;
-      margin-bottom: 16px;
+      border-radius: 16px;
+      padding: 32px 24px;
       color: var(--text);
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      height: 100%; /* Para ficarem da mesma altura */
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Animação suave ao passar o mouse nos valores */
+    .culture-card:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        border-color: rgba(0,0,0,0.05);
     }
 
     .culture-card h3 {
       font-size: 18px;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      color: var(--navy);
+    }
+    
+    .culture-icon {
+        width: 24px;
+        height: 24px;
+        stroke-width: 2;
     }
 
-    .culture-card p {
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 8px;
+    .culture-strong {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 12px;
+        font-size: 14px;
     }
 
-    .culture-card p:last-child {
-      margin-bottom: 0;
+    .culture-card p.desc {
+      font-size: 13px;
+      line-height: 1.7;
+      color: rgba(26, 41, 64, 0.8);
+      font-style: italic;
+      flex-grow: 1; /* Faz o texto ocupar o espaço e alinha o final */
     }
 
-    /* Cores das caixinhas baseadas no print */
-    .bg-green { background-color: #EAF2E9; }
-    .bg-blue { background-color: #EBF4FA; }
-    .bg-yellow { background-color: #FDF7E3; }
-    .bg-pink { background-color: #F9EAF0; }
+    /* Cores das caixinhas (Mantidas, mas mais suaves) */
+    .bg-green { background-color: #EAF2E9; } .bg-green .culture-icon { stroke: #2d7a39; }
+    .bg-blue { background-color: #EBF4FA; } .bg-blue .culture-icon { stroke: var(--accent); }
+    .bg-yellow { background-color: #FFF9E5; } .bg-yellow .culture-icon { stroke: #dba800; }
+    .bg-pink { background-color: #F9EAF0; } .bg-pink .culture-icon { stroke: #c7437e; }
 
-    @media (max-width: 560px) {
+
+    /* ── SESSÃO DE ACESSO RÁPIDO ── */
+    .quick-access-section {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    
+    .quick-icons-bar {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 24px;
+        background: white;
+        border-radius: 50px;
+        border: 1px solid var(--border);
+        display: inline-flex; /* Para a barra ficar só do tamanho dos ícones */
+        box-shadow: 0 4px 12px rgba(13, 34, 64, 0.04);
+    }
+
+    .quick-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--off-white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: var(--navy);
+        font-size: 24px;
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
+    }
+
+    .quick-icon:hover {
+        background: var(--accent);
+        color: white;
+        transform: scale(1.15);
+        box-shadow: 0 4px 12px rgba(46, 125, 209, 0.3);
+    }
+    
+    /* Dica flutuante (Tooltip) simples */
+    .quick-icon { position: relative; }
+    .quick-icon:hover::after {
+        content: attr(aria-label);
+        position: absolute;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--navy);
+        color: white;
+        font-size: 10px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        white-space: nowrap;
+        pointer-events: none;
+    }
+
+
+    /* ── FOOTER ── */
+    footer {
+        text-align: center;
+        padding: 24px;
+        margin-top: auto;
+        font-size: 12px;
+        color: var(--text-light);
+        border-top: 1px solid var(--border);
+    }
+
+    /* ── RESPONSIVIDADE ── */
+    @media (max-width: 900px) {
+        .culture-grid { grid-template-columns: repeat(2, 1fr); } /* 2 por linha em tablets */
+    }
+    
+    @media (max-width: 600px) {
       header { padding: 0 24px; }
-      .hero h1 { font-size: 24px; }
-      .grid { grid-template-columns: 1fr; }
+      .header-welcome { display: none; } /* Esconde o bem-vindo no celular para não apertar o logo */
+      .hero h1 { font-size: 28px; }
+      .hero p.lead { font-size: 16px; }
+      .grid, .culture-grid { grid-template-columns: 1fr; } /* 1 por linha no celular */
+      .card { padding: 24px; }
+      .quick-icons-bar { border-radius: 16px; width: 100%; gap: 16px; }
     }
   </style>
 </head>
@@ -200,100 +360,124 @@
     <a href="https://azumirh.com.br" target="_blank" style="text-decoration: none;">
       <span style="font-weight:700; color:white; font-size:24px;">azumi<span style="color:var(--accent);">RH</span></span>
     </a>
+    <div class="header-welcome">Olá, #TimeAzumiRH</div>
   </header>
 
   <main>
     <div class="hero">
-      <h1>Central de Ferramentas</h1>
-      <p>Selecione a ferramenta desejada abaixo</p>
-    </div>
-
-    <div class="grid">
-      <a class="card" href="atracao-hunting.html">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="8"/>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-            <line x1="11" y1="8" x2="11" y2="14"/>
-            <line x1="8" y1="11" x2="14" y2="11"/>
-          </svg>
-        </div>
-        <div class="card-title">Hunting & Atração</div>
-        <div class="card-desc">Gerador de relatório de processos seletivos.</div>
-        <div class="card-arrow">Acessar <svg viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </a>
-
-      <a class="card" href="calculadora-hraas.html">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24">
-            <rect x="4" y="2" width="16" height="20" rx="2"/>
-            <line x1="8" y1="6" x2="16" y2="6"/>
-            <line x1="8" y1="10" x2="16" y2="10"/>
-            <line x1="8" y1="14" x2="12" y2="14"/>
-          </svg>
-        </div>
-        <div class="card-title">Calculadora HRaaS</div>
-        <div class="card-desc">Calculadora de precificação de pacotes e serviços.</div>
-        <div class="card-arrow">Acessar <svg viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </a>
-
-      <a class="card" href="gerador-relatorios.html">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-            <line x1="8" y1="13" x2="16" y2="13"/>
-            <line x1="8" y1="17" x2="13" y2="17"/>
-          </svg>
-        </div>
-        <div class="card-title">Relatório Geral</div>
-        <div class="card-desc">Gerador padrão de relatórios de serviços.</div>
-        <div class="card-arrow">Acessar <svg viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </a>
-
-      <a class="card" href="https://raiox.azumirh.com.br/relatorioraiox.html" target="_blank">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="2" y1="12" x2="22" y2="12"/>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-          </svg>
-        </div>
-        <div class="card-title">Diagnóstico Raio-X</div>
-        <div class="card-desc">Gerador de diagnóstico de maturidade.</div>
-        <div class="card-arrow">Acessar <svg viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </a>
+      <h1>Bem-vindos à <span>Central Azumi</span></h1>
+      <p class="lead">"Sozinhos vamos mais rápido, juntos vamos mais longe."<br>Esta é a nossa base para construir o futuro do RH.</p>
+      <p class="sub">Selecione a ferramenta ou recurso desejado abaixo.</p>
     </div>
 
     <section class="culture-section">
-      <h2>About our Culture</h2>
+      <h2 class="section-title">Nossa Cultura (C.I.C.A.)</h2>
+      
+      <div class="culture-grid">
+        <div class="culture-card bg-green">
+          <h3>
+            <svg class="culture-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M8 11l2 2 4-4"/></svg>
+            [C]onfiança
+          </h3>
+          <span class="culture-strong">A base de toda relação verdadeira!</span>
+          <p class="desc">Construída com responsabilidade e transparência. Fazer o que diz e dizer o que faz. Cumprir prazos, honrar acordos e respeitar pessoas acima de tudo!</p>
+        </div>
 
-      <div class="culture-card bg-green">
-        <h3>▼ [C]onfiança</h3>
-        <p><strong>A base de toda relação verdadeira!</strong></p>
-        <p><em>Construída com responsabilidade e transparência.<br>Fazer o que diz e dizer o que faz.<br>Cumprir prazos, honrar acordos e respeitar pessoas acima de tudo!</em></p>
+        <div class="culture-card bg-blue">
+          <h3>
+            <svg class="culture-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            [I]ntegridade
+          </h3>
+          <span class="culture-strong">Fazer o certo, mesmo quando ninguém está vendo!</span>
+          <p class="desc">Ética em ação: nas decisões, nos dados, nas relações. Coerência entre fala e prática. É o que torna nosso trabalho sólido e respeitado!</p>
+        </div>
+
+        <div class="culture-card bg-yellow">
+          <h3>
+            <svg class="culture-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            [C]olaboração
+          </h3>
+          <span class="culture-strong">Nada foi construído sozinho!</span>
+          <p class="desc">Nosso coração operacional. Somamos talentos, dividimos conhecimento. Cada entrega reflete a inteligência do time. Crescemos juntos!</p>
+        </div>
+
+        <div class="culture-card bg-pink">
+          <h3>
+             <svg class="culture-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            [A]mor
+          </h3>
+          <span class="culture-strong">Amamos o que fazemos!</span>
+          <p class="desc">É o que dá sentido ao resultado, o cuidado nos detalhes, o respeito e o interesse genuíno em ver o outro crescer. Somos os melhores porque amamos!</p>
+        </div>
       </div>
-
-      <div class="culture-card bg-blue">
-        <h3>▼ [I]ntegridade</h3>
-        <p><strong>Fazer o certo, mesmo quando ninguém esta vendo!</strong></p>
-        <p><em>Ética em ação: nas decisões, nos dados, nas relações.<br>Coerência entre fala e prática.<br>É o que torna nosso trabalho sólido e nosso nome respeitado!</em></p>
-      </div>
-
-      <div class="culture-card bg-yellow">
-        <h3>▼ [C]olaboração</h3>
-        <p><strong>Nada foi construído sozinho!</strong></p>
-        <p><em>Colaboração é nosso coração operacional.<br>Somamos talentos, dividimos conhecimento e celebramos juntos.<br>Cada entrega reflete a inteligência do time —<br>Crescemos, erramos e acertamos juntos!</em></p>
-      </div>
-
-      <div class="culture-card bg-pink">
-        <h3>▼ [A]mor</h3>
-        <p><strong>Amamos o que fazemos!</strong></p>
-        <p><em>Amor é o que dá sentido ao resultado, é o cuidado nos detalhes, o respeito nas palavras, o interesse genuíno em ver o outro crescer.<br>Somos os melhores em que fazemos, porque fazemos o que amamos!</em></p>
-      </div>
-
     </section>
+
+    <section class="tools-section">
+      <h2 class="section-title">Ferramentas Internas</h2>
+      <div class="grid">
+        <a class="card" href="atracao-hunting.html">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          </div>
+          <div>
+              <div class="card-title">Hunting & Atração</div>
+              <div class="card-desc">Gerador de relatório de processos seletivos.</div>
+          </div>
+          <div class="card-arrow">Acessar <svg viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </a>
+
+        <a class="card" href="calculadora-hraas.html">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+          </div>
+          <div>
+              <div class="card-title">Calculadora HRaaS</div>
+              <div class="card-desc">Precificação de pacotes e serviços.</div>
+          </div>
+          <div class="card-arrow">Acessar <svg viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </a>
+
+        <a class="card" href="gerador-relatorios.html">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+          </div>
+          <div>
+              <div class="card-title">Relatório Geral</div>
+              <div class="card-desc">Gerador padrão de relatórios de serviços.</div>
+          </div>
+          <div class="card-arrow">Acessar <svg viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </a>
+
+        <a class="card" href="https://raiox.azumirh.com.br/relatorioraiox.html" target="_blank">
+          <div class="card-icon" style="background-color: #EBF4FA;">
+            <svg viewBox="0 0 24 24" style="stroke: var(--accent);"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div>
+              <div class="card-title">Diagnóstico Raio-X</div>
+              <div class="card-desc">Gerador de diagnóstico de maturidade.</div>
+          </div>
+          <div class="card-arrow">Acessar (Nova aba) <svg viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="quick-access-section">
+      <h2 class="section-title" style="justify-content: center;">Acesso Rápido</h2>
+      <div class="quick-icons-bar">
+        <a href="#" target="_blank" class="quick-icon" aria-label="Notion"><i class="ri-notion-fill"></i></a>
+        <a href="#" target="_blank" class="quick-icon" aria-label="Canva"><i class="ri-canva-fill"></i></a>
+        <a href="#" target="_blank" class="quick-icon" aria-label="Discord"><i class="ri-discord-fill"></i></a>
+        <a href="https://chat.openai.com" target="_blank" class="quick-icon" aria-label="ChatGPT"><i class="ri-openai-fill"></i></a>
+        <a href="https://gemini.google.com" target="_blank" class="quick-icon" aria-label="Gemini"><i class="ri-google-fill"></i></a>
+        <a href="https://www.perplexity.ai" target="_blank" class="quick-icon" aria-label="Perplexity"><i class="ri-search-eye-line"></i></a>
+      </div>
+    </section>
+
   </main>
+
+  <footer>
+    © 2024 Azumi RH. Uso interno exclusivo do #TimeAzumiRH.
+  </footer>
 
 </body>
 </html>
