@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AZUMI RH — Gerador de Relatórios de Vagas</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',Verdana,sans-serif;background:#f0f0f0;color:#222;font-size:13px}
+input,select,button,textarea{font-family:'Poppins',Verdana,sans-serif}
+#app{max-width:960px;margin:0 auto;padding:16px}
+.hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.brand{display:inline-flex;align-items:baseline;gap:2px;line-height:1}
+.brand .azumi{font-weight:600;text-transform:lowercase;font-size:26px;color:#034c8b}
+.brand .rh{font-family:'Avenir','Avenir Next','Helvetica Neue',Arial,sans-serif;font-style:italic;font-weight:400;text-transform:uppercase;font-size:26px;color:#034c8b}
+.btn{border:none;border-radius:7px;padding:8px 14px;cursor:pointer;font-weight:800;font-size:11px}
+.btn-primary{background:#034c8b;color:#fff;font-size:12px}
+.btn-ghost{background:#ededed;color:#222}
+.tabs{display:flex;gap:3px}
+.tab{flex:1;padding:8px 4px;font-size:10px;font-weight:700;border:none;border-radius:7px 7px 0 0;cursor:pointer;background:#ededed;color:#222}
+.tab.active{background:#034c8b;color:#fff}
+.panel{background:#fff;border-radius:0 0 10px 10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:#fff;border-radius:10px;padding:16px;margin-top:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.card-title{font-size:11px;font-weight:700;color:#222;margin-bottom:10px}
+.lbl{font-size:11px;font-weight:700;color:#222;margin:10px 0 4px}
+.inp,select,textarea{width:100%;padding:8px 10px;border:1px solid #ededed;border-radius:6px;font-size:12px;color:#222;background:#fff}
+textarea{min-height:92px;resize:vertical;line-height:1.5}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.mini{font-size:10px;color:#778082;margin-top:4px}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.kpi-item{padding:10px 12px;border:1px solid #ededed;border-radius:8px;background:#fafafa}
+.kpi-l{font-size:9px;color:#778082;font-weight:700;text-transform:uppercase;margin-bottom:2px}
+.kpi-v{font-size:13px;font-weight:800;color:#222}
+.kpi-v.blue{color:#034c8b}
+.alert{display:none;margin-top:10px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 12px;color:#b91c1c;font-size:11px;line-height:1.5}
+.alert.show{display:block}
+.divider{border-top:1px solid #ededed;margin:14px 0}
+.footer{text-align:center;font-size:9px;color:#bbb;margin-top:14px}
+
+/* PRINT PREVIEW STYLE */
+.print-wrap{max-width:860px;margin:0 auto;background:#fff;border-radius:8px;box-shadow:0 4px 32px rgba(0,0,0,.2);overflow:hidden}
+.p-hdr{background:#034c8b;padding:28px 40px 24px;position:relative}
+.p-title{font-size:22px;font-weight:900;color:#fff;margin-bottom:3px}
+.p-sub{font-size:13px;color:rgba(255,255,255,.8)}
+.p-logo{position:absolute;right:40px;top:50%;transform:translateY(-50%)}
+.p-logo .azumi,.p-logo .rh{font-size:34px;color:#fff}
+.p-body{padding:28px 40px}
+.p-bar{background:#fff8e1;border:1px solid #ffd54f;border-radius:6px;padding:9px 14px;margin-bottom:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:11px;color:#7c6200}
+.p-st{font-size:14px;font-weight:900;color:#034c8b;border-bottom:2px solid #034c8b;padding-bottom:6px;margin:18px 0 10px}
+.p-txt{font-size:12px;line-height:1.75;color:#222;white-space:pre-wrap}
+.p-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:12px 0 18px}
+.p-gi{padding:7px 10px;border-radius:5px;background:#fafafa;border:1px solid #ededed}
+.p-gl{font-size:9px;color:#778082;font-weight:700;text-transform:uppercase;margin-bottom:2px}
+.p-gv{font-size:12px;font-weight:800;color:#222}
+.money-strong{font-size:16px;font-weight:900;color:#034c8b}
+.money-chip{display:inline-block;background:#e9f2ff;border:1px solid #b9d7ff;border-radius:8px;padding:2px 10px}
+.p-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0 18px}
+.p-k{padding:8px 10px;border:1px solid #ededed;border-radius:6px;background:#fafafa}
+.p-kl{font-size:9px;color:#778082;font-weight:800;text-transform:uppercase}
+.p-kv{font-size:12px;font-weight:900;color:#034c8b;margin-top:2px}
+.p-sig{padding-top:16px;border-top:2px solid #ededed;margin-top:12px}
+.p-sig-name{font-size:13px;font-weight:900;color:#034c8b}
+.p-sig-det{font-size:11px;color:#778082;margin-top:3px}
+.p-foot{font-size:10px;color:#778082;margin-top:10px}
+
+@media print{
+  body{background:#fff}
+  #app{display:none!important}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  @page{size:A4;margin:0}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="hdr">
+    <div class="brand" aria-label="azumiRH"><span class="azumi">azumi</span><span class="rh">RH</span></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-ghost" onclick="resetAll()">Limpar</button>
+      <button class="btn btn-primary" id="btnGerarRel" onclick="openPreview()">Gerar relatório</button>
+      <button class="btn btn-primary" id="btnGerarProp" style="display:none" onclick="openProposal()">Gerar proposta</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" id="tab-rel" onclick="setTab('rel')">RELATÓRIO</button>
+    <button class="tab" id="tab-preco" onclick="setTab('preco')">PRECIFICAÇÃO</button>
+  </div>
+
+  <div class="panel">
+
+    <!-- RELATÓRIO -->
+    <div id="aba-rel">
+      <div class="grid2">
+        <div>
+          <div class="card-title">CONFIGURAÇÃO</div>
+          <div class="row">
+            <div>
+              <div class="lbl">Tipo de relatório</div>
+              <select id="relTipo" class="inp" onchange="syncVisibility(); calcKPIs();">
+                <option value="mensal">Mensal (prestação de serviço)</option>
+                <option value="final">Final (fechamento de vaga)</option>
+              </select>
+            </div>
+            <div>
+              <div class="lbl">Tipo de processo</div>
+              <select id="procTipo" class="inp" onchange="syncVisibility();">
+                <option value="atracao">Atração de Talentos</option>
+                <option value="hunting">Hunting</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="card-title">IDENTIFICAÇÃO</div>
+          <div class="lbl">Contratante</div>
+          <input id="contratante" class="inp" placeholder="Nome da empresa"/>
+
+          <div class="row">
+            <div>
+              <div class="lbl">CNPJ do contratante</div>
+              <input id="cnpjContratante" class="inp" placeholder="Opcional"/>
+            </div>
+            <div>
+              <div class="lbl">Cargo</div>
+              <input id="cargo" class="inp" placeholder="Ex.: Assistente da Presidência"/>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="lbl">Cidade</div>
+              <input id="cidade" class="inp" placeholder="Cidade"/>
+            </div>
+            <div>
+              <div class="lbl">Estado</div>
+              <input id="estado" class="inp" placeholder="UF"/>
+            </div>
+          </div>
+
+          <div class="row" id="blkMensal">
+            <div>
+              <div class="lbl">Referência</div>
+              <input id="referencia" class="inp" placeholder="Ex.: Jan de 2026"/>
+            </div>
+            <div>
+              <div class="lbl">Data de emissão</div>
+              <input id="emissao" class="inp" type="date"/>
+            </div>
+          </div>
+
+          <div class="row" id="blkFinal" style="display:none">
+            <div>
+              <div class="lbl">Data de abertura</div>
+              <input id="abertura" class="inp" type="date"/>
+            </div>
+            <div>
+              <div class="lbl">Data de fechamento</div>
+              <input id="fechamento" class="inp" type="date"/>
+            </div>
+          </div>
+
+          <div class="lbl">Status atual</div>
+          <select id="status" class="inp">
+            <option value="Em andamento">Em andamento</option>
+            <option value="Pausado">Pausado</option>
+            <option value="Finalistas enviados">Finalistas enviados</option>
+            <option value="Vaga fechada">Vaga fechada</option>
+          </select>
+
+          
+          <div class="row" style="margin-top:10px">
+            <div>
+              <div class="lbl">Consultor responsável</div>
+              <input id="consResp" class="inp" placeholder="Nome do consultor"/>
+            </div>
+            <div>
+              <div class="lbl">Cargo do consultor</div>
+              <input id="consCargo" class="inp" placeholder="Ex.: Consultor(a) de RH"/>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="card-title">NÚMEROS DO FUNIL</div>
+          <div class="row3">
+            <div>
+              <div class="lbl">Inscritos recebidos</div>
+              <input id="nInscritos" class="inp" type="number" min="0" value="0" oninput="calcKPIs();"/>
+            </div>
+            <div>
+              <div class="lbl">Triados</div>
+              <input id="nTriados" class="inp" type="number" min="0" value="0" oninput="calcKPIs();"/>
+            </div>
+            <div>
+              <div class="lbl">Reprovados</div>
+              <input id="nReprov" class="inp" type="number" min="0" value="0" oninput="calcKPIs();"/>
+            </div>
+          </div>
+
+          <div class="row3">
+            <div>
+              <div class="lbl">Declinaram</div>
+              <input id="nDecl" class="inp" type="number" min="0" value="0" oninput="calcKPIs();"/>
+              <div class="mini">Ex.: cancelou, desistiu, não compareceu.</div>
+            </div>
+            <div>
+              <div class="lbl">Aprovados p/ gestor</div>
+              <input id="nAprov" class="inp" type="number" min="0" value="0" oninput="calcKPIs();"/>
+            </div>
+            <div>
+              <div class="lbl">SLA alvo (dias úteis)</div>
+              <input id="slaAlvo" class="inp" type="number" min="0" value="15" oninput="calcKPIs();"/>
+              <div class="mini">Use o SLA acordado com o cliente.</div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:10px">
+            <div>
+              <div class="lbl">Dias úteis reais (até finalistas)</div>
+              <input id="slaReal" class="inp" type="number" min="0" value="0" oninput="calcKPIs();"/>
+              <div class="mini">Se ainda em andamento, deixe 0.</div>
+            </div>
+            <div>
+              <div class="lbl">Alerta de declínio (%)</div>
+              <input id="thrDecl" class="inp" type="number" min="0" max="100" value="30" oninput="calcKPIs();"/>
+              <div class="mini">Acima disso, o relatório sinaliza risco.</div>
+            </div>
+          </div>
+
+          <div class="alert" id="alertDecl"></div>
+
+          <div class="kpi" id="kpiBox">
+            <div class="kpi-item">
+              <div class="kpi-l">Total processados</div>
+              <div class="kpi-v" id="kTotalProc">0</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Pendentes na triagem</div>
+              <div class="kpi-v" id="kPend">0</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Taxa triagem (triados/inscritos)</div>
+              <div class="kpi-v blue" id="kTxTri">0%</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Taxa declínio (declinaram/triados)</div>
+              <div class="kpi-v blue" id="kTxDecl">0%</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Taxa avanço gestor (aprovados/triados)</div>
+              <div class="kpi-v blue" id="kTxAv">0%</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Cumprimento SLA</div>
+              <div class="kpi-v blue" id="kSLA">0%</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div>
+          <div class="card-title">NARRATIVA DO RELATÓRIO</div>
+
+          <div class="lbl">Panorama geral</div>
+          <textarea id="panorama" class="inp" placeholder="Contexto da demanda, relevância da posição, premissas e direcionamento."></textarea>
+
+          <div class="lbl">Divulgação e captação</div>
+          <textarea id="divulgacao" class="inp" placeholder="Estratégia de captação, canais, volume e critérios estratégicos."></textarea>
+
+          <div class="lbl">Triagem e avaliação técnica</div>
+          <textarea id="triagem" class="inp" placeholder="Critérios usados, filtros aplicados, comportamento do funil."></textarea>
+
+          <div class="lbl">Entrevistas e alinhamentos</div>
+          <textarea id="entrevistas" class="inp" placeholder="Etapas realizadas, alinhamentos de agenda, devolutivas."></textarea>
+
+          <div class="lbl">Status atual do processo</div>
+          <textarea id="statusTxt" class="inp" placeholder="Situação atual, dependências, próximos passos."></textarea>
+
+          <div id="blkHunting" style="display:none">
+            <div class="divider"></div>
+            <div class="card-title">CAMPOS ESPECÍFICOS DO HUNTING</div>
+            <div class="lbl">Mapa e estratégia de busca</div>
+            <textarea id="huntMapa" class="inp" placeholder="Onde buscou, quais critérios, recortes de mercado, nível de senioridade."></textarea>
+            <div class="lbl">Análise do hunter</div>
+            <textarea id="huntAnalise" class="inp" placeholder="Leituras estratégicas: riscos, aderência do mercado, objeções recorrentes."></textarea>
+            <div class="lbl">Status dos perfis abordados</div>
+            <textarea id="huntPerfis" class="inp" placeholder="Quantos mapeados, quantos abordados, quantos avançaram e por quê."></textarea>
+          </div>
+
+          <div class="divider"></div>
+          <div class="card-title">HORAS INVESTIDAS</div>
+          <div class="row3">
+            <div>
+              <div class="lbl">Divulgação</div>
+              <input id="hDiv" class="inp" type="number" min="0" value="0" oninput="calcHours();"/>
+            </div>
+            <div>
+              <div class="lbl">Triagem</div>
+              <input id="hTri" class="inp" type="number" min="0" value="0" oninput="calcHours();"/>
+            </div>
+            <div>
+              <div class="lbl">Entrevistas</div>
+              <input id="hEnt" class="inp" type="number" min="0" value="0" oninput="calcHours();"/>
+            </div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <div>
+              <div class="lbl">Outras frentes</div>
+              <input id="hOut" class="inp" type="number" min="0" value="0" oninput="calcHours();"/>
+            </div>
+            <div>
+              <div class="lbl">Total (auto)</div>
+              <input id="hTot" class="inp" type="number" value="0" readonly/>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="card-title">CONSIDERAÇÕES FINAIS</div>
+          <textarea id="final" class="inp" placeholder="Resumo executivo, pontos de atenção, recomendação de próximos passos."></textarea>
+
+        </div>
+      </div>
+
+      <div class="footer">AZUMI RH · contato@azumirh.com.br · https://www.azumirh.com.br · WhatsApp: +55 41 98835-0743</div>
+    </div>
+
+    <!-- PRECIFICAÇÃO -->
+    <div id="aba-preco" style="display:none">
+      <div class="grid2">
+        <div>
+          <div class="card-title">BASE DA VAGA</div>
+          <div class="lbl">Salário mensal bruto (R$)</div>
+          <input id="salBase" class="inp" type="number" min="0" value="0" oninput="calcPreco();"/>
+
+          <div class="lbl">Comissão mensal estimada (R$)</div>
+          <input id="comBase" class="inp" type="number" min="0" value="0" oninput="calcPreco();"/>
+          <div class="mini">Se não houver comissão, deixe 0.</div>
+
+          <div class="lbl">Nível da posição</div>
+          <select id="nivel" class="inp" onchange="applyNivel(); calcPreco();">
+            <option value="jr">Júnior</option>
+            <option value="pl">Pleno</option>
+            <option value="sr">Sênior</option>
+            <option value="exec">Executivo</option>
+          </select>
+          <div class="mini">Sugestão automática de % por nível. Você pode editar.</div>
+
+          <div class="lbl">Percentual (10% a 20%)</div>
+          <input id="perc" class="inp" type="number" min="0" max="100" value="12" step="0.5" oninput="calcPreco();"/>
+
+          <div class="divider"></div>
+          <div class="card-title">CONDIÇÕES DE PAGAMENTO</div>
+          <div class="row">
+            <div>
+              <div class="lbl">Entrada (%)</div>
+              <input id="pEntrada" class="inp" type="number" min="0" max="100" value="30" oninput="calcPreco();"/>
+            </div>
+            <div>
+              <div class="lbl">Sucesso (%)</div>
+              <input id="pSucesso" class="inp" type="number" min="0" max="100" value="70" oninput="calcPreco();"/>
+            </div>
+          </div>
+          <div class="mini">Deixe livre. 40/60, 20/80, etc.</div>
+
+          <div class="alert" id="alertPay"></div>
+          <div class="divider"></div>
+          <div class="card-title">DADOS DA PROPOSTA</div>
+
+          <div class="lbl">Empresa</div>
+          <input id="propEmpresa" class="inp" placeholder="Nome da empresa"/>
+
+          <div class="row">
+            <div>
+              <div class="lbl">Região</div>
+              <input id="propRegiao" class="inp" placeholder="Ex.: Curitiba – PR"/>
+            </div>
+            <div>
+              <div class="lbl">Segmento</div>
+              <input id="propSegmento" class="inp" placeholder="Ex.: Varejo, Indústria, Serviços"/>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="lbl">Contratante</div>
+              <input id="propContratante" class="inp" placeholder="Nome do responsável"/>
+            </div>
+            <div>
+              <div class="lbl">Cargo do contratante</div>
+              <input id="propCargoContratante" class="inp" placeholder="Ex.: CEO, Diretor(a), RH"/>
+            </div>
+          </div>
+
+          <div class="lbl">Regime e modelo</div>
+          <input id="propRegime" class="inp" placeholder="Ex.: CLT, PJ, Híbrido, Presencial, Remoto"/>
+
+          <div class="lbl">Requisitos</div>
+          <textarea id="propRequisitos" class="inp" placeholder="Requisitos essenciais, diferenciais, faixa, jornada, etc."></textarea>
+
+          <div class="lbl">Observações importantes</div>
+          <textarea id="propObsImp" class="inp" placeholder="Restrições, confidencialidade, urgência, alinhamentos críticos."></textarea>
+
+          <div class="divider"></div>
+          <div class="card-title">ADICIONAIS CONTRATADOS</div>
+          <div class="row">
+            <div>
+              <div class="lbl">Quantidade de candidatos</div>
+              <input id="qtdCand" class="inp" type="number" min="0" value="0" oninput="calcPreco();"/>
+              <div class="mini">Usado para calcular R$ 110 por candidato por adicional selecionado.</div>
+            </div>
+            <div>
+              <div class="lbl">Desconto manual (%)</div>
+              <input id="descManual" class="inp" type="number" min="0" max="100" step="0.5" value="0" oninput="calcPreco();"/>
+              <div class="mini">Desconto aplicado no total final.</div>
+            </div>
+          </div>
+
+          <div style="margin-top:8px;display:grid;grid-template-columns:1fr;gap:8px">
+            <label style="display:flex;gap:10px;align-items:center;font-size:12px">
+              <input id="addEntrevista" type="checkbox" onchange="calcPreco();"/>
+              Entrevista comportamental (R$ 110 por candidato)
+            </label>
+            <label style="display:flex;gap:10px;align-items:center;font-size:12px">
+              <input id="addDISC" type="checkbox" onchange="calcPreco();"/>
+              Teste de perfil DISC e aplicação (R$ 110 por candidato)
+            </label>
+            <label style="display:flex;gap:10px;align-items:center;font-size:12px">
+              <input id="addTec" type="checkbox" onchange="calcPreco();"/>
+              Aplicação de teste técnico (R$ 110 por candidato)
+            </label>
+          </div>
+
+
+        </div>
+
+        <div>
+          <div class="card-title">CÁLCULO</div>
+          <div class="kpi">
+            <div class="kpi-item">
+              <div class="kpi-l">Remuneração mensal total</div>
+              <div class="kpi-v" id="kMes">R$ 0,00</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Remuneração anual bruta</div>
+              <div class="kpi-v blue" id="kAno">R$ 0,00</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Honorários totais</div>
+              <div class="kpi-v blue" id="kFee">R$ 0,00</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Entrada</div>
+              <div class="kpi-v" id="kEnt">R$ 0,00</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Sucesso</div>
+              <div class="kpi-v" id="kSuc">R$ 0,00</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Percentual aplicado</div>
+              <div class="kpi-v" id="kPerc">0%</div>
+            </div>
+          
+            <div class="kpi-item">
+              <div class="kpi-l">Adicionais (auto)</div>
+              <div class="kpi-v" id="kAdicP">R$ 0,00</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Desconto (manual)</div>
+              <div class="kpi-v" id="kDescP">R$ 0,00</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Total final da proposta</div>
+              <div class="kpi-v blue" id="kFeeFinalP">R$ 0,00</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Entrada sobre total final</div>
+              <div class="kpi-v" id="kEntFinalP">R$ 0,00</div>
+            </div>
+            <div class="kpi-item">
+              <div class="kpi-l">Sucesso sobre total final</div>
+              <div class="kpi-v" id="kSucFinalP">R$ 0,00</div>
+            </div>
+</div>
+
+          <div class="divider"></div>
+          <div class="card-title">OBSERVAÇÕES</div>
+          <textarea id="obsPreco" class="inp" placeholder="Notas internas: justificativa do % e condições específicas."></textarea>
+
+        </div>
+      </div>
+
+      <div class="footer">Base de cálculo: 10% a 20% sobre salário anual bruto (salário + comissão). Percentuais e condições editáveis.</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function byId(id){return document.getElementById(id)}
+function n(v){const x=parseFloat(v);return isNaN(x)?0:x}
+function pct(a,b){if(b<=0) return 0; return (a/b)*100}
+function fmtBRL(v){return (n(v)).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+
+function setTab(t){
+  byId('tab-rel').classList.toggle('active',t==='rel');
+  byId('tab-preco').classList.toggle('active',t==='preco');
+  byId('aba-rel').style.display = t==='rel' ? 'block':'none';
+  byId('aba-preco').style.display = t==='preco' ? 'block':'none';
+  byId('btnGerarRel').style.display = (t==='rel') ? 'inline-block' : 'none';
+  byId('btnGerarProp').style.display = (t==='preco') ? 'inline-block' : 'none';
+}
+
+function syncVisibility(){
+  const relTipo = byId('relTipo').value;
+  const procTipo = byId('procTipo').value;
+  byId('blkMensal').style.display = (relTipo==='mensal') ? 'grid' : 'none';
+  byId('blkFinal').style.display = (relTipo==='final') ? 'grid' : 'none';
+  byId('blkHunting').style.display = (procTipo==='hunting') ? 'block' : 'none';
+}
+
+let alertedDecl = false;
+function calcKPIs(){
+  const inscritos = n(byId('nInscritos').value);
+  const triados = n(byId('nTriados').value);
+  const reprov = n(byId('nReprov').value);
+  const decl = n(byId('nDecl').value);
+  const aprov = n(byId('nAprov').value);
+
+  const totalProc = reprov + decl + aprov;
+  const pend = Math.max(0, triados - totalProc);
+
+  const txTri = pct(triados, inscritos);
+  const txDecl = pct(decl, triados);
+  const txAv = pct(aprov, triados);
+
+  const slaAlvo = n(byId('slaAlvo').value);
+  const slaReal = n(byId('slaReal').value);
+  let slaPct = 0;
+  if(slaReal<=0 || slaAlvo<=0){
+    slaPct = 0;
+  } else {
+    slaPct = Math.min(100, (slaAlvo / slaReal) * 100);
+  }
+
+  byId('kTotalProc').textContent = totalProc.toString();
+  byId('kPend').textContent = pend.toString();
+  byId('kTxTri').textContent = txTri.toFixed(1).replace('.',',') + '%';
+  byId('kTxDecl').textContent = txDecl.toFixed(1).replace('.',',') + '%';
+  byId('kTxAv').textContent = txAv.toFixed(1).replace('.',',') + '%';
+  byId('kSLA').textContent = (slaPct<=0? '0%' : slaPct.toFixed(1).replace('.',',') + '%');
+
+  const thr = n(byId('thrDecl').value);
+  const alertBox = byId('alertDecl');
+  const cond = (triados>0 && txDecl >= thr);
+  if(cond){
+    alertBox.classList.add('show');
+    alertBox.textContent = 'Alerta: taxa de declínio acima do limite. Isso normalmente indica desalinhamento de faixa, escopo, localização, expectativa de jornada ou timing de retorno do cliente. Reavalie rapidamente para não perder funil.';
+    if(!alertedDecl){
+      alertedDecl = true;
+      window.setTimeout(()=>{ window.alert('Alerta: taxa de declínio acima do limite definido. Reavalie faixa, escopo e velocidade de retorno do cliente.'); }, 50);
+    }
+  } else {
+    alertBox.classList.remove('show');
+    alertBox.textContent='';
+    alertedDecl = false;
+  }
+}
+
+function calcHours(){
+  const tot = n(byId('hDiv').value) + n(byId('hTri').value) + n(byId('hEnt').value) + n(byId('hOut').value);
+  byId('hTot').value = tot.toString();
+}
+
+function applyNivel(){
+  const nivel = byId('nivel').value;
+  const map = {jr:10, pl:12, sr:15, exec:20};
+  byId('perc').value = map[nivel] ?? 12;
+}
+
+function calcPreco(){
+  const sal = n(byId('salBase').value);
+  const com = n(byId('comBase').value);
+  const perc = n(byId('perc').value);
+  const pEnt = n(byId('pEntrada').value);
+  const pSuc = n(byId('pSucesso').value);
+
+  const alertPay = byId('alertPay');
+  if(Math.round((pEnt+pSuc)*100)/100 !== 100){
+    alertPay.classList.add('show');
+    alertPay.textContent = 'Atenção: Entrada + Sucesso não somam 100%. Ajuste para evitar erro na proposta.';
+  } else {
+    alertPay.classList.remove('show');
+    alertPay.textContent='';
+  }
+
+  const mes = sal + com;
+  const ano = mes * 12;
+  const fee = ano * (perc/100);
+  const vEnt = fee * (pEnt/100);
+  const vSuc = fee * (pSuc/100);
+
+  // Adicionais e desconto (não alteram o cálculo base acima)
+  const qtd = n(byId('qtdCand') ? byId('qtdCand').value : 0);
+  const descPerc = n(byId('descManual') ? byId('descManual').value : 0);
+  const selEnt = byId('addEntrevista') ? byId('addEntrevista').checked : false;
+  const selDisc = byId('addDISC') ? byId('addDISC').checked : false;
+  const selTec = byId('addTec') ? byId('addTec').checked : false;
+  const selCount = (selEnt?1:0) + (selDisc?1:0) + (selTec?1:0);
+  const vAdic = qtd * 110 * selCount;
+
+  // Desconto em % aplicado sobre (honorários base + adicionais)
+  const vDesc = Math.max(0, (fee + vAdic) * (descPerc/100));
+
+  const feeFinal = Math.max(0, fee + vAdic - vDesc);
+
+  const vEntFinal = feeFinal * (pEnt/100);
+  const vSucFinal = feeFinal * (pSuc/100);
+
+  byId('kMes').textContent = fmtBRL(mes);
+  byId('kAno').textContent = fmtBRL(ano);
+  byId('kFee').textContent = fmtBRL(fee);
+  byId('kEnt').textContent = fmtBRL(vEnt);
+  byId('kSuc').textContent = fmtBRL(vSuc);
+  byId('kPerc').textContent = (perc||0).toFixed(1).replace('.',',') + '%';
+
+  // Campos novos (proposta)
+  const descPercTxt = (descPerc||0).toFixed(1).replace('.',',') + '%';
+  if(byId('kAdic')) byId('kAdic').textContent = fmtBRL(vAdic);
+  if(byId('kDesc')) byId('kDesc').textContent = descPercTxt + ' · ' + fmtBRL(vDesc);
+  if(byId('kFeeFinal')) byId('kFeeFinal').textContent = fmtBRL(feeFinal);
+  if(byId('kEntFinal')) byId('kEntFinal').textContent = fmtBRL(vEntFinal);
+  if(byId('kSucFinal')) byId('kSucFinal').textContent = fmtBRL(vSucFinal);
+
+  if(byId('kAdicP')) byId('kAdicP').textContent = fmtBRL(vAdic);
+  if(byId('kDescP')) byId('kDescP').textContent = descPercTxt + ' · ' + fmtBRL(vDesc);
+  if(byId('kFeeFinalP')) byId('kFeeFinalP').textContent = fmtBRL(feeFinal);
+  if(byId('kEntFinalP')) byId('kEntFinalP').textContent = fmtBRL(vEntFinal);
+  if(byId('kSucFinalP')) byId('kSucFinalP').textContent = fmtBRL(vSucFinal);
+}
+
+function resetAll(){
+  if(!confirm('Limpar todos os campos?')) return;
+  document.querySelectorAll('input, textarea').forEach(el=>{
+    if(el.type==='number') el.value = 0;
+    else if(el.type==='date') el.value = '';
+    else el.value = '';
+  });
+  document.querySelectorAll('input[type="checkbox"]').forEach(el=>{ el.checked = false; });
+  byId('relTipo').value='mensal';
+  byId('procTipo').value='atracao';
+  byId('status').value='Em andamento';
+  byId('slaAlvo').value=15;
+  byId('thrDecl').value=30;
+  byId('nivel').value='pl';
+  byId('perc').value=12;
+  byId('pEntrada').value=30;
+  byId('pSucesso').value=70;
+  syncVisibility();
+  calcKPIs();
+  calcHours();
+  calcPreco();
+}
+
+function openPreview(){
+  // Ensure computed fields are up to date
+  calcKPIs();
+  calcHours();
+
+  const relTipo = byId('relTipo').value;
+  const procTipo = byId('procTipo').value;
+
+  const contratante = byId('contratante').value.trim() || 'Não informado';
+  const cnpjContratante = byId('cnpjContratante').value.trim() || 'Não informado';
+  const cargo = byId('cargo').value.trim() || 'Não informado';
+  const cidade = byId('cidade').value.trim() || 'Não informado';
+  const estado = byId('estado').value.trim() || 'Não informado';
+
+  const referencia = byId('referencia').value.trim();
+  const emissao = byId('emissao').value;
+  const abertura = byId('abertura').value;
+  const fechamento = byId('fechamento').value;
+
+  const status = byId('status').value;
+
+  const inscritos = n(byId('nInscritos').value);
+  const triados = n(byId('nTriados').value);
+  const reprov = n(byId('nReprov').value);
+  const decl = n(byId('nDecl').value);
+  const aprov = n(byId('nAprov').value);
+  const totalProc = reprov+decl+aprov;
+  const pend = Math.max(0, triados-totalProc);
+
+  const txTri = (pct(triados, inscritos)).toFixed(1).replace('.',',') + '%';
+  const txDecl = (pct(decl, triados)).toFixed(1).replace('.',',') + '%';
+  const txAv = (pct(aprov, triados)).toFixed(1).replace('.',',') + '%';
+
+  const slaAlvo = n(byId('slaAlvo').value);
+  const slaReal = n(byId('slaReal').value);
+  let slaPct = 0;
+  if(slaReal>0 && slaAlvo>0) slaPct = Math.min(100, (slaAlvo/slaReal)*100);
+  const slaPctTxt = (slaPct<=0? '0%' : slaPct.toFixed(1).replace('.',',') + '%');
+
+  const panorama = byId('panorama').value.trim();
+  const divulgacao = byId('divulgacao').value.trim();
+  const triagem = byId('triagem').value.trim();
+  const entrevistas = byId('entrevistas').value.trim();
+  const statusTxt = byId('statusTxt').value.trim();
+  const finalTxt = byId('final').value.trim();
+
+  const hDiv = n(byId('hDiv').value);
+  const hTri = n(byId('hTri').value);
+  const hEnt = n(byId('hEnt').value);
+  const hOut = n(byId('hOut').value);
+  const hTot = n(byId('hTot').value);
+
+  const huntMapa = byId('huntMapa').value.trim();
+  const huntAnalise = byId('huntAnalise').value.trim();
+  const huntPerfis = byId('huntPerfis').value.trim();
+
+  const consResp = byId('consResp').value.trim() || 'Não informado';
+  const consCargo = byId('consCargo').value.trim() || 'Não informado';
+
+  const titulo = (relTipo==='mensal') ? 'Relatório Mensal de Prestação de Serviços' : 'Relatório Final de Fechamento de Vaga';
+  const subtitulo = (procTipo==='hunting') ? 'Processo: Hunting' : 'Processo: Atração de Talentos';
+
+  const infoRef = (relTipo==='mensal')
+    ? `<div class="p-bar"><div>📅 Emissão: <b>${fmtDate(emissao)}</b></div><div>📌 Referência: <b>${escapeHtml(referencia || 'Não informada')}</b></div></div>`
+    : `<div class="p-bar"><div>📅 Abertura: <b>${fmtDate(abertura)}</b></div><div>✅ Fechamento: <b>${fmtDate(fechamento)}</b></div></div>`;
+
+  const huntBlock = (procTipo==='hunting') ? `
+    <div class="p-st">Campos específicos do Hunting</div>
+    <div class="p-txt"><b>Mapa e estratégia de busca</b>\n${escapeHtml(huntMapa || 'Não informado')}</div>
+    <div style="height:10px"></div>
+    <div class="p-txt"><b>Análise do hunter</b>\n${escapeHtml(huntAnalise || 'Não informado')}</div>
+    <div style="height:10px"></div>
+    <div class="p-txt"><b>Status dos perfis abordados</b>\n${escapeHtml(huntPerfis || 'Não informado')}</div>
+  ` : '';
+
+  const declWarn = (()=>{
+    const thr = n(byId('thrDecl').value);
+    const tx = pct(decl, triados);
+    if(triados>0 && tx>=thr){
+      return `<div style="margin-top:10px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 12px;color:#b91c1c;font-size:11px;line-height:1.5">Alerta: taxa de declínio acima do limite (${thr}%). A Azumi recomenda reavaliar faixa, escopo, localização, jornada e velocidade de retorno do cliente.</div>`;
+    }
+    return '';
+  })();
+
+  const html = `
+<!DOCTYPE html><html lang="pt-BR"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>${escapeHtml(titulo)}</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet"/>
+<style>${getPrintCss()}</style>
+</head><body>
+<div style="max-width:860px;margin:16px auto 12px;display:flex;justify-content:space-between;align-items:center;background:#034c8b;border-radius:10px;padding:10px 20px">
+  <div style="font-size:11px;color:rgba(255,255,255,.75)">Ative “Gráficos de fundo” no Ctrl+P para preservar as cores</div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <button onclick="window.print()" style="background:#fff;color:#034c8b;border:none;border-radius:6px;padding:7px 18px;font-size:12px;font-weight:900;cursor:pointer;font-family:'Poppins',Verdana,sans-serif">Salvar como PDF (Ctrl+P)</button>
+  </div>
+</div>
+
+<div class="print-wrap">
+  <div class="p-hdr">
+    <div class="p-title">${escapeHtml(titulo)}</div>
+    <div class="p-sub">${escapeHtml(subtitulo)}</div>
+    <div class="p-logo brand p-logo" aria-label="azumiRH"><span class="azumi">azumi</span><span class="rh">RH</span></div>
+  </div>
+
+  <div class="p-body">
+
+    ${infoRef}
+
+    <div class="p-grid">
+      <div class="p-gi"><div class="p-gl">Contratada</div><div class="p-gv">AKAYKO AZUMI RH LTDA</div></div>
+      <div class="p-gi"><div class="p-gl">CNPJ</div><div class="p-gv">56.660.675/0001-11</div></div>
+      <div class="p-gi"><div class="p-gl">Contratante</div><div class="p-gv">${escapeHtml(contratante)}</div></div>
+      <div class="p-gi"><div class="p-gl">CNPJ contratante</div><div class="p-gv">${escapeHtml(cnpjContratante)}</div></div>
+      <div class="p-gi"><div class="p-gl">Vaga</div><div class="p-gv">${escapeHtml(cargo)}</div></div>
+      <div class="p-gi"><div class="p-gl">Local</div><div class="p-gv">${escapeHtml(cidade)} · ${escapeHtml(estado)}</div></div>
+      <div class="p-gi"><div class="p-gl">Status</div><div class="p-gv">${escapeHtml(status)}</div></div>
+      <div class="p-gi"><div class="p-gl">Processo</div><div class="p-gv">${procTipo==='hunting'?'Hunting':'Atração de Talentos'}</div></div>
+    </div>
+
+    <div class="p-st">Visão geral do funil</div>
+    <div class="p-kpi">
+      <div class="p-k"><div class="p-kl">Inscritos</div><div class="p-kv">${inscritos}</div></div>
+      <div class="p-k"><div class="p-kl">Triados</div><div class="p-kv">${triados}</div></div>
+      <div class="p-k"><div class="p-kl">Reprovados</div><div class="p-kv">${reprov}</div></div>
+      <div class="p-k"><div class="p-kl">Declinaram</div><div class="p-kv">${decl}</div></div>
+      <div class="p-k"><div class="p-kl">Aprovados p/ gestor</div><div class="p-kv">${aprov}</div></div>
+      <div class="p-k"><div class="p-kl">Pendentes na triagem</div><div class="p-kv">${pend}</div></div>
+      <div class="p-k"><div class="p-kl">Taxa triagem</div><div class="p-kv">${txTri}</div></div>
+      <div class="p-k"><div class="p-kl">Taxa declínio</div><div class="p-kv">${txDecl}</div></div>
+      <div class="p-k"><div class="p-kl">Taxa avanço gestor</div><div class="p-kv">${txAv}</div></div>
+      <div class="p-k"><div class="p-kl">SLA alvo</div><div class="p-kv">${slaAlvo>0? (slaAlvo+' dias úteis'):'Não informado'}</div></div>
+      <div class="p-k"><div class="p-kl">SLA real</div><div class="p-kv">${slaReal>0? (slaReal+' dias úteis'):'Em andamento'}</div></div>
+      <div class="p-k"><div class="p-kl">Cumprimento SLA</div><div class="p-kv">${slaPctTxt}</div></div>
+    </div>
+    ${declWarn}
+
+    <div class="p-st">Panorama geral</div>
+    <div class="p-txt">${escapeHtml(panorama || 'Não informado')}</div>
+
+    <div class="p-st">Divulgação e captação</div>
+    <div class="p-txt">${escapeHtml(divulgacao || 'Não informado')}</div>
+
+    <div class="p-st">Triagem e avaliação técnica</div>
+    <div class="p-txt">${escapeHtml(triagem || 'Não informado')}</div>
+
+    <div class="p-st">Entrevistas e alinhamentos</div>
+    <div class="p-txt">${escapeHtml(entrevistas || 'Não informado')}</div>
+
+    <div class="p-st">Status atual do processo</div>
+    <div class="p-txt">${escapeHtml(statusTxt || 'Não informado')}</div>
+
+    ${huntBlock}
+
+    <div class="p-st">Horas investidas no período</div>
+    <div class="p-grid">
+      <div class="p-gi"><div class="p-gl">Divulgação</div><div class="p-gv">${hDiv}h</div></div>
+      <div class="p-gi"><div class="p-gl">Triagem</div><div class="p-gv">${hTri}h</div></div>
+      <div class="p-gi"><div class="p-gl">Entrevistas</div><div class="p-gv">${hEnt}h</div></div>
+      <div class="p-gi"><div class="p-gl">Outras frentes</div><div class="p-gv">${hOut}h</div></div>
+      <div class="p-gi" style="grid-column:1/-1"><div class="p-gl">Total</div><div class="p-gv">${hTot}h</div></div>
+    </div>
+
+    <div class="p-st">Considerações finais</div>
+    <div class="p-txt">${escapeHtml(finalTxt || 'Não informado')}</div>
+
+    <div class="p-sig">
+      <div class="p-sig-name">${escapeHtml(consResp)}</div>
+      <div class="p-sig-det">${escapeHtml(consCargo)} · Azumi RH</div>
+      <div class="p-foot">contato@azumirh.com.br · https://www.azumirh.com.br · WhatsApp: +55 41 98835-0743</div>
+      <div class="p-foot" style="margin-top:6px">Este relatório é confidencial e protegido pela LGPD. Uso restrito ao contratante e à Azumi RH. Proibido compartilhar, copiar ou divulgar sem autorização expressa.</div>
+    </div>
+
+  </div>
+</div>
+</body></html>`;
+
+  const w = window.open('', '_blank');
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
+}
+
+
+function openProposal(){
+  // Ensure pricing is up to date
+  calcPreco();
+
+  const empresa = byId('propEmpresa').value.trim() || 'Não informado';
+  const regiao = byId('propRegiao').value.trim() || 'Não informado';
+  const segmento = byId('propSegmento').value.trim() || 'Não informado';
+  const contratante = byId('propContratante').value.trim() || 'Não informado';
+  const cargoContr = byId('propCargoContratante').value.trim() || 'Não informado';
+  const regime = byId('propRegime').value.trim() || 'Não informado';
+  const requisitos = byId('propRequisitos').value.trim() || 'Não informado';
+  const obsImp = byId('propObsImp').value.trim() || 'Não informado';
+
+  const sal = n(byId('salBase').value);
+  const com = n(byId('comBase').value);
+  const perc = n(byId('perc').value);
+  const mes = sal + com;
+  const ano = mes * 12;
+  const feeBase = ano * (perc/100);
+
+  const pEnt = n(byId('pEntrada').value);
+  const pSuc = n(byId('pSucesso').value);
+
+  const qtd = n(byId('qtdCand').value);
+  const descPerc = n(byId('descManual').value);
+
+  const selEnt = byId('addEntrevista').checked;
+  const selDisc = byId('addDISC').checked;
+  const selTec = byId('addTec').checked;
+  const selCount = (selEnt?1:0) + (selDisc?1:0) + (selTec?1:0);
+  const vAdic = qtd * 110 * selCount;
+
+  // Desconto em % aplicado sobre (honorários base + adicionais)
+  const vDesc = Math.max(0, (feeBase + vAdic) * (descPerc/100));
+
+const totalFinal = Math.max(0, feeBase + vAdic - vDesc);
+  const vEntFinal = totalFinal * (pEnt/100);
+  const vSucFinal = totalFinal * (pSuc/100);
+
+  const itensAdic = [];
+  if(selEnt) itensAdic.push('Entrevista comportamental');
+  if(selDisc) itensAdic.push('DISC e aplicação');
+  if(selTec) itensAdic.push('Teste técnico');
+  const adicTxt = itensAdic.length ? itensAdic.join(', ') : 'Nenhum';
+
+  const html = `
+<!DOCTYPE html><html lang="pt-BR"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Proposta de Vaga</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet"/>
+<style>${getPrintCss()}</style>
+</head><body>
+<div style="max-width:860px;margin:16px auto 12px;display:flex;justify-content:space-between;align-items:center;background:#034c8b;border-radius:10px;padding:10px 20px">
+  <div style="font-size:11px;color:rgba(255,255,255,.75)">Ative “Gráficos de fundo” no Ctrl+P para preservar as cores</div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <button onclick="window.print()" style="background:#fff;color:#034c8b;border:none;border-radius:6px;padding:7px 18px;font-size:12px;font-weight:900;cursor:pointer;font-family:'Poppins',Verdana,sans-serif">Salvar como PDF (Ctrl+P)</button>
+  </div>
+</div>
+
+<div class="print-wrap">
+  <div class="p-hdr">
+    <div class="p-title">Proposta de Vaga</div>
+    <div class="p-sub">Atração e Hunting · Precificação</div>
+    <div class="p-logo brand p-logo" aria-label="azumiRH"><span class="azumi">azumi</span><span class="rh">RH</span></div>
+  </div>
+
+  <div class="p-body">
+
+    <div class="p-bar"><div>📅 Emissão: <b>${new Date().toLocaleDateString('pt-BR')}</b></div><div>🏢 Empresa: <b>${escapeHtml(empresa)}</b></div></div>
+
+    <div class="p-grid">
+      <div class="p-gi"><div class="p-gl">Região</div><div class="p-gv">${escapeHtml(regiao)}</div></div>
+      <div class="p-gi"><div class="p-gl">Segmento</div><div class="p-gv">${escapeHtml(segmento)}</div></div>
+      <div class="p-gi"><div class="p-gl">Contratante</div><div class="p-gv">${escapeHtml(contratante)}</div></div>
+      <div class="p-gi"><div class="p-gl">Cargo do contratante</div><div class="p-gv">${escapeHtml(cargoContr)}</div></div>
+      <div class="p-gi" style="grid-column:1/-1"><div class="p-gl">Regime e modelo</div><div class="p-gv">${escapeHtml(regime)}</div></div>
+    </div>
+
+    <div class="p-st">Requisitos</div>
+    <div class="p-txt">${escapeHtml(requisitos)}</div>
+
+    <div class="p-st">Observações importantes</div>
+    <div class="p-txt">${escapeHtml(obsImp)}</div>
+
+    <div class="p-st">Base de cálculo</div>
+    <div class="p-grid">
+      <div class="p-gi"><div class="p-gl">Salário mensal bruto</div><div class="p-gv">${fmtBRL(sal)}</div></div>
+      <div class="p-gi"><div class="p-gl">Comissão mensal estimada</div><div class="p-gv">${fmtBRL(com)}</div></div>
+      <div class="p-gi"><div class="p-gl">Remuneração mensal total</div><div class="p-gv">${fmtBRL(mes)}</div></div>
+      <div class="p-gi"><div class="p-gl">Remuneração anual bruta</div><div class="p-gv">${fmtBRL(ano)}</div></div>
+      <div class="p-gi"><div class="p-gl">Percentual aplicado</div><div class="p-gv">${(perc||0).toFixed(1).replace('.',',')}%</div></div>
+      <div class="p-gi"><div class="p-gl">Honorários base</div><div class="p-gv" money-strong" style="color:#034c8b;font-weight:900"><span class="money-chip">${fmtBRL(feeBase)}</span></div></div>
+    </div>
+
+    <div class="p-st">Adicionais e ajustes</div>
+    <div class="p-grid">
+      <div class="p-gi"><div class="p-gl">Adicionais selecionados</div><div class="p-gv">${escapeHtml(adicTxt)}</div></div>
+      <div class="p-gi"><div class="p-gl">Quantidade de candidatos</div><div class="p-gv">${qtd}</div></div>
+      <div class="p-gi"><div class="p-gl">Total de adicionais</div><div class="p-gv">${fmtBRL(vAdic)}</div></div>
+      <div class="p-gi"><div class="p-gl">Desconto manual</div><div class="p-gv">${(descPerc||0).toFixed(1).replace('.',',')}% · ${fmtBRL(vDesc)}</div></div>
+      <div class="p-gi" style="grid-column:1/-1"><div class="p-gl">Total final da proposta</div><div class="p-gv" money-strong" style="color:#034c8b;font-weight:900"><span class="money-chip">${fmtBRL(totalFinal)}</span></div></div>
+    </div>
+
+    <div class="p-st">Condições de pagamento</div>
+    <div class="p-grid">
+      <div class="p-gi"><div class="p-gl">Entrada</div><div class="p-gv" money-strong" style="color:#034c8b;font-weight:900"><span class="money-chip">${pEnt}% · ${fmtBRL(vEntFinal)}</span></div></div>
+      <div class="p-gi"><div class="p-gl">Sucesso</div><div class="p-gv" money-strong" style="color:#034c8b;font-weight:900"><span class="money-chip">${pSuc}% · ${fmtBRL(vSucFinal)}</span></div></div>
+    </div>
+
+    <div class="p-st">Observação</div>
+    <div class="p-txt">Pagamento: ${pEnt}% no início + ${pSuc}% no fechamento (aceite do candidato).
+Sem exclusividade obrigatória.
+Garantia de reposição: opcional (adicional) conforme política vigente.</div>
+
+    <div class="p-st">Próximos passos</div>
+    <div class="p-txt">1. Aprovação do investimento.
+2. Assinatura do termo.
+3. Pagamento da entrada.
+4. Envio e validação do briefing.
+5. Início do projeto imediato.</div>
+
+    <div class="p-sig">
+      <div class="p-sig-name">AZUMI RH</div>
+      <div class="p-sig-det">AKAYKO AZUMI RH LTDA · CNPJ 56.660.675/0001-11</div>
+      <div class="p-foot">contato@azumirh.com.br · https://www.azumirh.com.br · WhatsApp: +55 41 98835-0743</div>
+    </div>
+
+  </div>
+</div>
+</body></html>`;
+
+  const w = window.open('', '_blank');
+  if(!w){
+    window.alert('Seu navegador bloqueou a nova aba. Permita pop-ups para gerar a proposta.');
+    return;
+  }
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
+}
+
+function fmtDate(d){
+  if(!d) return 'Não informado';
+  try{
+    const dt = new Date(d+'T00:00:00');
+    return dt.toLocaleDateString('pt-BR');
+  }catch(e){
+    return 'Não informado';
+  }
+}
+
+function escapeHtml(s){
+  return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+}
+
+function getPrintCss(){
+  // Keep it compact and stable inside the new window
+  return `
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',Verdana,sans-serif;background:#e8e8e8;color:#222;font-size:13px}
+.brand{display:inline-flex;align-items:baseline;gap:2px;line-height:1}
+.brand .azumi{font-weight:600;text-transform:lowercase}
+.brand .rh{font-family:'Avenir','Avenir Next','Helvetica Neue',Arial,sans-serif;font-style:italic;font-weight:400;text-transform:uppercase}
+.print-wrap{max-width:860px;margin:0 auto;background:#fff;border-radius:8px;box-shadow:0 4px 32px rgba(0,0,0,.2);overflow:hidden}
+.p-hdr{background:#034c8b;padding:28px 40px 24px;position:relative}
+.p-title{font-size:22px;font-weight:900;color:#fff;margin-bottom:3px}
+.p-sub{font-size:13px;color:rgba(255,255,255,.8)}
+.p-logo{position:absolute;right:40px;top:50%;transform:translateY(-50%)}
+.p-logo .azumi,.p-logo .rh{font-size:34px;color:#fff}
+.p-body{padding:28px 40px}
+.p-bar{background:#fff8e1;border:1px solid #ffd54f;border-radius:6px;padding:9px 14px;margin-bottom:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:11px;color:#7c6200}
+.p-st{font-size:14px;font-weight:900;color:#034c8b;border-bottom:2px solid #034c8b;padding-bottom:6px;margin:18px 0 10px}
+.p-txt{font-size:12px;line-height:1.75;color:#222;white-space:pre-wrap}
+.p-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:12px 0 18px}
+.p-gi{padding:7px 10px;border-radius:5px;background:#fafafa;border:1px solid #ededed}
+.p-gl{font-size:9px;color:#778082;font-weight:700;text-transform:uppercase;margin-bottom:2px}
+.p-gv{font-size:12px;font-weight:800;color:#222}
+.p-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0 18px}
+.p-k{padding:8px 10px;border:1px solid #ededed;border-radius:6px;background:#fafafa}
+.p-kl{font-size:9px;color:#778082;font-weight:800;text-transform:uppercase}
+.p-kv{font-size:12px;font-weight:900;color:#034c8b;margin-top:2px}
+.p-sig{padding-top:16px;border-top:2px solid #ededed;margin-top:12px}
+.p-sig-name{font-size:13px;font-weight:900;color:#034c8b}
+.p-sig-det{font-size:11px;color:#778082;margin-top:3px}
+.p-foot{font-size:10px;color:#778082;margin-top:10px}
+@media print{
+  body{background:#fff}
+  div[style*="max-width:860px"]{display:none!important}
+  .print-wrap{border-radius:0!important;box-shadow:none!important;max-width:100%!important}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  @page{size:A4;margin:0}
+}
+`;
+}
+
+// Init
+(function init(){
+  applyNivel();
+  setTab('rel');
+  syncVisibility();
+  calcKPIs();
+  calcHours();
+  calcPreco();
+})();
+</script>
+</body>
+</html>
