@@ -6,7 +6,7 @@
     <title>Gerador de Relatórios - Azumi RH</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,300&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         * { 
@@ -23,6 +23,20 @@
             font-size: 14px;
         }
 
+        /* ── LOGO AZUMI RH PADRÃO ── */
+        .logo-azumi {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            text-transform: lowercase;
+        }
+        .logo-rh {
+            font-family: 'Avenir', 'Nunito', sans-serif;
+            font-weight: 300;
+            font-style: italic;
+            text-transform: uppercase;
+            margin-left: 2px;
+        }
+
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -34,7 +48,7 @@
 
         /* CABEÇALHO */
         .header {
-            background: linear-gradient(135deg, #034c8b 0%, #017cbc 100%);
+            background: linear-gradient(135deg, #034c8b 0%, #017ccb 100%);
             color: white;
             padding: 30px 25px;
             text-align: center;
@@ -61,7 +75,7 @@
         .section {
             margin-bottom: 25px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #ededef;
+            border-bottom: 1px solid #ededed;
         }
 
         .section:last-of-type {
@@ -74,7 +88,7 @@
             font-weight: 600;
             margin-bottom: 15px;
             padding-bottom: 8px;
-            border-bottom: 2px solid #017cbc;
+            border-bottom: 2px solid #017ccb;
         }
 
         /* FORMULÁRIOS */
@@ -101,21 +115,22 @@
         textarea {
             width: 100%;
             padding: 10px 12px;
-            border: 1.5px solid #ededef;
+            border: 1.5px solid #ededed;
             border-radius: 6px;
             font-family: 'Poppins', sans-serif;
             font-size: 0.85em;
             background: #fafafa;
             transition: all 0.3s ease;
+            color: #222222;
         }
 
         input:focus, 
         select:focus, 
         textarea:focus {
             outline: none;
-            border-color: #017cbc;
+            border-color: #017ccb;
             background: white;
-            box-shadow: 0 0 0 3px rgba(1, 124, 188, 0.1);
+            box-shadow: 0 0 0 3px rgba(1, 124, 203, 0.1);
         }
 
         textarea {
@@ -140,7 +155,7 @@
         /* DICAS */
         .hint {
             background: #e6f2f8;
-            border-left: 3px solid #017cbc;
+            border-left: 3px solid #017ccb;
             padding: 10px 12px;
             margin-bottom: 12px;
             font-size: 0.78em;
@@ -158,7 +173,7 @@
         /* CARDS DE ITENS */
         .item-card {
             background: #fafafa;
-            border: 1.5px solid #ededef;
+            border: 1.5px solid #ededed;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 12px;
@@ -218,7 +233,7 @@
         .btn-add {
             background: white;
             color: #034c8b;
-            border: 2px solid #017cbc;
+            border: 2px solid #017ccb;
             width: 100%;
             justify-content: center;
             margin-top: 8px;
@@ -251,7 +266,7 @@
             background: #fafafa;
             padding: 25px;
             text-align: center;
-            border-top: 2px solid #ededef;
+            border-top: 2px solid #ededed;
         }
 
         .footer-actions h3 {
@@ -291,8 +306,8 @@
         }
 
         .spinner {
-            border: 4px solid #ededef;
-            border-top: 4px solid #017cbc;
+            border: 4px solid #ededed;
+            border-top: 4px solid #017ccb;
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -326,7 +341,6 @@
 </head>
 <body>
 
-    <!-- LOADING -->
     <div id="loading">
         <div class="spinner"></div>
         <h3 style="color:#034c8b; margin-top:20px;">Processando...</h3>
@@ -334,16 +348,16 @@
 
     <div class="container">
         
-        <!-- CABEÇALHO -->
         <div class="header">
+            <div style="font-size: 38px; color: #FFFFFF; margin-bottom: 8px; line-height: 1;">
+                <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
+            </div>
             <h1>Gerador de Relatórios</h1>
             <p>Sistema Azumi RH - Relatórios Mensais</p>
         </div>
 
-        <!-- CONTEÚDO -->
         <div class="content">
             
-            <!-- INFORMAÇÕES BÁSICAS -->
             <div class="section">
                 <h2 class="section-title">Informações Básicas</h2>
                 
@@ -390,10 +404,8 @@
                 </div>
             </div>
 
-            <!-- CAMPOS DINÂMICOS POR FRENTE -->
             <div id="camposDinamicos"></div>
 
-            <!-- CONSIDERAÇÕES FINAIS (SEMPRE PRESENTE) -->
             <div class="section">
                 <h2 class="section-title">Considerações Finais</h2>
                 <div class="hint">
@@ -404,7 +416,6 @@
                 </div>
             </div>
 
-            <!-- ASSINATURA (SEMPRE PRESENTE) -->
             <div class="section">
                 <h2 class="section-title">Assinatura</h2>
                 <div class="grid-2">
@@ -425,7 +436,6 @@
 
         </div>
 
-        <!-- FOOTER AÇÕES -->
         <div class="footer-actions">
             <h3>Ações do Relatório</h3>
             
@@ -1850,7 +1860,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatório Mensal - ${dados.contratante}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,300&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -1865,6 +1875,20 @@
             font-size: 11pt;
         }
 
+        /* ── LOGO AZUMI RH PADRÃO ── */
+        .logo-azumi {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            text-transform: lowercase;
+        }
+        .logo-rh {
+            font-family: 'Avenir', 'Nunito', sans-serif;
+            font-weight: 300;
+            font-style: italic;
+            text-transform: uppercase;
+            margin-left: 2px;
+        }
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -1872,17 +1896,6 @@
             padding-bottom: 20px;
             border-bottom: 3px solid #034c8b;
             margin-bottom: 30px;
-        }
-
-        .logo {
-            font-size: 1.8em;
-            font-weight: 700;
-            color: #034c8b;
-        }
-
-        .logo-rh {
-            font-style: italic;
-            font-weight: 400;
         }
 
         .header-info {
@@ -1907,7 +1920,7 @@
             border-radius: 6px;
             margin-bottom: 25px;
             font-size: 0.85em;
-            border-left: 3px solid #017cbc;
+            border-left: 3px solid #017ccb;
         }
 
         .empresa-info strong {
@@ -1924,7 +1937,7 @@
             font-weight: 600;
             color: #034c8b;
             padding-bottom: 6px;
-            border-bottom: 2px solid #017cbc;
+            border-bottom: 2px solid #017ccb;
             margin-bottom: 12px;
         }
 
@@ -1974,7 +1987,7 @@
             content: "•";
             position: absolute;
             left: 0;
-            color: #017cbc;
+            color: #017ccb;
             font-weight: bold;
             font-size: 1.1em;
         }
@@ -1997,7 +2010,7 @@
 
         .table td {
             padding: 8px 10px;
-            border-bottom: 1px solid #ededef;
+            border-bottom: 1px solid #ededed;
         }
 
         .table tr:last-child td {
@@ -2032,7 +2045,7 @@
         .footer {
             margin-top: 40px;
             padding-top: 15px;
-            border-top: 2px solid #ededef;
+            border-top: 2px solid #ededed;
             text-align: center;
             font-size: 0.75em;
             color: #778082;
@@ -2047,8 +2060,8 @@
 <body>
 
     <div class="header">
-        <div class="logo">
-            azumi <span class="logo-rh">RH</span>
+        <div style="font-size: 36px; color: #034C8B; line-height: 1;">
+            <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
         </div>
         <div class="header-info">
             <h1>RELATÓRIO MENSAL</h1>
@@ -2108,7 +2121,7 @@
     </div>
 
     <div class="footer">
-        <p><strong>Azumi RH</strong> - Gestão de Pessoas e Consultoria em Recursos Humanos</p>
+        <p><strong style="font-size: 14px; color: #034C8B;"><span class="logo-azumi">azumi</span><span class="logo-rh">RH</span></strong> - Gestão de Pessoas e Consultoria em Recursos Humanos</p>
     </div>
 
 </body>
