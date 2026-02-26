@@ -46,25 +46,39 @@
             overflow: hidden;
         }
 
-        /* CABEÇALHO */
+        /* CABEÇALHO DO APP (HERO) */
         .header {
-            background: linear-gradient(135deg, #034c8b 0%, #017ccb 100%);
-            color: white;
-            padding: 30px 25px;
-            text-align: center;
+            background: #034c8b; /* Azul sólido oficial */
+            padding: 25px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .header h1 {
+        .header-texts {
+            text-align: left;
+        }
+
+        .header-texts h1 {
             font-size: 1.6em;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             letter-spacing: -0.5px;
+            color: #ffffff; /* Texto branco */
         }
 
-        .header p {
+        .header-texts p {
             font-size: 0.85em;
-            opacity: 0.95;
+            opacity: 0.9;
             font-weight: 300;
+            color: #ffffff; /* Texto branco */
+        }
+
+        .header-logo {
+            font-size: 26px; /* Tamanho mais discreto e elegante */
+            color: #ffffff; /* Toda branca */
+            line-height: 1;
+            text-align: right;
         }
 
         /* CONTEÚDO */
@@ -332,7 +346,8 @@
         @media (max-width: 768px) {
             body { padding: 8px; }
             .content { padding: 20px; }
-            .header { padding: 25px 15px; }
+            .header { padding: 25px 20px; flex-direction: column; gap: 15px; text-align: center; }
+            .header-texts { text-align: center; }
             .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 12px; }
             .button-group { flex-direction: column; }
             .btn { width: 100%; justify-content: center; }
@@ -349,11 +364,13 @@
     <div class="container">
         
         <div class="header">
-            <div style="font-size: 38px; color: #FFFFFF; margin-bottom: 8px; line-height: 1;">
+            <div class="header-texts">
+                <h1>Gerador de Relatórios</h1>
+                <p>Sistema Azumi RH - Relatórios Mensais</p>
+            </div>
+            <div class="header-logo">
                 <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
             </div>
-            <h1>Gerador de Relatórios</h1>
-            <p>Sistema Azumi RH - Relatórios Mensais</p>
         </div>
 
         <div class="content">
@@ -1868,10 +1885,9 @@
             font-family: 'Poppins', sans-serif;
             line-height: 1.5;
             color: #222222;
-            background: white;
-            padding: 30px 40px;
-            max-width: 210mm;
-            margin: 0 auto;
+            background: #ededed;
+            margin: 0;
+            padding: 20px 0;
             font-size: 11pt;
         }
 
@@ -1889,29 +1905,47 @@
             margin-left: 2px;
         }
 
-        .header {
+        .page {
+            max-width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 24px rgba(0,0,0,.15);
+        }
+
+        .p-hdr {
+            background: #034c8b;
+            padding: 28px 40px;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            padding-bottom: 20px;
-            border-bottom: 3px solid #034c8b;
-            margin-bottom: 30px;
+            align-items: center;
         }
 
-        .header-info {
-            text-align: right;
+        .p-hdr-info {
+            text-align: left;
         }
 
-        .header-info h1 {
-            font-size: 1.2em;
-            color: #034c8b;
-            font-weight: 600;
+        .p-hdr-info h1 {
+            font-size: 1.4em;
+            color: #ffffff;
+            font-weight: 700;
             margin-bottom: 4px;
         }
 
-        .header-info p {
-            font-size: 0.85em;
-            color: #778082;
+        .p-hdr-info p {
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .p-hdr-logo {
+            font-size: 26px;
+            color: #ffffff;
+            line-height: 1;
+            text-align: right;
+        }
+
+        .p-body {
+            padding: 30px 40px;
         }
 
         .empresa-info {
@@ -2052,76 +2086,82 @@
         }
 
         @media print {
-            body { padding: 15mm 20mm; }
+            body { padding: 0; background: #fff !important; }
+            .page { box-shadow: none !important; margin: 0 !important; width: 100% !important; }
             .section { page-break-inside: avoid; }
+            @page { size: A4; margin: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div style="font-size: 36px; color: #034C8B; line-height: 1;">
-            <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
-        </div>
-        <div class="header-info">
-            <h1>RELATÓRIO MENSAL</h1>
-            <p>Prestação de Serviços</p>
-        </div>
-    </div>
-
-    <div class="empresa-info">
-        <strong>AKAYKO AZUMI RH LTDA.</strong> | CNPJ: 56.660.675/0001-11 | Consultoria: Azumi RH
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">Identificação</h2>
-        <div class="info-grid">
-            <div class="info-item">
-                <div class="info-label">Contratante</div>
-                <div class="info-value">${dados.contratante || '-'}</div>
+    <div class="page">
+        <div class="p-hdr">
+            <div class="p-hdr-info">
+                <h1>RELATÓRIO MENSAL</h1>
+                <p>Prestação de Serviços</p>
             </div>
-            ${dados.cnpjContratante ? `
-            <div class="info-item">
-                <div class="info-label">CNPJ do Contratante</div>
-                <div class="info-value">${dados.cnpjContratante}</div>
+            <div class="p-hdr-logo">
+                <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
+            </div>
+        </div>
+
+        <div class="p-body">
+            <div class="empresa-info">
+                <strong>AKAYKO AZUMI RH LTDA.</strong> | CNPJ: 56.660.675/0001-11 | Consultoria: Azumi RH
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Identificação</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Contratante</div>
+                        <div class="info-value">${dados.contratante || '-'}</div>
+                    </div>
+                    ${dados.cnpjContratante ? `
+                    <div class="info-item">
+                        <div class="info-label">CNPJ do Contratante</div>
+                        <div class="info-value">${dados.cnpjContratante}</div>
+                    </div>
+                    ` : ''}
+                    <div class="info-item">
+                        <div class="info-label">Mês de Referência</div>
+                        <div class="info-value">${dados.referencia || '-'}</div>
+                    </div>
+                    ${dados.horasContratadas ? `
+                    <div class="info-item">
+                        <div class="info-label">Horas Contratadas</div>
+                        <div class="info-value">${dados.horasContratadas}h</div>
+                    </div>
+                    ` : ''}
+                    <div class="info-item">
+                        <div class="info-label">Tipo de Serviço</div>
+                        <div class="info-value">${dados.tipoServicoTexto || '-'}</div>
+                    </div>
+                </div>
+            </div>
+
+            ${conteudoDinamico}
+
+            ${dados.consideracoes ? `
+            <div class="section">
+                <h2 class="section-title">Considerações Finais</h2>
+                <div class="text-content">${dados.consideracoes}</div>
             </div>
             ` : ''}
-            <div class="info-item">
-                <div class="info-label">Mês de Referência</div>
-                <div class="info-value">${dados.referencia || '-'}</div>
+
+            <div class="signature">
+                <div class="signature-line">
+                    ${dados.nomeConsultor ? `<div class="signature-name">${dados.nomeConsultor}</div>` : ''}
+                    ${dados.cargoConsultor ? `<div class="signature-role">${dados.cargoConsultor}</div>` : ''}
+                    ${dados.localData ? `<div class="signature-role">${dados.localData}</div>` : ''}
+                </div>
             </div>
-            ${dados.horasContratadas ? `
-            <div class="info-item">
-                <div class="info-label">Horas Contratadas</div>
-                <div class="info-value">${dados.horasContratadas}h</div>
-            </div>
-            ` : ''}
-            <div class="info-item">
-                <div class="info-label">Tipo de Serviço</div>
-                <div class="info-value">${dados.tipoServicoTexto || '-'}</div>
+
+            <div class="footer">
+                <p><strong style="font-size: 14px; color: #034C8B;"><span class="logo-azumi">azumi</span><span class="logo-rh">RH</span></strong> - Gestão de Pessoas e Consultoria em Recursos Humanos</p>
             </div>
         </div>
-    </div>
-
-    ${conteudoDinamico}
-
-    ${dados.consideracoes ? `
-    <div class="section">
-        <h2 class="section-title">Considerações Finais</h2>
-        <div class="text-content">${dados.consideracoes}</div>
-    </div>
-    ` : ''}
-
-    <div class="signature">
-        <div class="signature-line">
-            ${dados.nomeConsultor ? `<div class="signature-name">${dados.nomeConsultor}</div>` : ''}
-            ${dados.cargoConsultor ? `<div class="signature-role">${dados.cargoConsultor}</div>` : ''}
-            ${dados.localData ? `<div class="signature-role">${dados.localData}</div>` : ''}
-        </div>
-    </div>
-
-    <div class="footer">
-        <p><strong style="font-size: 14px; color: #034C8B;"><span class="logo-azumi">azumi</span><span class="logo-rh">RH</span></strong> - Gestão de Pessoas e Consultoria em Recursos Humanos</p>
     </div>
 
 </body>
