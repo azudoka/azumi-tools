@@ -4,16 +4,33 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>AZUMI RH — Gerador de Relatórios de Vagas</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,300&family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Poppins',Verdana,sans-serif;background:#f0f0f0;color:#222;font-size:13px}
 input,select,button,textarea{font-family:'Poppins',Verdana,sans-serif}
 #app{max-width:960px;margin:0 auto;padding:16px}
 .hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.brand{display:inline-flex;align-items:baseline;gap:2px;line-height:1}
-.brand .azumi{font-weight:600;text-transform:lowercase;font-size:26px;color:#034c8b}
-.brand .rh{font-family:'Avenir','Avenir Next','Helvetica Neue',Arial,sans-serif;font-style:italic;font-weight:400;text-transform:uppercase;font-size:26px;color:#034c8b}
+.brand{display:inline-flex;align-items:baseline;line-height:1}
+
+/* ── LOGO AZUMI RH PADRÃO ── */
+.logo-azumi {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 26px;
+  color: #034c8b; /* Azul no sistema claro */
+  text-transform: lowercase;
+}
+.logo-rh {
+  font-family: 'Avenir', 'Nunito', sans-serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 26px;
+  color: #034c8b; /* Azul no sistema claro */
+  text-transform: uppercase;
+  margin-left: 2px;
+}
+
 .btn{border:none;border-radius:7px;padding:8px 14px;cursor:pointer;font-weight:800;font-size:11px}
 .btn-primary{background:#034c8b;color:#fff;font-size:12px}
 .btn-ghost{background:#ededed;color:#222}
@@ -46,7 +63,7 @@ textarea{min-height:92px;resize:vertical;line-height:1.5}
 .p-title{font-size:22px;font-weight:900;color:#fff;margin-bottom:3px}
 .p-sub{font-size:13px;color:rgba(255,255,255,.8)}
 .p-logo{position:absolute;right:40px;top:50%;transform:translateY(-50%)}
-.p-logo .azumi,.p-logo .rh{font-size:34px;color:#fff}
+.p-logo .logo-azumi, .p-logo .logo-rh { font-size:34px; color:#fff; } /* Branca no PDF */
 .p-body{padding:28px 40px}
 .p-bar{background:#fff8e1;border:1px solid #ffd54f;border-radius:6px;padding:9px 14px;margin-bottom:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:11px;color:#7c6200}
 .p-st{font-size:14px;font-weight:900;color:#034c8b;border-bottom:2px solid #034c8b;padding-bottom:6px;margin:18px 0 10px}
@@ -77,7 +94,7 @@ textarea{min-height:92px;resize:vertical;line-height:1.5}
 <body>
 <div id="app">
   <div class="hdr">
-    <div class="brand" aria-label="azumiRH"><span class="azumi">azumi</span><span class="rh">RH</span></div>
+    <div class="brand" aria-label="azumiRH"><span class="logo-azumi">azumi</span><span class="logo-rh">RH</span></div>
     <div style="display:flex;gap:8px">
       <button class="btn btn-ghost" onclick="resetAll()">Limpar</button>
       <button class="btn btn-primary" id="btnGerarRel" onclick="openPreview()">Gerar relatório</button>
@@ -92,7 +109,6 @@ textarea{min-height:92px;resize:vertical;line-height:1.5}
 
   <div class="panel">
 
-    <!-- RELATÓRIO -->
     <div id="aba-rel">
       <div class="grid2">
         <div>
@@ -329,7 +345,6 @@ textarea{min-height:92px;resize:vertical;line-height:1.5}
       <div class="footer">AZUMI RH · contato@azumirh.com.br · https://www.azumirh.com.br · WhatsApp: +55 41 98835-0743</div>
     </div>
 
-    <!-- PRECIFICAÇÃO -->
     <div id="aba-preco" style="display:none">
       <div class="grid2">
         <div>
@@ -755,7 +770,7 @@ function openPreview(){
 <!DOCTYPE html><html lang="pt-BR"><head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>${escapeHtml(titulo)}</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,300&family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet"/>
 <style>${getPrintCss()}</style>
 </head><body>
 <div style="max-width:860px;margin:16px auto 12px;display:flex;justify-content:space-between;align-items:center;background:#034c8b;border-radius:10px;padding:10px 20px">
@@ -769,7 +784,7 @@ function openPreview(){
   <div class="p-hdr">
     <div class="p-title">${escapeHtml(titulo)}</div>
     <div class="p-sub">${escapeHtml(subtitulo)}</div>
-    <div class="p-logo brand p-logo" aria-label="azumiRH"><span class="azumi">azumi</span><span class="rh">RH</span></div>
+    <div class="p-logo" aria-label="azumiRH"><span class="logo-azumi">azumi</span><span class="logo-rh">RH</span></div>
   </div>
 
   <div class="p-body">
@@ -900,7 +915,7 @@ const totalFinal = Math.max(0, feeBase + vAdic - vDesc);
 <!DOCTYPE html><html lang="pt-BR"><head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Proposta de Vaga</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,300&family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet"/>
 <style>${getPrintCss()}</style>
 </head><body>
 <div style="max-width:860px;margin:16px auto 12px;display:flex;justify-content:space-between;align-items:center;background:#034c8b;border-radius:10px;padding:10px 20px">
@@ -914,7 +929,7 @@ const totalFinal = Math.max(0, feeBase + vAdic - vDesc);
   <div class="p-hdr">
     <div class="p-title">Proposta de Vaga</div>
     <div class="p-sub">Atração e Hunting · Precificação</div>
-    <div class="p-logo brand p-logo" aria-label="azumiRH"><span class="azumi">azumi</span><span class="rh">RH</span></div>
+    <div class="p-logo" aria-label="azumiRH"><span class="logo-azumi">azumi</span><span class="logo-rh">RH</span></div>
   </div>
 
   <div class="p-body">
@@ -1011,15 +1026,15 @@ function getPrintCss(){
   return `
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Poppins',Verdana,sans-serif;background:#e8e8e8;color:#222;font-size:13px}
-.brand{display:inline-flex;align-items:baseline;gap:2px;line-height:1}
-.brand .azumi{font-weight:600;text-transform:lowercase}
-.brand .rh{font-family:'Avenir','Avenir Next','Helvetica Neue',Arial,sans-serif;font-style:italic;font-weight:400;text-transform:uppercase}
+.brand{display:inline-flex;align-items:baseline;line-height:1}
+.logo-azumi { font-family: 'Poppins', sans-serif; font-weight: 600; text-transform: lowercase; }
+.logo-rh { font-family: 'Avenir', 'Nunito', sans-serif; font-weight: 300; font-style: italic; text-transform: uppercase; margin-left: 2px; }
 .print-wrap{max-width:860px;margin:0 auto;background:#fff;border-radius:8px;box-shadow:0 4px 32px rgba(0,0,0,.2);overflow:hidden}
 .p-hdr{background:#034c8b;padding:28px 40px 24px;position:relative}
 .p-title{font-size:22px;font-weight:900;color:#fff;margin-bottom:3px}
 .p-sub{font-size:13px;color:rgba(255,255,255,.8)}
 .p-logo{position:absolute;right:40px;top:50%;transform:translateY(-50%)}
-.p-logo .azumi,.p-logo .rh{font-size:34px;color:#fff}
+.p-logo .logo-azumi, .p-logo .logo-rh { font-size:34px; color:#fff; }
 .p-body{padding:28px 40px}
 .p-bar{background:#fff8e1;border:1px solid #ffd54f;border-radius:6px;padding:9px 14px;margin-bottom:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:11px;color:#7c6200}
 .p-st{font-size:14px;font-weight:900;color:#034c8b;border-bottom:2px solid #034c8b;padding-bottom:6px;margin:18px 0 10px}
