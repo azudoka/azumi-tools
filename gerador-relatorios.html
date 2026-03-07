@@ -1,2173 +1,1310 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Relatórios - Azumi RH</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,300&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #fafafa;
-            padding: 15px;
-            color: #222222;
-            font-size: 14px;
-        }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gerador de Relatórios — Azumi RH</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --ocean:#031D38;--blue:#034C8B;--blue2:#3B82F6;--violet:#8B5CF6;--ice:#93C5FD;
+  --gray:#778082;--light:#EDEDED;--white:#FAFAFA;--text:#222222;
+  --gm:linear-gradient(135deg,#034C8B 0%,#3B82F6 50%,#8B5CF6 100%);
+  --gh:linear-gradient(135deg,#031D38 0%,#034C8B 40%,#3B82F6 75%,#8B5CF6 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:#f0f2f7;color:var(--text);font-size:14px}
+input,select,button,textarea{font-family:'Space Grotesk',sans-serif}
 
-        /* ── LOGO AZUMI RH PADRÃO ── */
-        .logo-azumi {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            text-transform: lowercase;
-        }
-        .logo-rh {
-            font-family: 'Avenir', 'Nunito', sans-serif;
-            font-weight: 300;
-            font-style: italic;
-            text-transform: uppercase;
-            margin-left: 2px;
-        }
+/* ── LOGO: FUNDO ESCURO (padrão header) ── */
+.logo-dark .logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;color:#fff;letter-spacing:-.01em}
+.logo-dark .logo-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;color:#93C5FD;margin-left:1px}
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(3, 76, 139, 0.08);
-            overflow: hidden;
-        }
+/* ── LOGO: FUNDO CLARO (footer, corpo) ── */
+.logo-light .logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;color:var(--blue);letter-spacing:-.01em}
+.logo-light .logo-rh{
+  font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;
+  background:var(--gm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-left:1px;
+}
 
-        /* CABEÇALHO DO APP (HERO) */
-        .header {
-            background: #034c8b; /* Azul sólido oficial */
-            padding: 25px 35px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+/* ── CONTAINER ── */
+.container{max-width:920px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(3,29,56,.1);overflow:hidden}
 
-        .header-texts {
-            text-align: left;
-        }
+/* ── HEADER ── */
+.header{
+  background:var(--gh);padding:24px 35px;
+  display:flex;justify-content:space-between;align-items:center;
+  position:relative;overflow:hidden;
+}
+.header::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.2) 0%,transparent 60%);
+}
+.header-inner{position:relative;display:flex;justify-content:space-between;align-items:center;width:100%}
+.header-texts h1{font-family:'Sora',sans-serif;font-size:1.5em;font-weight:800;color:#fff;margin-bottom:3px;letter-spacing:-.5px}
+.header-texts p{font-family:'JetBrains Mono',monospace;font-size:.78em;color:rgba(147,197,253,.8);letter-spacing:.08em}
+.header-logo{display:flex;align-items:center;gap:9px;flex-shrink:0}
+.header-logo .logo-azumi{font-size:26px}
+.header-logo .logo-rh{font-size:26px}
 
-        .header-texts h1 {
-            font-size: 1.6em;
-            font-weight: 600;
-            margin-bottom: 4px;
-            letter-spacing: -0.5px;
-            color: #ffffff; /* Texto branco */
-        }
+/* PROTOCOLO badge no header */
+.protocolo-badge{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  color:rgba(147,197,253,.9);border-radius:100px;
+  padding:4px 12px;letter-spacing:.06em;
+  margin-top:6px;display:inline-block;
+}
 
-        .header-texts p {
-            font-size: 0.85em;
-            opacity: 0.9;
-            font-weight: 300;
-            color: #ffffff; /* Texto branco */
-        }
+/* ── CONTEÚDO ── */
+.content{padding:28px 35px}
+.section{margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--light)}
+.section:last-of-type{border-bottom:none}
 
-        .header-logo {
-            font-size: 26px; /* Tamanho mais discreto e elegante */
-            color: #ffffff; /* Toda branca */
-            line-height: 1;
-            text-align: right;
-        }
+/* ── SECTION TITLE ── */
+.section-title{
+  font-family:'Sora',sans-serif;font-size:1em;font-weight:700;
+  color:var(--blue);margin-bottom:14px;padding-bottom:7px;
+  display:flex;align-items:center;gap:8px;
+}
+.section-title::before{
+  content:'';display:inline-block;width:4px;height:18px;
+  border-radius:100px;background:var(--gm);flex-shrink:0;
+}
 
-        /* CONTEÚDO */
-        .content {
-            padding: 30px 35px;
-        }
+/* ── FORM ── */
+.form-group{margin-bottom:14px}
+label{
+  display:block;font-family:'JetBrains Mono',monospace;
+  font-size:.78em;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
+  margin-bottom:5px;color:var(--gray);
+}
+label .required{color:#dc3545;margin-left:2px}
 
-        .section {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #ededed;
-        }
+input[type="text"],input[type="number"],select,textarea{
+  width:100%;padding:9px 12px;
+  border:1.5px solid var(--light);border-radius:8px;
+  font-size:.87em;background:var(--white);color:var(--text);
+  transition:all .2s ease;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;border-color:var(--blue2);background:#fff;
+  box-shadow:0 0 0 3px rgba(59,130,246,.1);
+}
+textarea{resize:vertical;min-height:80px;font-size:.84em;line-height:1.5}
 
-        .section:last-of-type {
-            border-bottom: none;
-        }
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 
-        .section-title {
-            color: #034c8b;
-            font-size: 1.1em;
-            font-weight: 600;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #017ccb;
-        }
+/* ── HINT ── */
+.hint{
+  background:#e8f0fb;border-left:3px solid var(--blue2);
+  padding:9px 12px;margin-bottom:12px;
+  font-family:'Space Grotesk',sans-serif;font-size:.78em;color:var(--blue);
+  border-radius:4px;
+}
 
-        /* FORMULÁRIOS */
-        .form-group {
-            margin-bottom: 15px;
-        }
+/* ── ITEM CARDS ── */
+.item-card{
+  background:var(--white);border:1.5px solid var(--light);
+  padding:14px;border-radius:10px;margin-bottom:10px;
+}
+.item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.item-number{
+  font-family:'JetBrains Mono',monospace;font-size:.8em;font-weight:500;
+  color:var(--blue);letter-spacing:.05em;
+}
 
-        label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 6px;
-            font-size: 0.85em;
-            color: #034c8b;
-        }
+/* ── BOTÕES ── */
+.btn{
+  padding:9px 18px;border:none;border-radius:100px;cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.84em;
+  transition:all .18s ease;display:inline-flex;align-items:center;gap:6px;
+}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.btn-primary{background:var(--gm);color:#fff;box-shadow:0 2px 8px rgba(59,130,246,.25)}
+.btn-primary:hover{box-shadow:0 4px 14px rgba(59,130,246,.4)}
+.btn-secondary{background:var(--light);color:var(--text)}
+.btn-secondary:hover{background:#d8dce2}
+.btn-add{
+  background:#fff;color:var(--blue);
+  border:1.5px solid var(--blue2);width:100%;
+  justify-content:center;margin-top:8px;border-radius:100px;
+}
+.btn-add:hover{background:#e8f0fb}
+.btn-remove{
+  background:#fff5f5;color:#dc3545;border:1px solid #dc3545;
+  padding:5px 10px;font-size:.76em;border-radius:100px;
+}
+.btn-remove:hover{background:#dc3545;color:#fff}
+.btn-danger{background:#dc3545;color:#fff}
+.btn-danger:hover{background:#b52a37}
 
-        label .required {
-            color: #dc3545;
-            margin-left: 2px;
-        }
+/* ── FOOTER AÇÕES ── */
+.footer-actions{
+  background:var(--white);padding:24px;text-align:center;
+  border-top:1px solid var(--light);
+}
+.footer-actions h3{
+  font-family:'Sora',sans-serif;font-size:.95em;font-weight:700;
+  color:var(--blue);margin-bottom:14px;
+}
+.button-group{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.info-text{
+  font-family:'JetBrains Mono',monospace;font-size:.74em;color:var(--gray);
+  margin-top:10px;letter-spacing:.04em;
+}
 
-        input[type="text"], 
-        input[type="number"],
-        select, 
-        textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1.5px solid #ededed;
-            border-radius: 6px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.85em;
-            background: #fafafa;
-            transition: all 0.3s ease;
-            color: #222222;
-        }
+/* ── LOADING ── */
+#loading{
+  display:none;position:fixed;inset:0;background:rgba(255,255,255,.96);
+  z-index:9999;justify-content:center;align-items:center;flex-direction:column;
+}
+.spinner{
+  border:4px solid var(--light);border-top:4px solid var(--blue2);
+  border-radius:50%;width:48px;height:48px;animation:spin 1s linear infinite;
+}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 
-        input:focus, 
-        select:focus, 
-        textarea:focus {
-            outline: none;
-            border-color: #017ccb;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(1, 124, 203, 0.1);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-            font-size: 0.82em;
-            line-height: 1.5;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-        }
-
-        /* DICAS */
-        .hint {
-            background: #e6f2f8;
-            border-left: 3px solid #017ccb;
-            padding: 10px 12px;
-            margin-bottom: 12px;
-            font-size: 0.78em;
-            color: #034c8b;
-            border-radius: 4px;
-        }
-
-        .char-count {
-            text-align: right;
-            font-size: 0.75em;
-            color: #778082;
-            margin-top: 4px;
-        }
-
-        /* CARDS DE ITENS */
-        .item-card {
-            background: #fafafa;
-            border: 1.5px solid #ededed;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .item-number {
-            font-weight: 600;
-            color: #034c8b;
-            font-size: 0.85em;
-        }
-
-        /* BOTÕES */
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.85em;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .btn-primary {
-            background: #034c8b;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #023a6b;
-        }
-
-        .btn-secondary {
-            background: #778082;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6264;
-        }
-
-        .btn-add {
-            background: white;
-            color: #034c8b;
-            border: 2px solid #017ccb;
-            width: 100%;
-            justify-content: center;
-            margin-top: 8px;
-        }
-
-        .btn-add:hover {
-            background: #e6f2f8;
-        }
-
-        .btn-remove {
-            background: #fff5f5;
-            color: #dc3545;
-            border: 1px solid #dc3545;
-            padding: 5px 10px;
-            font-size: 0.78em;
-        }
-
-        .btn-remove:hover {
-            background: #dc3545;
-            color: white;
-        }
-
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
-
-        /* FOOTER AÇÕES */
-        .footer-actions {
-            background: #fafafa;
-            padding: 25px;
-            text-align: center;
-            border-top: 2px solid #ededed;
-        }
-
-        .footer-actions h3 {
-            color: #034c8b;
-            font-size: 1em;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-
-        .info-text {
-            font-size: 0.78em;
-            color: #778082;
-            margin-top: 12px;
-        }
-
-        /* LOADING */
-        #loading {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .spinner {
-            border: 4px solid #ededed;
-            border-top: 4px solid #017ccb;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* CAMPOS CONDICIONAIS */
-        .conditional-section {
-            display: none;
-        }
-
-        .conditional-section.active {
-            display: block;
-        }
-
-        /* RESPONSIVO */
-        @media (max-width: 768px) {
-            body { padding: 8px; }
-            .content { padding: 20px; }
-            .header { padding: 25px 20px; flex-direction: column; gap: 15px; text-align: center; }
-            .header-texts { text-align: center; }
-            .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 12px; }
-            .button-group { flex-direction: column; }
-            .btn { width: 100%; justify-content: center; }
-        }
-    </style>
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  body{padding:8px}
+  .content{padding:18px}
+  .header{padding:20px}
+  .header-inner{flex-direction:column;gap:14px;align-items:flex-start}
+  .grid-2,.grid-3{grid-template-columns:1fr;gap:10px}
+  .button-group{flex-direction:column}
+  .btn{width:100%;justify-content:center}
+}
+</style>
 </head>
 <body>
 
-    <div id="loading">
-        <div class="spinner"></div>
-        <h3 style="color:#034c8b; margin-top:20px;">Processando...</h3>
+<div id="loading">
+  <div class="spinner"></div>
+  <p style="font-family:'Sora',sans-serif;color:var(--blue);margin-top:18px;font-weight:600">Processando...</p>
+</div>
+
+<div class="container">
+
+  <div class="header">
+    <div class="header-inner">
+      <div class="header-texts">
+        <h1>Gerador de Relatórios</h1>
+        <p>SISTEMA AZUMI RH · RELATÓRIOS MENSAIS</p>
+        <span class="protocolo-badge" id="protocolo-display">Gerando protocolo...</span>
+      </div>
+      <div class="header-logo logo-dark">
+        <svg width="32" height="26" viewBox="0 0 120 96" fill="none" aria-hidden="true">
+          <defs><linearGradient id="hg" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/>
+          </linearGradient></defs>
+          <circle cx="44" cy="48" r="34" fill="url(#hg)" opacity=".9"/>
+          <circle cx="76" cy="48" r="34" fill="url(#hg)" opacity=".7"/>
+        </svg>
+        <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <h2 class="section-title">Informações Básicas</h2>
+
+      <div class="form-group">
+        <label>Nome do Contratante <span class="required">*</span></label>
+        <input type="text" id="contratante" placeholder="Ex: Empresa XYZ Ltda"/>
+      </div>
+      <div class="form-group">
+        <label>CNPJ do Contratante (opcional)</label>
+        <input type="text" id="cnpjContratante" placeholder="00.000.000/0000-00"/>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Mês/Ano de Referência <span class="required">*</span></label>
+          <input type="text" id="referencia" placeholder="Ex: Janeiro/2026"/>
+        </div>
+        <div class="form-group">
+          <label>Horas Contratadas no Mês (opcional)</label>
+          <input type="number" id="horasContratadas" placeholder="Ex: 40"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tipo de Serviço / Frente <span class="required">*</span></label>
+        <select id="tipoServico" onchange="trocarCampos()">
+          <option value="">Selecione...</option>
+          <option value="hraas">HRaaS - Operação de RH Contínua</option>
+          <option value="consultoria">Consultoria de RH por Projeto</option>
+          <option value="diagnostico">Diagnóstico Organizacional</option>
+          <option value="estruturacao">Estruturação e Implementação de RH</option>
+          <option value="recrutamento">Recrutamento e Seleção - Atração de Talentos</option>
+          <option value="hunting">Hunting Executivo</option>
+          <option value="endomarketing">Endomarketing</option>
+          <option value="clima">Clima Organizacional</option>
+          <option value="treinamento">Treinamento In Company</option>
+          <option value="lideranca">Desenvolvimento de Lideranças</option>
+          <option value="cultura">Cultura e Rituais de Gestão</option>
+          <option value="personalizados">Projetos Personalizados em Gestão de Pessoas</option>
+          <option value="mentoria">Mentoria Impulso (B2C)</option>
+        </select>
+      </div>
     </div>
 
-    <div class="container">
-        
-        <div class="header">
-            <div class="header-texts">
-                <h1>Gerador de Relatórios</h1>
-                <p>Sistema Azumi RH - Relatórios Mensais</p>
-            </div>
-            <div class="header-logo">
-                <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
-            </div>
-        </div>
+    <div id="camposDinamicos"></div>
 
-        <div class="content">
-            
-            <div class="section">
-                <h2 class="section-title">Informações Básicas</h2>
-                
-                <div class="form-group">
-                    <label>Nome do Contratante <span class="required">*</span></label>
-                    <input type="text" id="contratante" placeholder="Ex: Empresa XYZ Ltda">
-                </div>
-
-                <div class="form-group">
-                    <label>CNPJ do Contratante (opcional)</label>
-                    <input type="text" id="cnpjContratante" placeholder="00.000.000/0000-00">
-                </div>
-
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label>Mês/Ano de Referência <span class="required">*</span></label>
-                        <input type="text" id="referencia" placeholder="Ex: Janeiro/2026">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Horas Contratadas no Mês (opcional)</label>
-                        <input type="number" id="horasContratadas" placeholder="Ex: 40">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Tipo de Serviço / Frente <span class="required">*</span></label>
-                    <select id="tipoServico" onchange="trocarCampos()">
-                        <option value="">Selecione...</option>
-                        <option value="hraas">HRaaS - Operação de RH Contínua</option>
-                        <option value="consultoria">Consultoria de RH por Projeto</option>
-                        <option value="diagnostico">Diagnóstico Organizacional</option>
-                        <option value="estruturacao">Estruturação e Implementação de RH</option>
-                        <option value="recrutamento">Recrutamento e Seleção - Atração de Talentos</option>
-                        <option value="hunting">Hunting Executivo</option>
-                        <option value="endomarketing">Endomarketing</option>
-                        <option value="clima">Clima Organizacional</option>
-                        <option value="treinamento">Treinamento In Company</option>
-                        <option value="lideranca">Desenvolvimento de Lideranças</option>
-                        <option value="cultura">Cultura e Rituais de Gestão</option>
-                        <option value="personalizados">Projetos Personalizados em Gestão de Pessoas</option>
-                        <option value="mentoria">Mentoria Impulso (B2C)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div id="camposDinamicos"></div>
-
-            <div class="section">
-                <h2 class="section-title">Considerações Finais</h2>
-                <div class="hint">
-                    <strong>Dica:</strong> Inclua perspectivas futuras, próximos passos e agradecimentos.
-                </div>
-                <div class="form-group">
-                    <textarea id="consideracoes" placeholder="Perspectivas para o próximo mês, agradecimentos, etc..."></textarea>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2 class="section-title">Assinatura</h2>
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label>Nome do Consultor <span class="required">*</span></label>
-                        <input type="text" id="nomeConsultor" placeholder="Ex: Maria Silva">
-                    </div>
-                    <div class="form-group">
-                        <label>Cargo do Consultor <span class="required">*</span></label>
-                        <input type="text" id="cargoConsultor" placeholder="Ex: Consultora de RH">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Local e Data <span class="required">*</span></label>
-                    <input type="text" id="localData" placeholder="Ex: Curitiba, 13 de fevereiro de 2026">
-                </div>
-            </div>
-
-        </div>
-
-        <div class="footer-actions">
-            <h3>Ações do Relatório</h3>
-            
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="gerarVisualizacao()">📄 Visualizar Relatório</button>
-                <button class="btn btn-secondary" onclick="salvarRascunho()">💾 Salvar Rascunho</button>
-                <button class="btn btn-secondary" onclick="carregarRascunho()">📂 Carregar Rascunho</button>
-                <button class="btn btn-danger" onclick="limparTudo()">🗑 Limpar Tudo</button>
-            </div>
-
-            <p class="info-text">✅ Sistema 100% Offline - Todos os dados são processados localmente</p>
-        </div>
-
+    <div class="section">
+      <h2 class="section-title">Considerações Finais</h2>
+      <div class="hint"><strong>Dica:</strong> Inclua perspectivas futuras, próximos passos e agradecimentos.</div>
+      <div class="form-group">
+        <textarea id="consideracoes" placeholder="Perspectivas para o próximo mês, agradecimentos, etc..."></textarea>
+      </div>
     </div>
 
-    <script>
-        // VARIÁVEIS GLOBAIS
-        let dadosDinamicos = {};
-
-        // TEMPLATES DE CAMPOS POR FRENTE
-        const templatesCampos = {
-            hraas: `
-                <div class="section">
-                    <h2 class="section-title">Síntese Executiva</h2>
-                    <textarea id="sintese" placeholder="Cenário do mês em 5 a 8 linhas..."></textarea>
-                </div>
-                
-                <div class="section">
-                    <h2 class="section-title">Objetivos do Mês</h2>
-                    <div id="objetivosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('objetivos', 'Objetivo')">+ Adicionar Objetivo</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Entregas Principais</h2>
-                    <div id="entregasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('entregas', 'Entrega')">+ Adicionar Entrega</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Pendências e Dependências do Cliente</h2>
-                    <div id="pendenciasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('pendencias', 'Pendência')">+ Adicionar Pendência</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Backlog do Próximo Mês</h2>
-                    <div id="backlogContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('backlog', 'Item')">+ Adicionar Item</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Tempo por Tarefa</h2>
-                    <div id="tempoTarefaContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar Tarefa</button>
-                    <div style="margin-top:15px; text-align:right; font-weight:600; color:#034c8b;">
-                        Total de Horas: <span id="totalHoras">0</span>h
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Riscos e Recomendações</h2>
-                    <div id="riscosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('riscos', 'Risco')">+ Adicionar Risco</button>
-                </div>
-            `,
-
-            consultoria: `
-                <div class="section">
-                    <h2 class="section-title">Síntese Executiva</h2>
-                    <textarea id="sintese" placeholder="Status do projeto e cenário do mês..."></textarea>
-                </div>
-                
-                <div class="section">
-                    <h2 class="section-title">Escopo do Projeto</h2>
-                    <div id="escopoContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('escopo', 'Item do Escopo')">+ Adicionar Item</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Atividades Realizadas</h2>
-                    <div id="atividadesContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('atividades', 'Atividade')">+ Adicionar Atividade</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Entregas Concluídas</h2>
-                    <div id="entregasConcluidasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarEntregaData()">+ Adicionar Entrega</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Próximas Etapas</h2>
-                    <div id="proximasEtapasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarEtapaResponsavel()">+ Adicionar Etapa</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Bloqueios</h2>
-                    <div id="bloqueiosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('bloqueios', 'Bloqueio')">+ Adicionar Bloqueio</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Tempo por Tarefa</h2>
-                    <div id="tempoTarefaContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar Tarefa</button>
-                    <div style="margin-top:15px; text-align:right; font-weight:600; color:#034c8b;">
-                        Total de Horas: <span id="totalHoras">0</span>h
-                    </div>
-                </div>
-            `,
-
-            diagnostico: `
-                <div class="section">
-                    <h2 class="section-title">Síntese Executiva</h2>
-                    <textarea id="sintese" placeholder="Recorte e status do diagnóstico..."></textarea>
-                </div>
-                
-                <div class="section">
-                    <h2 class="section-title">Escopo Avaliado</h2>
-                    <div class="form-group">
-                        <label>Pilares Avaliados</label>
-                        <div style="display:flex; gap:15px; flex-wrap:wrap; margin-top:8px;">
-                            <label style="display:inline-flex; align-items:center; gap:5px; font-weight:400;">
-                                <input type="checkbox" id="pilarPeople" value="People"> People
-                            </label>
-                            <label style="display:inline-flex; align-items:center; gap:5px; font-weight:400;">
-                                <input type="checkbox" id="pilarProcess" value="Process"> Process
-                            </label>
-                            <label style="display:inline-flex; align-items:center; gap:5px; font-weight:400;">
-                                <input type="checkbox" id="pilarPerformance" value="Performance"> Performance
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Coletas Realizadas</h2>
-                    <div id="coletasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('coletas', 'Coleta')">+ Adicionar Coleta</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Achados Principais por Pilar</h2>
-                    <div id="achadosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('achados', 'Achado')">+ Adicionar Achado</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Evidências</h2>
-                    <div id="evidenciasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('evidencias', 'Evidência')">+ Adicionar Evidência</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Hipóteses e Validações Pendentes</h2>
-                    <div id="hipotesesContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('hipoteses', 'Hipótese')">+ Adicionar Hipótese</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Recomendações Iniciais</h2>
-                    <div id="recomendacoesContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('recomendacoes', 'Recomendação')">+ Adicionar Recomendação</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Próximos Passos</h2>
-                    <div id="proximosPassosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarPassoData()">+ Adicionar Passo</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Tempo por Etapa</h2>
-                    <div id="tempoTarefaContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar Etapa</button>
-                    <div style="margin-top:15px; text-align:right; font-weight:600; color:#034c8b;">
-                        Total de Horas: <span id="totalHoras">0</span>h
-                    </div>
-                </div>
-            `,
-
-            estruturacao: `
-                <div class="section">
-                    <h2 class="section-title">Síntese Executiva</h2>
-                    <textarea id="sintese" placeholder="Contexto da estruturação e status geral..."></textarea>
-                </div>
-                
-                <div class="section">
-                    <h2 class="section-title">Módulos Implantados</h2>
-                    <div id="modulosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('modulos', 'Módulo')">+ Adicionar Módulo</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Documentos e Processos Criados/Revisados</h2>
-                    <div id="documentosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('documentos', 'Documento')">+ Adicionar Documento</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Rituais Definidos</h2>
-                    <div id="rituaisContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('rituais', 'Ritual')">+ Adicionar Ritual</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Treinamentos Aplicados</h2>
-                    <div id="treinamentosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('treinamentos', 'Treinamento')">+ Adicionar Treinamento</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Pendências do Cliente</h2>
-                    <div id="pendenciasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('pendencias', 'Pendência')">+ Adicionar Pendência</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Check de Adoção</h2>
-                    <div class="form-group">
-                        <label>O que já está rodando</label>
-                        <textarea id="checkRodando" placeholder="Liste o que já foi adotado..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>O que ainda não roda</label>
-                        <textarea id="checkNaoRodando" placeholder="Liste o que ainda precisa ser implementado..."></textarea>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Tempo por Tarefa</h2>
-                    <div id="tempoTarefaContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar Tarefa</button>
-                    <div style="margin-top:15px; text-align:right; font-weight:600; color:#034c8b;">
-                        Total de Horas: <span id="totalHoras">0</span>h
-                    </div>
-                </div>
-            `,
-
-            recrutamento: `
-                <div class="section">
-                    <h2 class="section-title">Síntese Executiva</h2>
-                    <textarea id="sintese" placeholder="Panorama das vagas do mês..."></textarea>
-                </div>
-                
-                <div class="section">
-                    <h2 class="section-title">Vagas em Andamento</h2>
-                    <div id="vagasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarVaga()">+ Adicionar Vaga</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Funil por Vaga</h2>
-                    <div id="funilContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarFunil()">+ Adicionar Funil de Vaga</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Qualidade do Funil</h2>
-                    <textarea id="qualidadeFunil" placeholder="Observações sobre a qualidade dos candidatos..."></textarea>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Ações de Sourcing</h2>
-                    <div id="sourcingContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarSourcing()">+ Adicionar Ação</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Principais Bloqueios</h2>
-                    <div id="bloqueiosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('bloqueios', 'Bloqueio')">+ Adicionar Bloqueio</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Próximos Passos por Vaga</h2>
-                    <div id="proximosPassosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('proximosPassos', 'Passo')">+ Adicionar Passo</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Tempo por Vaga/Atividade</h2>
-                    <div id="tempoTarefaContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar</button>
-                    <div style="margin-top:15px; text-align:right; font-weight:600; color:#034c8b;">
-                        Total de Horas: <span id="totalHoras">0</span>h
-                    </div>
-                </div>
-            `,
-
-            hunting: `
-                <div class="section">
-                    <h2 class="section-title">Síntese Executiva</h2>
-                    <textarea id="sintese" placeholder="Contexto e andamento do hunting..."></textarea>
-                </div>
-                
-                <div class="section">
-                    <h2 class="section-title">Perfil Alvo</h2>
-                    <textarea id="perfilAlvo" placeholder="Resumo do briefing..."></textarea>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Mapa de Busca</h2>
-                    <textarea id="mapaBusca" placeholder="Segmentos e regiões exploradas..."></textarea>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Lista de Abordagens</h2>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Volume de Abordagens</label>
-                            <input type="number" id="volumeAbordagens" placeholder="Ex: 50">
-                        </div>
-                        <div class="form-group">
-                            <label>Taxa de Retorno</label>
-                            <input type="text" id="taxaRetorno" placeholder="Ex: 20%">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Shortlist</h2>
-                    <div id="shortlistContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarShortlist()">+ Adicionar Candidato</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Riscos de Confidencialidade e Condução</h2>
-                    <div id="riscosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('riscos', 'Risco')">+ Adicionar Risco</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Tempo por Etapa</h2>
-                    <div id="tempoTarefaContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar Etapa</button>
-                    <div style="margin-top:15px; text-align:right; font-weight:600; color:#034c8b;">
-                        Total de Horas: <span id="totalHoras">0</span>h
-                    </div>
-                </div>
-            `,
-
-            endomarketing: `
-                <div class="section">
-                    <h2 class="section-title">Síntese Executiva</h2>
-                    <textarea id="sintese" placeholder="Contexto das ações de endomarketing do mês..."></textarea>
-                </div>
-                
-                <div class="section">
-                    <h2 class="section-title">Campanhas Executadas</h2>
-                    <div id="campanhasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('campanhas', 'Campanha')">+ Adicionar Campanha</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Materiais Entregues</h2>
-                    <div id="materiaisContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarMaterial()">+ Adicionar Material</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Calendário Interno do Mês</h2>
-                    <div id="calendarioContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('calendario', 'Item')">+ Adicionar Item</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Engajamento</h2>
-                    <textarea id="engajamento" placeholder="Métricas simples, quando houver..."></textarea>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Próximas Ações</h2>
-                    <div id="proximasAcoesContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('proximasAcoes', 'Ação')">+ Adicionar Ação</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Tempo por Entrega</h2>
-                    <div id="tempoTarefaContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar</button>
-                    <div style="margin-top:15px; text-align:right; font-weight:600; color:#034c8b;">
-                        Total de Horas: <span id="totalHoras">0</span>h
-                    </div>
-                </div>
-            `,
-
-            clima: `
-                <div class="section">
-                    <h2 class="section-title">Síntese Executiva</h2>
-                    <textarea id="sintese" placeholder="Contexto da pesquisa de clima..."></textarea>
-                </div>
-                
-                <div class="section">
-                    <h2 class="section-title">Etapa do Ciclo</h2>
-                    <select id="etapaCiclo">
-                        <option value="">Selecione...</option>
-                        <option value="Planejamento">Planejamento</option>
-                        <option value="Coleta">Coleta</option>
-                        <option value="Análise">Análise</option>
-                        <option value="Devolutiva">Devolutiva</option>
-                    </select>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Participação</h2>
-                    <div class="form-group">
-                        <label>Percentual de Participação</label>
-                        <input type="text" id="participacao" placeholder="Ex: 85%">
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Principais Temas</h2>
-                    <div id="temasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('temas', 'Tema')">+ Adicionar Tema</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Riscos Identificados</h2>
-                    <div id="riscosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('riscos', 'Risco')">+ Adicionar Risco</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Plano de Ação Proposto</h2>
-                    <div id="planoAcaoContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('planoAcao', 'Iniciativa')">+ Adicionar Iniciativa</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Próximos Passos</h2>
-                    <div id="proximosPassosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarEtapaResponsavel()">+ Adicionar Passo</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Tempo por Etapa</h2>
-                    <div id="tempoTarefaContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar Etapa</button>
-                    <div style="margin-top:15px; text-align:right; font-weight:600; color:#034c8b;">
-                        Total de Horas: <span id="totalHoras">0</span>h
-                    </div>
-                </div>
-            `,
-
-            treinamento: `
-                <div class="section">
-                    <h2 class="section-title">Síntese Executiva</h2>
-                    <textarea id="sintese" placeholder="Contexto do treinamento aplicado..."></textarea>
-                </div>
-                
-                <div class="section">
-                    <h2 class="section-title">Treinamento Aplicado</h2>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Tema</label>
-                            <input type="text" id="temaTreinamento" placeholder="Ex: Feedback Efetivo">
-                        </div>
-                        <div class="form-group">
-                            <label>Data</label>
-                            <input type="text" id="dataTreinamento" placeholder="Ex: 15/01/2026">
-                        </div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Público</label>
-                            <input type="text" id="publicoTreinamento" placeholder="Ex: Lideranças">
-                        </div>
-                        <div class="form-group">
-                            <label>Duração</label>
-                            <input type="text" id="duracaoTreinamento" placeholder="Ex: 4 horas">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Objetivo e Conteúdo</h2>
-                    <div id="conteudoContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('conteudo', 'Tópico')">+ Adicionar Tópico</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Presença</h2>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Número de Participantes</label>
-                            <input type="number" id="numeroPresentes" placeholder="Ex: 25">
-                        </div>
-                        <div class="form-group">
-                            <label>Percentual</label>
-                            <input type="text" id="percentualPresentes" placeholder="Ex: 90%">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Avaliação de Reação</h2>
-                    <textarea id="avaliacaoReacao" placeholder="Quando houver avaliação..."></textarea>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Recomendações Pós Turma</h2>
-                    <div id="recomendacoesContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('recomendacoes', 'Recomendação')">+ Adicionar Recomendação</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Tempo</h2>
-                    <div class="grid-3">
-                        <div class="form-group">
-                            <label>Preparação</label>
-                            <input type="text" id="tempoPreparacao" placeholder="Ex: 8h">
-                        </div>
-                        <div class="form-group">
-                            <label>Aplicação</label>
-                            <input type="text" id="tempoAplicacao" placeholder="Ex: 4h">
-                        </div>
-                        <div class="form-group">
-                            <label>Pós</label>
-                            <input type="text" id="tempoPos" placeholder="Ex: 2h">
-                        </div>
-                    </div>
-                </div>
-            `,
-
-            lideranca: `
-                <div class="section">
-                    <h2 class="section-title">Síntese Executiva</h2>
-                    <textarea id="sintese" placeholder="Contexto do desenvolvimento de lideranças..."></textarea>
-                </div>
-                
-                <div class="section">
-                    <h2 class="section-title">Trilha ou Ciclo</h2>
-                    <div class="form-group">
-                        <label>Fase Atual</label>
-                        <input type="text" id="faseAtual" placeholder="Ex: Módulo 3 de 5">
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Participantes</h2>
-                    <div class="form-group">
-                        <label>Lista ou Contagem</label>
-                        <textarea id="participantes" placeholder="Liste os participantes ou informe a quantidade..."></textarea>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Temas Trabalhados</h2>
-                    <div id="temasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('temas', 'Tema')">+ Adicionar Tema</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Ações Práticas Aplicadas no Mês</h2>
-                    <div id="acoesContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('acoes', 'Ação')">+ Adicionar Ação</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Evolução Percebida</h2>
-                    <div id="evolucaoContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('evolucao', 'Ponto')">+ Adicionar Ponto</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Próximos Passos</h2>
-                    <div id="proximosPassosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('proximosPassos', 'Passo')">+ Adicionar Passo</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Tempo por Atividade</h2>
-                    <div id="tempoTarefaContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar</button>
-                    <div style="margin-top:15px; text-align:right; font-weight:600; color:#034c8b;">
-                        Total de Horas: <span id="totalHoras">0</span>h
-                    </div>
-                </div>
-            `,
-
-            cultura: `
-                <div class="section">
-                    <h2 class="section-title">Síntese Executiva</h2>
-                    <textarea id="sintese" placeholder="Contexto do trabalho em cultura..."></textarea>
-                </div>
-                
-                <div class="section">
-                    <h2 class="section-title">Rituais Definidos ou Ajustados</h2>
-                    <div id="rituaisContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('rituais', 'Ritual')">+ Adicionar Ritual</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Políticas e Combinados</h2>
-                    <div id="politicasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('politicas', 'Política')">+ Adicionar Política</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Comunicação para o Time</h2>
-                    <div id="comunicacaoContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('comunicacao', 'Entrega')">+ Adicionar Entrega</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Adoção</h2>
-                    <div class="form-group">
-                        <label>O que está sendo praticado</label>
-                        <textarea id="adocao" placeholder="Liste o que já está sendo adotado pela equipe..."></textarea>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Tempo por Ação</h2>
-                    <div id="tempoTarefaContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar</button>
-                    <div style="margin-top:15px; text-align:right; font-weight:600; color:#034c8b;">
-                        Total de Horas: <span id="totalHoras">0</span>h
-                    </div>
-                </div>
-            `,
-
-            personalizados: `
-                <div class="section">
-                    <h2 class="section-title">Síntese Executiva</h2>
-                    <textarea id="sintese" placeholder="Contexto do projeto personalizado..."></textarea>
-                </div>
-                
-                <div class="section">
-                    <h2 class="section-title">Objetivo do Projeto</h2>
-                    <textarea id="objetivoProjeto" placeholder="Descreva o objetivo principal..."></textarea>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Entregas do Mês</h2>
-                    <div id="entregasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('entregas', 'Entrega')">+ Adicionar Entrega</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Dependências</h2>
-                    <div id="dependenciasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('dependencias', 'Dependência')">+ Adicionar Dependência</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Próximas Etapas</h2>
-                    <div id="proximasEtapasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('proximasEtapas', 'Etapa')">+ Adicionar Etapa</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Tempo por Tarefa</h2>
-                    <div id="tempoTarefaContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar</button>
-                    <div style="margin-top:15px; text-align:right; font-weight:600; color:#034c8b;">
-                        Total de Horas: <span id="totalHoras">0</span>h
-                    </div>
-                </div>
-            `,
-
-            mentoria: `
-                <div class="section">
-                    <h2 class="section-title">Síntese Executiva</h2>
-                    <textarea id="sintese" placeholder="Contexto do ciclo de mentoria..."></textarea>
-                </div>
-                
-                <div class="section">
-                    <h2 class="section-title">Objetivo do Ciclo</h2>
-                    <textarea id="objetivoCiclo" placeholder="Descreva o objetivo da mentoria..."></textarea>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Temas do Mês</h2>
-                    <div id="temasContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('temas', 'Tema')">+ Adicionar Tema</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Exercícios Propostos</h2>
-                    <div id="exerciciosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('exercicios', 'Exercício')">+ Adicionar Exercício</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Evolução Técnica e Comportamental</h2>
-                    <div id="evolucaoContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('evolucao', 'Tópico')">+ Adicionar Tópico</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Próximos Passos</h2>
-                    <div id="proximosPassosContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarItem('proximosPassos', 'Passo')">+ Adicionar Passo</button>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Tempo por Sessão e Preparação</h2>
-                    <div id="tempoTarefaContainer"></div>
-                    <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar</button>
-                    <div style="margin-top:15px; text-align:right; font-weight:600; color:#034c8b;">
-                        Total de Horas: <span id="totalHoras">0</span>h
-                    </div>
-                </div>
-            `
-        };
-
-        // TROCAR CAMPOS DINÂMICOS
-        function trocarCampos() {
-            const tipo = document.getElementById('tipoServico').value;
-            const container = document.getElementById('camposDinamicos');
-            
-            if (!tipo) {
-                container.innerHTML = '';
-                return;
-            }
-
-            container.innerHTML = templatesCampos[tipo] || '';
-            dadosDinamicos = {};
-        }
-
-        // FUNÇÕES AUXILIARES PARA ADICIONAR ITENS
-        function adicionarItem(tipo, label) {
-            if (!dadosDinamicos[tipo]) dadosDinamicos[tipo] = [];
-            const id = Date.now();
-            dadosDinamicos[tipo].push({ id, texto: '' });
-            renderItens(tipo, label);
-        }
-
-        function renderItens(tipo, label) {
-            const container = document.getElementById(tipo + 'Container');
-            if (!container) return;
-            
-            container.innerHTML = dadosDinamicos[tipo].map((item, i) => `
-                <div class="item-card">
-                    <div class="item-header">
-                        <span class="item-number">${label} ${i + 1}</span>
-                        <button class="btn btn-remove" onclick="removerItem('${tipo}', ${item.id})">Remover</button>
-                    </div>
-                    <textarea placeholder="Descreva..." oninput="dadosDinamicos['${tipo}'][${i}].texto = this.value">${item.texto}</textarea>
-                </div>
-            `).join('');
-        }
-
-        function removerItem(tipo, id) {
-            dadosDinamicos[tipo] = dadosDinamicos[tipo].filter(item => item.id !== id);
-            renderItens(tipo, tipo.charAt(0).toUpperCase() + tipo.slice(1));
-        }
-
-        // FUNÇÕES ESPECÍFICAS
-        function adicionarTarefaTempo() {
-            if (!dadosDinamicos.tempoTarefa) dadosDinamicos.tempoTarefa = [];
-            const id = Date.now();
-            dadosDinamicos.tempoTarefa.push({ id, tarefa: '', tipo: '', status: '', horas: 0 });
-            renderTempoTarefa();
-        }
-
-        function renderTempoTarefa() {
-            const container = document.getElementById('tempoTarefaContainer');
-            if (!container) return;
-            
-            container.innerHTML = dadosDinamicos.tempoTarefa.map((item, i) => `
-                <div class="item-card">
-                    <div class="item-header">
-                        <span class="item-number">Tarefa ${i + 1}</span>
-                        <button class="btn btn-remove" onclick="removerTarefaTempo(${item.id})">Remover</button>
-                    </div>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Tarefa</label>
-                            <input type="text" placeholder="Nome da tarefa" value="${item.tarefa}" oninput="dadosDinamicos.tempoTarefa[${i}].tarefa = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Tipo</label>
-                            <select oninput="dadosDinamicos.tempoTarefa[${i}].tipo = this.value">
-                                <option value="">Selecione...</option>
-                                <option value="People" ${item.tipo === 'People' ? 'selected' : ''}>People</option>
-                                <option value="Process" ${item.tipo === 'Process' ? 'selected' : ''}>Process</option>
-                                <option value="Performance" ${item.tipo === 'Performance' ? 'selected' : ''}>Performance</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Status</label>
-                            <select oninput="dadosDinamicos.tempoTarefa[${i}].status = this.value">
-                                <option value="">Selecione...</option>
-                                <option value="Feito" ${item.status === 'Feito' ? 'selected' : ''}>Feito</option>
-                                <option value="Em Andamento" ${item.status === 'Em Andamento' ? 'selected' : ''}>Em Andamento</option>
-                                <option value="Bloqueado" ${item.status === 'Bloqueado' ? 'selected' : ''}>Bloqueado</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Horas</label>
-                            <input type="number" placeholder="0" value="${item.horas}" oninput="dadosDinamicos.tempoTarefa[${i}].horas = parseFloat(this.value) || 0; calcularTotalHoras()">
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-            
-            calcularTotalHoras();
-        }
-
-        function removerTarefaTempo(id) {
-            dadosDinamicos.tempoTarefa = dadosDinamicos.tempoTarefa.filter(item => item.id !== id);
-            renderTempoTarefa();
-        }
-
-        function calcularTotalHoras() {
-            if (!dadosDinamicos.tempoTarefa) return;
-            const total = dadosDinamicos.tempoTarefa.reduce((sum, item) => sum + (parseFloat(item.horas) || 0), 0);
-            const el = document.getElementById('totalHoras');
-            if (el) el.textContent = total.toFixed(1);
-        }
-
-        // FUNÇÕES ESPECÍFICAS DE RECRUTAMENTO
-        function adicionarVaga() {
-            if (!dadosDinamicos.vagas) dadosDinamicos.vagas = [];
-            const id = Date.now();
-            dadosDinamicos.vagas.push({ id, vaga: '', area: '', status: '', dataAbertura: '', slaPrevisto: '', slaReal: '' });
-            renderVagas();
-        }
-
-        function renderVagas() {
-            const container = document.getElementById('vagasContainer');
-            if (!container) return;
-            
-            container.innerHTML = dadosDinamicos.vagas.map((v, i) => `
-                <div class="item-card">
-                    <div class="item-header">
-                        <span class="item-number">Vaga ${i + 1}</span>
-                        <button class="btn btn-remove" onclick="removerVaga(${v.id})">Remover</button>
-                    </div>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Vaga</label>
-                            <input type="text" placeholder="Ex: Analista de RH" value="${v.vaga}" oninput="dadosDinamicos.vagas[${i}].vaga = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Área</label>
-                            <input type="text" placeholder="Ex: Recursos Humanos" value="${v.area}" oninput="dadosDinamicos.vagas[${i}].area = this.value">
-                        </div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Status</label>
-                            <select oninput="dadosDinamicos.vagas[${i}].status = this.value">
-                                <option value="">Selecione...</option>
-                                <option value="Briefing" ${v.status === 'Briefing' ? 'selected' : ''}>Briefing</option>
-                                <option value="Divulgação" ${v.status === 'Divulgação' ? 'selected' : ''}>Divulgação</option>
-                                <option value="Triagem" ${v.status === 'Triagem' ? 'selected' : ''}>Triagem</option>
-                                <option value="Entrevistas" ${v.status === 'Entrevistas' ? 'selected' : ''}>Entrevistas</option>
-                                <option value="Proposta" ${v.status === 'Proposta' ? 'selected' : ''}>Proposta</option>
-                                <option value="Finalizada" ${v.status === 'Finalizada' ? 'selected' : ''}>Finalizada</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Data de Abertura</label>
-                            <input type="text" placeholder="DD/MM/AAAA" value="${v.dataAbertura}" oninput="dadosDinamicos.vagas[${i}].dataAbertura = this.value">
-                        </div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>SLA Previsto</label>
-                            <input type="text" placeholder="Ex: 15 dias" value="${v.slaPrevisto}" oninput="dadosDinamicos.vagas[${i}].slaPrevisto = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>SLA Real</label>
-                            <input type="text" placeholder="Ex: 12 dias" value="${v.slaReal}" oninput="dadosDinamicos.vagas[${i}].slaReal = this.value">
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function removerVaga(id) {
-            dadosDinamicos.vagas = dadosDinamicos.vagas.filter(v => v.id !== id);
-            renderVagas();
-        }
-
-        function adicionarFunil() {
-            if (!dadosDinamicos.funil) dadosDinamicos.funil = [];
-            const id = Date.now();
-            dadosDinamicos.funil.push({ 
-                id, vaga: '', candidaturas: 0, triados: 0, entrevistadosAzumi: 0, 
-                encaminhados: 0, entrevistadosCliente: 0, aprovados: 0, contratados: 0, desistencias: 0 
-            });
-            renderFunil();
-        }
-
-        function renderFunil() {
-            const container = document.getElementById('funilContainer');
-            if (!container) return;
-            
-            container.innerHTML = dadosDinamicos.funil.map((f, i) => `
-                <div class="item-card">
-                    <div class="item-header">
-                        <span class="item-number">Funil ${i + 1}</span>
-                        <button class="btn btn-remove" onclick="removerFunil(${f.id})">Remover</button>
-                    </div>
-                    <div class="form-group">
-                        <label>Vaga</label>
-                        <input type="text" placeholder="Nome da vaga" value="${f.vaga}" oninput="dadosDinamicos.funil[${i}].vaga = this.value">
-                    </div>
-                    <div class="grid-3">
-                        <div class="form-group">
-                            <label>Candidaturas</label>
-                            <input type="number" value="${f.candidaturas}" oninput="dadosDinamicos.funil[${i}].candidaturas = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Triados</label>
-                            <input type="number" value="${f.triados}" oninput="dadosDinamicos.funil[${i}].triados = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Entrev. Azumi</label>
-                            <input type="number" value="${f.entrevistadosAzumi}" oninput="dadosDinamicos.funil[${i}].entrevistadosAzumi = this.value">
-                        </div>
-                    </div>
-                    <div class="grid-3">
-                        <div class="form-group">
-                            <label>Encaminhados</label>
-                            <input type="number" value="${f.encaminhados}" oninput="dadosDinamicos.funil[${i}].encaminhados = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Entrev. Cliente</label>
-                            <input type="number" value="${f.entrevistadosCliente}" oninput="dadosDinamicos.funil[${i}].entrevistadosCliente = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Aprovados</label>
-                            <input type="number" value="${f.aprovados}" oninput="dadosDinamicos.funil[${i}].aprovados = this.value">
-                        </div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Contratados</label>
-                            <input type="number" value="${f.contratados}" oninput="dadosDinamicos.funil[${i}].contratados = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Desistências</label>
-                            <input type="number" value="${f.desistencias}" oninput="dadosDinamicos.funil[${i}].desistencias = this.value">
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function removerFunil(id) {
-            dadosDinamicos.funil = dadosDinamicos.funil.filter(f => f.id !== id);
-            renderFunil();
-        }
-
-        function adicionarSourcing() {
-            if (!dadosDinamicos.sourcing) dadosDinamicos.sourcing = [];
-            const id = Date.now();
-            dadosDinamicos.sourcing.push({ id, canal: '', resultado: '' });
-            renderSourcing();
-        }
-
-        function renderSourcing() {
-            const container = document.getElementById('sourcingContainer');
-            if (!container) return;
-            
-            container.innerHTML = dadosDinamicos.sourcing.map((s, i) => `
-                <div class="item-card">
-                    <div class="item-header">
-                        <span class="item-number">Ação ${i + 1}</span>
-                        <button class="btn btn-remove" onclick="removerSourcing(${s.id})">Remover</button>
-                    </div>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Canal</label>
-                            <input type="text" placeholder="Ex: LinkedIn" value="${s.canal}" oninput="dadosDinamicos.sourcing[${i}].canal = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Resultado</label>
-                            <input type="text" placeholder="Ex: 15 candidatos" value="${s.resultado}" oninput="dadosDinamicos.sourcing[${i}].resultado = this.value">
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function removerSourcing(id) {
-            dadosDinamicos.sourcing = dadosDinamicos.sourcing.filter(s => s.id !== id);
-            renderSourcing();
-        }
-
-        // HUNTING
-        function adicionarShortlist() {
-            if (!dadosDinamicos.shortlist) dadosDinamicos.shortlist = [];
-            const id = Date.now();
-            dadosDinamicos.shortlist.push({ id, nome: '', status: '', proximaEtapa: '' });
-            renderShortlist();
-        }
-
-        function renderShortlist() {
-            const container = document.getElementById('shortlistContainer');
-            if (!container) return;
-            
-            container.innerHTML = dadosDinamicos.shortlist.map((s, i) => `
-                <div class="item-card">
-                    <div class="item-header">
-                        <span class="item-number">Candidato ${i + 1}</span>
-                        <button class="btn btn-remove" onclick="removerShortlist(${s.id})">Remover</button>
-                    </div>
-                    <div class="grid-3">
-                        <div class="form-group">
-                            <label>Nome/Identificador</label>
-                            <input type="text" placeholder="Ex: Candidato A" value="${s.nome}" oninput="dadosDinamicos.shortlist[${i}].nome = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Status</label>
-                            <input type="text" placeholder="Ex: Interesse" value="${s.status}" oninput="dadosDinamicos.shortlist[${i}].status = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Próxima Etapa</label>
-                            <input type="text" placeholder="Ex: Entrevista" value="${s.proximaEtapa}" oninput="dadosDinamicos.shortlist[${i}].proximaEtapa = this.value">
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function removerShortlist(id) {
-            dadosDinamicos.shortlist = dadosDinamicos.shortlist.filter(s => s.id !== id);
-            renderShortlist();
-        }
-
-        // ENDOMARKETING
-        function adicionarMaterial() {
-            if (!dadosDinamicos.materiais) dadosDinamicos.materiais = [];
-            const id = Date.now();
-            dadosDinamicos.materiais.push({ id, material: '', link: '' });
-            renderMateriais();
-        }
-
-        function renderMateriais() {
-            const container = document.getElementById('materiaisContainer');
-            if (!container) return;
-            
-            container.innerHTML = dadosDinamicos.materiais.map((m, i) => `
-                <div class="item-card">
-                    <div class="item-header">
-                        <span class="item-number">Material ${i + 1}</span>
-                        <button class="btn btn-remove" onclick="removerMaterial(${m.id})">Remover</button>
-                    </div>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Material</label>
-                            <input type="text" placeholder="Ex: Vídeo Institucional" value="${m.material}" oninput="dadosDinamicos.materiais[${i}].material = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Link Interno</label>
-                            <input type="text" placeholder="URL ou localização" value="${m.link}" oninput="dadosDinamicos.materiais[${i}].link = this.value">
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function removerMaterial(id) {
-            dadosDinamicos.materiais = dadosDinamicos.materiais.filter(m => m.id !== id);
-            renderMateriais();
-        }
-
-        // AUXILIARES GENÉRICOS
-        function adicionarEntregaData() {
-            if (!dadosDinamicos.entregasConcluidas) dadosDinamicos.entregasConcluidas = [];
-            const id = Date.now();
-            dadosDinamicos.entregasConcluidas.push({ id, entrega: '', data: '' });
-            renderEntregasData();
-        }
-
-        function renderEntregasData() {
-            const container = document.getElementById('entregasConcluidasContainer');
-            if (!container) return;
-            
-            container.innerHTML = dadosDinamicos.entregasConcluidas.map((e, i) => `
-                <div class="item-card">
-                    <div class="item-header">
-                        <span class="item-number">Entrega ${i + 1}</span>
-                        <button class="btn btn-remove" onclick="removerEntregaData(${e.id})">Remover</button>
-                    </div>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Entrega</label>
-                            <input type="text" placeholder="Descrição" value="${e.entrega}" oninput="dadosDinamicos.entregasConcluidas[${i}].entrega = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Data</label>
-                            <input type="text" placeholder="DD/MM/AAAA" value="${e.data}" oninput="dadosDinamicos.entregasConcluidas[${i}].data = this.value">
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function removerEntregaData(id) {
-            dadosDinamicos.entregasConcluidas = dadosDinamicos.entregasConcluidas.filter(e => e.id !== id);
-            renderEntregasData();
-        }
-
-        function adicionarEtapaResponsavel() {
-            if (!dadosDinamicos.proximasEtapas) dadosDinamicos.proximasEtapas = [];
-            const id = Date.now();
-            dadosDinamicos.proximasEtapas.push({ id, etapa: '', responsavel: '' });
-            renderEtapasResponsavel();
-        }
-
-        function renderEtapasResponsavel() {
-            const container = document.getElementById('proximasEtapasContainer') || document.getElementById('proximosPassosContainer');
-            if (!container) return;
-            
-            container.innerHTML = dadosDinamicos.proximasEtapas.map((e, i) => `
-                <div class="item-card">
-                    <div class="item-header">
-                        <span class="item-number">Etapa ${i + 1}</span>
-                        <button class="btn btn-remove" onclick="removerEtapaResponsavel(${e.id})">Remover</button>
-                    </div>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Etapa</label>
-                            <input type="text" placeholder="Descrição" value="${e.etapa}" oninput="dadosDinamicos.proximasEtapas[${i}].etapa = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Responsável</label>
-                            <input type="text" placeholder="Nome" value="${e.responsavel}" oninput="dadosDinamicos.proximasEtapas[${i}].responsavel = this.value">
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function removerEtapaResponsavel(id) {
-            dadosDinamicos.proximasEtapas = dadosDinamicos.proximasEtapas.filter(e => e.id !== id);
-            renderEtapasResponsavel();
-        }
-
-        function adicionarPassoData() {
-            if (!dadosDinamicos.proximosPassos) dadosDinamicos.proximosPassos = [];
-            const id = Date.now();
-            dadosDinamicos.proximosPassos.push({ id, passo: '', data: '' });
-            renderPassosData();
-        }
-
-        function renderPassosData() {
-            const container = document.getElementById('proximosPassosContainer');
-            if (!container) return;
-            
-            container.innerHTML = dadosDinamicos.proximosPassos.map((p, i) => `
-                <div class="item-card">
-                    <div class="item-header">
-                        <span class="item-number">Passo ${i + 1}</span>
-                        <button class="btn btn-remove" onclick="removerPassoData(${p.id})">Remover</button>
-                    </div>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Passo</label>
-                            <input type="text" placeholder="Descrição" value="${p.passo}" oninput="dadosDinamicos.proximosPassos[${i}].passo = this.value">
-                        </div>
-                        <div class="form-group">
-                            <label>Data</label>
-                            <input type="text" placeholder="DD/MM/AAAA" value="${p.data}" oninput="dadosDinamicos.proximosPassos[${i}].data = this.value">
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function removerPassoData(id) {
-            dadosDinamicos.proximosPassos = dadosDinamicos.proximosPassos.filter(p => p.id !== id);
-            renderPassosData();
-        }
-
-        // SALVAR/CARREGAR
-        function salvarRascunho() {
-            const dados = {
-                contratante: document.getElementById('contratante').value,
-                cnpjContratante: document.getElementById('cnpjContratante').value,
-                referencia: document.getElementById('referencia').value,
-                horasContratadas: document.getElementById('horasContratadas').value,
-                tipoServico: document.getElementById('tipoServico').value,
-                consideracoes: document.getElementById('consideracoes').value,
-                nomeConsultor: document.getElementById('nomeConsultor').value,
-                cargoConsultor: document.getElementById('cargoConsultor').value,
-                localData: document.getElementById('localData').value,
-                dadosDinamicos: dadosDinamicos
-            };
-            localStorage.setItem('azumi_relatorio_v2', JSON.stringify(dados));
-            alert('✅ Rascunho salvo com sucesso!');
-        }
-
-        function carregarRascunho() {
-            const dados = JSON.parse(localStorage.getItem('azumi_relatorio_v2'));
-            if (!dados) return alert('❌ Nenhum rascunho encontrado.');
-
-            document.getElementById('contratante').value = dados.contratante || '';
-            document.getElementById('cnpjContratante').value = dados.cnpjContratante || '';
-            document.getElementById('referencia').value = dados.referencia || '';
-            document.getElementById('horasContratadas').value = dados.horasContratadas || '';
-            document.getElementById('tipoServico').value = dados.tipoServico || '';
-            document.getElementById('consideracoes').value = dados.consideracoes || '';
-            document.getElementById('nomeConsultor').value = dados.nomeConsultor || '';
-            document.getElementById('cargoConsultor').value = dados.cargoConsultor || '';
-            document.getElementById('localData').value = dados.localData || '';
-
-            trocarCampos();
-            dadosDinamicos = dados.dadosDinamicos || {};
-
-            // Recarregar campos dinâmicos
-            setTimeout(() => {
-                Object.keys(dadosDinamicos).forEach(key => {
-                    const funcaoRender = window['render' + key.charAt(0).toUpperCase() + key.slice(1)];
-                    if (funcaoRender) funcaoRender();
-                });
-            }, 100);
-
-            alert('✅ Rascunho carregado com sucesso!');
-        }
-
-        function limparTudo() {
-            if (!confirm('⚠️ Tem certeza que deseja limpar todo o formulário?')) return;
-            
-            document.querySelectorAll('input, textarea, select').forEach(el => el.value = '');
-            dadosDinamicos = {};
-            document.getElementById('camposDinamicos').innerHTML = '';
-            
-            alert('✅ Formulário limpo!');
-        }
-
-        // GERAR VISUALIZAÇÃO
-        function gerarVisualizacao() {
-            const contratante = document.getElementById('contratante').value;
-            const referencia = document.getElementById('referencia').value;
-            
-            if (!contratante || !referencia) {
-                alert('⚠️ Preencha pelo menos o Nome do Contratante e o Mês de Referência');
-                return;
-            }
-
-            const dados = coletarTodosDados();
-            const htmlVisualizacao = gerarHTMLRelatorio(dados);
-            
-            const novaJanela = window.open('', '_blank');
-            novaJanela.document.write(htmlVisualizacao);
-            novaJanela.document.close();
-        }
-
-        function coletarTodosDados() {
-            return {
-                // Dados básicos
-                contratante: document.getElementById('contratante').value,
-                cnpjContratante: document.getElementById('cnpjContratante').value,
-                referencia: document.getElementById('referencia').value,
-                horasContratadas: document.getElementById('horasContratadas').value,
-                tipoServico: document.getElementById('tipoServico').value,
-                tipoServicoTexto: document.getElementById('tipoServico').options[document.getElementById('tipoServico').selectedIndex]?.text || '',
-                
-                // Campos dinâmicos
-                sintese: document.getElementById('sintese')?.value || '',
-                consideracoes: document.getElementById('consideracoes').value,
-                
-                // Assinatura
-                nomeConsultor: document.getElementById('nomeConsultor').value,
-                cargoConsultor: document.getElementById('cargoConsultor').value,
-                localData: document.getElementById('localData').value,
-                
-                // Dados dinâmicos
-                dadosDinamicos: dadosDinamicos
-            };
-        }
-
-        function gerarHTMLRelatorio(dados) {
-            let conteudoDinamico = '';
-            
-            // Gerar conteúdo baseado no tipo de serviço
-            if (dados.sintese) {
-                conteudoDinamico += `
-                    <div class="section">
-                        <h2 class="section-title">Síntese Executiva</h2>
-                        <div class="text-content">${dados.sintese}</div>
-                    </div>
-                `;
-            }
-
-            // Renderizar listas simples
-            const listasSimples = ['objetivos', 'entregas', 'pendencias', 'backlog', 'riscos', 'escopo', 'atividades', 'bloqueios',
-                'coletas', 'achados', 'evidencias', 'hipoteses', 'recomendacoes', 'modulos', 'documentos', 'rituais', 'treinamentos',
-                'campanhas', 'calendario', 'proximasAcoes', 'temas', 'planoAcao', 'conteudo', 'acoes', 'evolucao', 'proximosPassos',
-                'politicas', 'comunicacao', 'dependencias', 'proximasEtapas', 'exercicios'];
-
-            listasSimples.forEach(lista => {
-                if (dados.dadosDinamicos[lista] && dados.dadosDinamicos[lista].length > 0) {
-                    const titulo = lista.charAt(0).toUpperCase() + lista.slice(1).replace(/([A-Z])/g, ' $1');
-                    conteudoDinamico += `
-                        <div class="section">
-                            <h2 class="section-title">${titulo}</h2>
-                            <div class="item-list">
-                                ${dados.dadosDinamicos[lista].map(item => item.texto ? `<div class="item">${item.texto}</div>` : '').join('')}
-                            </div>
-                        </div>
-                    `;
-                }
-            });
-
-            // Tabela de Tempo por Tarefa
-            if (dados.dadosDinamicos.tempoTarefa && dados.dadosDinamicos.tempoTarefa.length > 0) {
-                const total = dados.dadosDinamicos.tempoTarefa.reduce((sum, t) => sum + (parseFloat(t.horas) || 0), 0);
-                conteudoDinamico += `
-                    <div class="section">
-                        <h2 class="section-title">Tempo por Tarefa</h2>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Tarefa</th>
-                                    <th>Tipo</th>
-                                    <th>Status</th>
-                                    <th>Horas</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${dados.dadosDinamicos.tempoTarefa.map(t => `
-                                    <tr>
-                                        <td>${t.tarefa || '-'}</td>
-                                        <td>${t.tipo || '-'}</td>
-                                        <td>${t.status || '-'}</td>
-                                        <td>${t.horas || 0}h</td>
-                                    </tr>
-                                `).join('')}
-                                <tr style="font-weight:600; background:#e6f2f8;">
-                                    <td colspan="3" style="text-align:right;">Total:</td>
-                                    <td>${total.toFixed(1)}h</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-
-                // Alerta de horas se aplicável
-                if (dados.horasContratadas) {
-                    const contratadas = parseFloat(dados.horasContratadas);
-                    const diferenca = contratadas - total;
-                    const status = diferenca >= 0 ? 'dentro' : 'acima';
-                    const cor = diferenca >= 0 ? '#28a745' : '#dc3545';
-                    
-                    conteudoDinamico += `
-                        <div style="background:#fff3cd; border-left:4px solid ${cor}; padding:15px; margin:20px 0; border-radius:6px;">
-                            <strong>Alerta de Horas:</strong><br>
-                            Horas Contratadas: ${contratadas}h<br>
-                            Horas Realizadas: ${total.toFixed(1)}h<br>
-                            Diferença: ${Math.abs(diferenca).toFixed(1)}h ${status} do contratado
-                        </div>
-                    `;
-                }
-            }
-
-            // Vagas (Recrutamento)
-            if (dados.dadosDinamicos.vagas && dados.dadosDinamicos.vagas.length > 0) {
-                conteudoDinamico += `
-                    <div class="section">
-                        <h2 class="section-title">Vagas em Andamento</h2>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Vaga</th>
-                                    <th>Área</th>
-                                    <th>Status</th>
-                                    <th>Data Abertura</th>
-                                    <th>SLA Previsto</th>
-                                    <th>SLA Real</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${dados.dadosDinamicos.vagas.map(v => `
-                                    <tr>
-                                        <td>${v.vaga || '-'}</td>
-                                        <td>${v.area || '-'}</td>
-                                        <td>${v.status || '-'}</td>
-                                        <td>${v.dataAbertura || '-'}</td>
-                                        <td>${v.slaPrevisto || '-'}</td>
-                                        <td>${v.slaReal || '-'}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-            }
-
-            // Funil (Recrutamento)
-            if (dados.dadosDinamicos.funil && dados.dadosDinamicos.funil.length > 0) {
-                conteudoDinamico += `
-                    <div class="section">
-                        <h2 class="section-title">Funil por Vaga</h2>
-                        ${dados.dadosDinamicos.funil.map(f => `
-                            <div style="margin-bottom:20px;">
-                                <h3 style="color:#034c8b; font-size:1em; margin-bottom:10px;">${f.vaga || 'Vaga'}</h3>
-                                <table class="table">
-                                    <tr><td>Candidaturas Recebidas</td><td>${f.candidaturas || 0}</td></tr>
-                                    <tr><td>Triados</td><td>${f.triados || 0}</td></tr>
-                                    <tr><td>Entrevistados Azumi</td><td>${f.entrevistadosAzumi || 0}</td></tr>
-                                    <tr><td>Encaminhados ao Cliente</td><td>${f.encaminhados || 0}</td></tr>
-                                    <tr><td>Entrevistados pelo Cliente</td><td>${f.entrevistadosCliente || 0}</td></tr>
-                                    <tr><td>Aprovados</td><td>${f.aprovados || 0}</td></tr>
-                                    <tr><td>Contratados</td><td>${f.contratados || 0}</td></tr>
-                                    <tr><td>Desistências</td><td>${f.desistencias || 0}</td></tr>
-                                </table>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            }
-
-            return `
-<!DOCTYPE html>
+    <div class="section">
+      <h2 class="section-title">Assinatura</h2>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Nome do Consultor <span class="required">*</span></label>
+          <input type="text" id="nomeConsultor" placeholder="Ex: Maria Silva"/>
+        </div>
+        <div class="form-group">
+          <label>Cargo do Consultor <span class="required">*</span></label>
+          <input type="text" id="cargoConsultor" placeholder="Ex: Consultora de RH"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Local e Data <span class="required">*</span></label>
+        <input type="text" id="localData" placeholder="Ex: Curitiba, 13 de fevereiro de 2026"/>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-actions">
+    <h3>Ações do Relatório</h3>
+    <div class="button-group">
+      <button class="btn btn-primary" onclick="gerarVisualizacao()">📄 Visualizar Relatório</button>
+      <button class="btn btn-secondary" onclick="salvarRascunho()">💾 Salvar Rascunho</button>
+      <button class="btn btn-secondary" onclick="carregarRascunho()">📂 Carregar Rascunho</button>
+      <button class="btn btn-danger" onclick="limparTudo()">🗑 Limpar Tudo</button>
+    </div>
+    <p class="info-text">✅ SISTEMA 100% OFFLINE · DADOS PROCESSADOS LOCALMENTE</p>
+  </div>
+
+</div>
+
+<script>
+// ── PROTOCOLO AUTO-INCREMENTAL ─────────────────────────────────────────────
+// Formato: AZ-YYYYMMDD-NNNNN
+// Persiste no localStorage: nunca repete no mesmo navegador/máquina
+let protocoloAtual = '';
+
+function gerarProtocolo() {
+  const hoje = new Date();
+  const yyyy = hoje.getFullYear();
+  const mm = String(hoje.getMonth()+1).padStart(2,'0');
+  const dd = String(hoje.getDate()).padStart(2,'0');
+  const dataStr = `${yyyy}${mm}${dd}`;
+
+  // Contador global — nunca zera, garante unicidade absoluta
+  const contadorKey = 'azumi_protocolo_counter';
+  let counter = parseInt(localStorage.getItem(contadorKey) || '0', 10) + 1;
+  localStorage.setItem(contadorKey, String(counter));
+
+  return `AZ-${dataStr}-${String(counter).padStart(5,'0')}`;
+}
+
+// ── VARIÁVEIS GLOBAIS ──────────────────────────────────────────────────────
+let dadosDinamicos = {};
+
+// ── TEMPLATES ─────────────────────────────────────────────────────────────
+const templatesCampos = {
+  hraas: `
+    <div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <textarea id="sintese" placeholder="Cenário do mês em 5 a 8 linhas..."></textarea></div>
+    <div class="section"><h2 class="section-title">Objetivos do Mês</h2>
+      <div id="objetivosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('objetivos','Objetivo')">+ Adicionar Objetivo</button></div>
+    <div class="section"><h2 class="section-title">Entregas Principais</h2>
+      <div id="entregasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('entregas','Entrega')">+ Adicionar Entrega</button></div>
+    <div class="section"><h2 class="section-title">Pendências e Dependências do Cliente</h2>
+      <div id="pendenciasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('pendencias','Pendência')">+ Adicionar Pendência</button></div>
+    <div class="section"><h2 class="section-title">Backlog do Próximo Mês</h2>
+      <div id="backlogContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('backlog','Item')">+ Adicionar Item</button></div>
+    <div class="section"><h2 class="section-title">Tempo por Tarefa</h2>
+      <div id="tempoTarefaContainer"></div>
+      <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar Tarefa</button>
+      <div style="margin-top:14px;text-align:right;font-family:'Sora',sans-serif;font-weight:700;color:var(--blue)">
+        Total: <span id="totalHoras">0</span>h</div></div>
+    <div class="section"><h2 class="section-title">Riscos e Recomendações</h2>
+      <div id="riscosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('riscos','Risco')">+ Adicionar Risco</button></div>`,
+
+  consultoria: `
+    <div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <textarea id="sintese" placeholder="Status do projeto e cenário do mês..."></textarea></div>
+    <div class="section"><h2 class="section-title">Escopo do Projeto</h2>
+      <div id="escopoContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('escopo','Item do Escopo')">+ Adicionar Item</button></div>
+    <div class="section"><h2 class="section-title">Atividades Realizadas</h2>
+      <div id="atividadesContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('atividades','Atividade')">+ Adicionar Atividade</button></div>
+    <div class="section"><h2 class="section-title">Entregas Concluídas</h2>
+      <div id="entregasConcluidasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarEntregaData()">+ Adicionar Entrega</button></div>
+    <div class="section"><h2 class="section-title">Próximas Etapas</h2>
+      <div id="proximasEtapasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarEtapaResponsavel()">+ Adicionar Etapa</button></div>
+    <div class="section"><h2 class="section-title">Bloqueios</h2>
+      <div id="bloqueiosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('bloqueios','Bloqueio')">+ Adicionar Bloqueio</button></div>
+    <div class="section"><h2 class="section-title">Tempo por Tarefa</h2>
+      <div id="tempoTarefaContainer"></div>
+      <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar Tarefa</button>
+      <div style="margin-top:14px;text-align:right;font-family:'Sora',sans-serif;font-weight:700;color:var(--blue)">
+        Total: <span id="totalHoras">0</span>h</div></div>`,
+
+  diagnostico: `
+    <div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <textarea id="sintese" placeholder="Recorte e status do diagnóstico..."></textarea></div>
+    <div class="section"><h2 class="section-title">Escopo Avaliado</h2>
+      <div class="form-group"><label>Pilares Avaliados</label>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px">
+          <label style="display:inline-flex;align-items:center;gap:5px;font-weight:400;text-transform:none;font-size:.85em;color:var(--text)"><input type="checkbox" id="pilarPeople" value="People"> People</label>
+          <label style="display:inline-flex;align-items:center;gap:5px;font-weight:400;text-transform:none;font-size:.85em;color:var(--text)"><input type="checkbox" id="pilarProcess" value="Process"> Process</label>
+          <label style="display:inline-flex;align-items:center;gap:5px;font-weight:400;text-transform:none;font-size:.85em;color:var(--text)"><input type="checkbox" id="pilarPerformance" value="Performance"> Performance</label>
+        </div></div></div>
+    <div class="section"><h2 class="section-title">Coletas Realizadas</h2>
+      <div id="coletasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('coletas','Coleta')">+ Adicionar Coleta</button></div>
+    <div class="section"><h2 class="section-title">Achados Principais por Pilar</h2>
+      <div id="achadosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('achados','Achado')">+ Adicionar Achado</button></div>
+    <div class="section"><h2 class="section-title">Evidências</h2>
+      <div id="evidenciasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('evidencias','Evidência')">+ Adicionar Evidência</button></div>
+    <div class="section"><h2 class="section-title">Hipóteses e Validações Pendentes</h2>
+      <div id="hipotesesContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('hipoteses','Hipótese')">+ Adicionar Hipótese</button></div>
+    <div class="section"><h2 class="section-title">Recomendações Iniciais</h2>
+      <div id="recomendacoesContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('recomendacoes','Recomendação')">+ Adicionar Recomendação</button></div>
+    <div class="section"><h2 class="section-title">Próximos Passos</h2>
+      <div id="proximosPassosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarPassoData()">+ Adicionar Passo</button></div>
+    <div class="section"><h2 class="section-title">Tempo por Etapa</h2>
+      <div id="tempoTarefaContainer"></div>
+      <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar Etapa</button>
+      <div style="margin-top:14px;text-align:right;font-family:'Sora',sans-serif;font-weight:700;color:var(--blue)">
+        Total: <span id="totalHoras">0</span>h</div></div>`,
+
+  estruturacao: `
+    <div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <textarea id="sintese" placeholder="Contexto da estruturação e status geral..."></textarea></div>
+    <div class="section"><h2 class="section-title">Módulos Implantados</h2>
+      <div id="modulosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('modulos','Módulo')">+ Adicionar Módulo</button></div>
+    <div class="section"><h2 class="section-title">Documentos e Processos Criados/Revisados</h2>
+      <div id="documentosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('documentos','Documento')">+ Adicionar Documento</button></div>
+    <div class="section"><h2 class="section-title">Rituais Definidos</h2>
+      <div id="rituaisContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('rituais','Ritual')">+ Adicionar Ritual</button></div>
+    <div class="section"><h2 class="section-title">Treinamentos Aplicados</h2>
+      <div id="treinamentosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('treinamentos','Treinamento')">+ Adicionar Treinamento</button></div>
+    <div class="section"><h2 class="section-title">Pendências do Cliente</h2>
+      <div id="pendenciasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('pendencias','Pendência')">+ Adicionar Pendência</button></div>
+    <div class="section"><h2 class="section-title">Check de Adoção</h2>
+      <div class="form-group"><label>O que já está rodando</label>
+        <textarea id="checkRodando" placeholder="Liste o que já foi adotado..."></textarea></div>
+      <div class="form-group"><label>O que ainda não roda</label>
+        <textarea id="checkNaoRodando" placeholder="Liste o que ainda precisa ser implementado..."></textarea></div></div>
+    <div class="section"><h2 class="section-title">Tempo por Tarefa</h2>
+      <div id="tempoTarefaContainer"></div>
+      <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar Tarefa</button>
+      <div style="margin-top:14px;text-align:right;font-family:'Sora',sans-serif;font-weight:700;color:var(--blue)">
+        Total: <span id="totalHoras">0</span>h</div></div>`,
+
+  recrutamento: `
+    <div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <textarea id="sintese" placeholder="Panorama das vagas do mês..."></textarea></div>
+    <div class="section"><h2 class="section-title">Vagas em Andamento</h2>
+      <div id="vagasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarVaga()">+ Adicionar Vaga</button></div>
+    <div class="section"><h2 class="section-title">Funil por Vaga</h2>
+      <div id="funilContainer"></div>
+      <button class="btn btn-add" onclick="adicionarFunil()">+ Adicionar Funil de Vaga</button></div>
+    <div class="section"><h2 class="section-title">Qualidade do Funil</h2>
+      <textarea id="qualidadeFunil" placeholder="Observações sobre a qualidade dos candidatos..."></textarea></div>
+    <div class="section"><h2 class="section-title">Ações de Sourcing</h2>
+      <div id="sourcingContainer"></div>
+      <button class="btn btn-add" onclick="adicionarSourcing()">+ Adicionar Ação</button></div>
+    <div class="section"><h2 class="section-title">Principais Bloqueios</h2>
+      <div id="bloqueiosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('bloqueios','Bloqueio')">+ Adicionar Bloqueio</button></div>
+    <div class="section"><h2 class="section-title">Próximos Passos por Vaga</h2>
+      <div id="proximosPassosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('proximosPassos','Passo')">+ Adicionar Passo</button></div>
+    <div class="section"><h2 class="section-title">Tempo por Vaga/Atividade</h2>
+      <div id="tempoTarefaContainer"></div>
+      <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar</button>
+      <div style="margin-top:14px;text-align:right;font-family:'Sora',sans-serif;font-weight:700;color:var(--blue)">
+        Total: <span id="totalHoras">0</span>h</div></div>`,
+
+  hunting: `
+    <div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <textarea id="sintese" placeholder="Contexto e andamento do hunting..."></textarea></div>
+    <div class="section"><h2 class="section-title">Perfil Alvo</h2>
+      <textarea id="perfilAlvo" placeholder="Resumo do briefing..."></textarea></div>
+    <div class="section"><h2 class="section-title">Mapa de Busca</h2>
+      <textarea id="mapaBusca" placeholder="Segmentos e regiões exploradas..."></textarea></div>
+    <div class="section"><h2 class="section-title">Lista de Abordagens</h2>
+      <div class="grid-2">
+        <div class="form-group"><label>Volume de Abordagens</label>
+          <input type="number" id="volumeAbordagens" placeholder="Ex: 50"/></div>
+        <div class="form-group"><label>Taxa de Retorno</label>
+          <input type="text" id="taxaRetorno" placeholder="Ex: 20%"/></div></div></div>
+    <div class="section"><h2 class="section-title">Shortlist</h2>
+      <div id="shortlistContainer"></div>
+      <button class="btn btn-add" onclick="adicionarShortlist()">+ Adicionar Candidato</button></div>
+    <div class="section"><h2 class="section-title">Riscos de Confidencialidade e Condução</h2>
+      <div id="riscosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('riscos','Risco')">+ Adicionar Risco</button></div>
+    <div class="section"><h2 class="section-title">Tempo por Etapa</h2>
+      <div id="tempoTarefaContainer"></div>
+      <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar Etapa</button>
+      <div style="margin-top:14px;text-align:right;font-family:'Sora',sans-serif;font-weight:700;color:var(--blue)">
+        Total: <span id="totalHoras">0</span>h</div></div>`,
+
+  endomarketing: `
+    <div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <textarea id="sintese" placeholder="Contexto das ações de endomarketing do mês..."></textarea></div>
+    <div class="section"><h2 class="section-title">Campanhas Executadas</h2>
+      <div id="campanhasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('campanhas','Campanha')">+ Adicionar Campanha</button></div>
+    <div class="section"><h2 class="section-title">Materiais Entregues</h2>
+      <div id="materiaisContainer"></div>
+      <button class="btn btn-add" onclick="adicionarMaterial()">+ Adicionar Material</button></div>
+    <div class="section"><h2 class="section-title">Calendário Interno do Mês</h2>
+      <div id="calendarioContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('calendario','Item')">+ Adicionar Item</button></div>
+    <div class="section"><h2 class="section-title">Engajamento</h2>
+      <textarea id="engajamento" placeholder="Métricas simples, quando houver..."></textarea></div>
+    <div class="section"><h2 class="section-title">Próximas Ações</h2>
+      <div id="proximasAcoesContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('proximasAcoes','Ação')">+ Adicionar Ação</button></div>
+    <div class="section"><h2 class="section-title">Tempo por Entrega</h2>
+      <div id="tempoTarefaContainer"></div>
+      <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar</button>
+      <div style="margin-top:14px;text-align:right;font-family:'Sora',sans-serif;font-weight:700;color:var(--blue)">
+        Total: <span id="totalHoras">0</span>h</div></div>`,
+
+  clima: `
+    <div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <textarea id="sintese" placeholder="Contexto da pesquisa de clima..."></textarea></div>
+    <div class="section"><h2 class="section-title">Etapa do Ciclo</h2>
+      <select id="etapaCiclo">
+        <option value="">Selecione...</option>
+        <option>Planejamento</option><option>Coleta</option>
+        <option>Análise</option><option>Devolutiva</option></select></div>
+    <div class="section"><h2 class="section-title">Participação</h2>
+      <div class="form-group"><label>Percentual de Participação</label>
+        <input type="text" id="participacao" placeholder="Ex: 85%"/></div></div>
+    <div class="section"><h2 class="section-title">Principais Temas</h2>
+      <div id="temasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('temas','Tema')">+ Adicionar Tema</button></div>
+    <div class="section"><h2 class="section-title">Riscos Identificados</h2>
+      <div id="riscosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('riscos','Risco')">+ Adicionar Risco</button></div>
+    <div class="section"><h2 class="section-title">Plano de Ação Proposto</h2>
+      <div id="planoAcaoContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('planoAcao','Iniciativa')">+ Adicionar Iniciativa</button></div>
+    <div class="section"><h2 class="section-title">Próximos Passos</h2>
+      <div id="proximosPassosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarEtapaResponsavel()">+ Adicionar Passo</button></div>
+    <div class="section"><h2 class="section-title">Tempo por Etapa</h2>
+      <div id="tempoTarefaContainer"></div>
+      <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar Etapa</button>
+      <div style="margin-top:14px;text-align:right;font-family:'Sora',sans-serif;font-weight:700;color:var(--blue)">
+        Total: <span id="totalHoras">0</span>h</div></div>`,
+
+  treinamento: `
+    <div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <textarea id="sintese" placeholder="Contexto do treinamento aplicado..."></textarea></div>
+    <div class="section"><h2 class="section-title">Treinamento Aplicado</h2>
+      <div class="grid-2">
+        <div class="form-group"><label>Tema</label>
+          <input type="text" id="temaTreinamento" placeholder="Ex: Feedback Efetivo"/></div>
+        <div class="form-group"><label>Data</label>
+          <input type="text" id="dataTreinamento" placeholder="Ex: 15/01/2026"/></div></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Público</label>
+          <input type="text" id="publicoTreinamento" placeholder="Ex: Lideranças"/></div>
+        <div class="form-group"><label>Duração</label>
+          <input type="text" id="duracaoTreinamento" placeholder="Ex: 4 horas"/></div></div></div>
+    <div class="section"><h2 class="section-title">Objetivo e Conteúdo</h2>
+      <div id="conteudoContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('conteudo','Tópico')">+ Adicionar Tópico</button></div>
+    <div class="section"><h2 class="section-title">Presença</h2>
+      <div class="grid-2">
+        <div class="form-group"><label>Número de Participantes</label>
+          <input type="number" id="numeroPresentes" placeholder="Ex: 25"/></div>
+        <div class="form-group"><label>Percentual</label>
+          <input type="text" id="percentualPresentes" placeholder="Ex: 90%"/></div></div></div>
+    <div class="section"><h2 class="section-title">Avaliação de Reação</h2>
+      <textarea id="avaliacaoReacao" placeholder="Quando houver avaliação..."></textarea></div>
+    <div class="section"><h2 class="section-title">Recomendações Pós Turma</h2>
+      <div id="recomendacoesContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('recomendacoes','Recomendação')">+ Adicionar Recomendação</button></div>
+    <div class="section"><h2 class="section-title">Tempo</h2>
+      <div class="grid-3">
+        <div class="form-group"><label>Preparação</label>
+          <input type="text" id="tempoPreparacao" placeholder="Ex: 8h"/></div>
+        <div class="form-group"><label>Aplicação</label>
+          <input type="text" id="tempoAplicacao" placeholder="Ex: 4h"/></div>
+        <div class="form-group"><label>Pós</label>
+          <input type="text" id="tempoPos" placeholder="Ex: 2h"/></div></div></div>`,
+
+  lideranca: `
+    <div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <textarea id="sintese" placeholder="Contexto do desenvolvimento de lideranças..."></textarea></div>
+    <div class="section"><h2 class="section-title">Trilha ou Ciclo</h2>
+      <div class="form-group"><label>Fase Atual</label>
+        <input type="text" id="faseAtual" placeholder="Ex: Módulo 3 de 5"/></div></div>
+    <div class="section"><h2 class="section-title">Participantes</h2>
+      <div class="form-group"><label>Lista ou Contagem</label>
+        <textarea id="participantes" placeholder="Liste os participantes ou informe a quantidade..."></textarea></div></div>
+    <div class="section"><h2 class="section-title">Temas Trabalhados</h2>
+      <div id="temasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('temas','Tema')">+ Adicionar Tema</button></div>
+    <div class="section"><h2 class="section-title">Ações Práticas Aplicadas no Mês</h2>
+      <div id="acoesContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('acoes','Ação')">+ Adicionar Ação</button></div>
+    <div class="section"><h2 class="section-title">Evolução Percebida</h2>
+      <div id="evolucaoContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('evolucao','Ponto')">+ Adicionar Ponto</button></div>
+    <div class="section"><h2 class="section-title">Próximos Passos</h2>
+      <div id="proximosPassosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('proximosPassos','Passo')">+ Adicionar Passo</button></div>
+    <div class="section"><h2 class="section-title">Tempo por Atividade</h2>
+      <div id="tempoTarefaContainer"></div>
+      <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar</button>
+      <div style="margin-top:14px;text-align:right;font-family:'Sora',sans-serif;font-weight:700;color:var(--blue)">
+        Total: <span id="totalHoras">0</span>h</div></div>`,
+
+  cultura: `
+    <div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <textarea id="sintese" placeholder="Contexto do trabalho em cultura..."></textarea></div>
+    <div class="section"><h2 class="section-title">Rituais Definidos ou Ajustados</h2>
+      <div id="rituaisContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('rituais','Ritual')">+ Adicionar Ritual</button></div>
+    <div class="section"><h2 class="section-title">Políticas e Combinados</h2>
+      <div id="politicasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('politicas','Política')">+ Adicionar Política</button></div>
+    <div class="section"><h2 class="section-title">Comunicação para o Time</h2>
+      <div id="comunicacaoContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('comunicacao','Entrega')">+ Adicionar Entrega</button></div>
+    <div class="section"><h2 class="section-title">Adoção</h2>
+      <div class="form-group"><label>O que está sendo praticado</label>
+        <textarea id="adocao" placeholder="Liste o que já está sendo adotado pela equipe..."></textarea></div></div>
+    <div class="section"><h2 class="section-title">Tempo por Ação</h2>
+      <div id="tempoTarefaContainer"></div>
+      <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar</button>
+      <div style="margin-top:14px;text-align:right;font-family:'Sora',sans-serif;font-weight:700;color:var(--blue)">
+        Total: <span id="totalHoras">0</span>h</div></div>`,
+
+  personalizados: `
+    <div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <textarea id="sintese" placeholder="Contexto do projeto personalizado..."></textarea></div>
+    <div class="section"><h2 class="section-title">Objetivo do Projeto</h2>
+      <textarea id="objetivoProjeto" placeholder="Descreva o objetivo principal..."></textarea></div>
+    <div class="section"><h2 class="section-title">Entregas do Mês</h2>
+      <div id="entregasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('entregas','Entrega')">+ Adicionar Entrega</button></div>
+    <div class="section"><h2 class="section-title">Dependências</h2>
+      <div id="dependenciasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('dependencias','Dependência')">+ Adicionar Dependência</button></div>
+    <div class="section"><h2 class="section-title">Próximas Etapas</h2>
+      <div id="proximasEtapasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('proximasEtapas','Etapa')">+ Adicionar Etapa</button></div>
+    <div class="section"><h2 class="section-title">Tempo por Tarefa</h2>
+      <div id="tempoTarefaContainer"></div>
+      <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar</button>
+      <div style="margin-top:14px;text-align:right;font-family:'Sora',sans-serif;font-weight:700;color:var(--blue)">
+        Total: <span id="totalHoras">0</span>h</div></div>`,
+
+  mentoria: `
+    <div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <textarea id="sintese" placeholder="Contexto do ciclo de mentoria..."></textarea></div>
+    <div class="section"><h2 class="section-title">Objetivo do Ciclo</h2>
+      <textarea id="objetivoCiclo" placeholder="Descreva o objetivo da mentoria..."></textarea></div>
+    <div class="section"><h2 class="section-title">Temas do Mês</h2>
+      <div id="temasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('temas','Tema')">+ Adicionar Tema</button></div>
+    <div class="section"><h2 class="section-title">Exercícios Propostos</h2>
+      <div id="exerciciosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('exercicios','Exercício')">+ Adicionar Exercício</button></div>
+    <div class="section"><h2 class="section-title">Evolução Técnica e Comportamental</h2>
+      <div id="evolucaoContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('evolucao','Tópico')">+ Adicionar Tópico</button></div>
+    <div class="section"><h2 class="section-title">Próximos Passos</h2>
+      <div id="proximosPassosContainer"></div>
+      <button class="btn btn-add" onclick="adicionarItem('proximosPassos','Passo')">+ Adicionar Passo</button></div>
+    <div class="section"><h2 class="section-title">Tempo por Sessão e Preparação</h2>
+      <div id="tempoTarefaContainer"></div>
+      <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar</button>
+      <div style="margin-top:14px;text-align:right;font-family:'Sora',sans-serif;font-weight:700;color:var(--blue)">
+        Total: <span id="totalHoras">0</span>h</div></div>`
+};
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+window.onload = function() {
+  protocoloAtual = gerarProtocolo();
+  document.getElementById('protocolo-display').textContent = 'Protocolo: ' + protocoloAtual;
+};
+
+// ── CAMPOS DINÂMICOS ───────────────────────────────────────────────────────
+function trocarCampos() {
+  const tipo = document.getElementById('tipoServico').value;
+  const container = document.getElementById('camposDinamicos');
+  if (!tipo) { container.innerHTML = ''; return; }
+  container.innerHTML = templatesCampos[tipo] || '';
+  dadosDinamicos = {};
+}
+
+// ── ITENS GENÉRICOS ────────────────────────────────────────────────────────
+function adicionarItem(tipo, label) {
+  if (!dadosDinamicos[tipo]) dadosDinamicos[tipo] = [];
+  dadosDinamicos[tipo].push({ id: Date.now(), texto: '' });
+  renderItens(tipo, label);
+}
+function renderItens(tipo, label) {
+  const c = document.getElementById(tipo + 'Container');
+  if (!c) return;
+  c.innerHTML = dadosDinamicos[tipo].map((item, i) => `
+    <div class="item-card">
+      <div class="item-header">
+        <span class="item-number">${label} ${i+1}</span>
+        <button class="btn btn-remove" onclick="removerItem('${tipo}',${item.id})">Remover</button>
+      </div>
+      <textarea placeholder="Descreva..." oninput="dadosDinamicos['${tipo}'][${i}].texto=this.value">${item.texto}</textarea>
+    </div>`).join('');
+}
+function removerItem(tipo, id) {
+  dadosDinamicos[tipo] = dadosDinamicos[tipo].filter(x => x.id !== id);
+  renderItens(tipo, tipo.charAt(0).toUpperCase()+tipo.slice(1));
+}
+
+// ── TEMPO POR TAREFA ───────────────────────────────────────────────────────
+function adicionarTarefaTempo() {
+  if (!dadosDinamicos.tempoTarefa) dadosDinamicos.tempoTarefa = [];
+  dadosDinamicos.tempoTarefa.push({ id: Date.now(), tarefa:'', tipo:'', status:'', horas:0 });
+  renderTempoTarefa();
+}
+function renderTempoTarefa() {
+  const c = document.getElementById('tempoTarefaContainer');
+  if (!c) return;
+  c.innerHTML = dadosDinamicos.tempoTarefa.map((item, i) => `
+    <div class="item-card">
+      <div class="item-header">
+        <span class="item-number">Tarefa ${i+1}</span>
+        <button class="btn btn-remove" onclick="removerTarefaTempo(${item.id})">Remover</button>
+      </div>
+      <div class="grid-2">
+        <div class="form-group"><label>Tarefa</label>
+          <input type="text" placeholder="Nome da tarefa" value="${item.tarefa}" oninput="dadosDinamicos.tempoTarefa[${i}].tarefa=this.value"/></div>
+        <div class="form-group"><label>Tipo</label>
+          <select oninput="dadosDinamicos.tempoTarefa[${i}].tipo=this.value">
+            <option value="">Selecione...</option>
+            <option ${item.tipo==='People'?'selected':''}>People</option>
+            <option ${item.tipo==='Process'?'selected':''}>Process</option>
+            <option ${item.tipo==='Performance'?'selected':''}>Performance</option>
+          </select></div></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Status</label>
+          <select oninput="dadosDinamicos.tempoTarefa[${i}].status=this.value">
+            <option value="">Selecione...</option>
+            <option ${item.status==='Feito'?'selected':''}>Feito</option>
+            <option ${item.status==='Em Andamento'?'selected':''}>Em Andamento</option>
+            <option ${item.status==='Bloqueado'?'selected':''}>Bloqueado</option>
+          </select></div>
+        <div class="form-group"><label>Horas</label>
+          <input type="number" placeholder="0" value="${item.horas}" oninput="dadosDinamicos.tempoTarefa[${i}].horas=parseFloat(this.value)||0;calcularTotalHoras()"/></div></div>
+    </div>`).join('');
+  calcularTotalHoras();
+}
+function removerTarefaTempo(id) {
+  dadosDinamicos.tempoTarefa = dadosDinamicos.tempoTarefa.filter(x => x.id !== id);
+  renderTempoTarefa();
+}
+function calcularTotalHoras() {
+  if (!dadosDinamicos.tempoTarefa) return;
+  const total = dadosDinamicos.tempoTarefa.reduce((s,x) => s+(parseFloat(x.horas)||0), 0);
+  const el = document.getElementById('totalHoras');
+  if (el) el.textContent = total.toFixed(1);
+}
+
+// ── VAGAS ──────────────────────────────────────────────────────────────────
+function adicionarVaga() {
+  if (!dadosDinamicos.vagas) dadosDinamicos.vagas = [];
+  dadosDinamicos.vagas.push({ id:Date.now(), vaga:'', area:'', status:'', dataAbertura:'', slaPrevisto:'', slaReal:'' });
+  renderVagas();
+}
+function renderVagas() {
+  const c = document.getElementById('vagasContainer'); if (!c) return;
+  c.innerHTML = dadosDinamicos.vagas.map((v,i) => `
+    <div class="item-card">
+      <div class="item-header"><span class="item-number">Vaga ${i+1}</span>
+        <button class="btn btn-remove" onclick="removerVaga(${v.id})">Remover</button></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Vaga</label>
+          <input type="text" placeholder="Ex: Analista de RH" value="${v.vaga}" oninput="dadosDinamicos.vagas[${i}].vaga=this.value"/></div>
+        <div class="form-group"><label>Área</label>
+          <input type="text" placeholder="Ex: Recursos Humanos" value="${v.area}" oninput="dadosDinamicos.vagas[${i}].area=this.value"/></div></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Status</label>
+          <select oninput="dadosDinamicos.vagas[${i}].status=this.value">
+            <option value="">Selecione...</option>
+            ${['Briefing','Divulgação','Triagem','Entrevistas','Proposta','Finalizada'].map(s=>`<option ${v.status===s?'selected':''}>${s}</option>`).join('')}
+          </select></div>
+        <div class="form-group"><label>Data de Abertura</label>
+          <input type="text" placeholder="DD/MM/AAAA" value="${v.dataAbertura}" oninput="dadosDinamicos.vagas[${i}].dataAbertura=this.value"/></div></div>
+      <div class="grid-2">
+        <div class="form-group"><label>SLA Previsto</label>
+          <input type="text" placeholder="Ex: 15 dias" value="${v.slaPrevisto}" oninput="dadosDinamicos.vagas[${i}].slaPrevisto=this.value"/></div>
+        <div class="form-group"><label>SLA Real</label>
+          <input type="text" placeholder="Ex: 12 dias" value="${v.slaReal}" oninput="dadosDinamicos.vagas[${i}].slaReal=this.value"/></div></div>
+    </div>`).join('');
+}
+function removerVaga(id) { dadosDinamicos.vagas=dadosDinamicos.vagas.filter(x=>x.id!==id); renderVagas(); }
+
+// ── FUNIL ──────────────────────────────────────────────────────────────────
+function adicionarFunil() {
+  if (!dadosDinamicos.funil) dadosDinamicos.funil = [];
+  dadosDinamicos.funil.push({ id:Date.now(), vaga:'', candidaturas:0, triados:0, entrevistadosAzumi:0, encaminhados:0, entrevistadosCliente:0, aprovados:0, contratados:0, desistencias:0 });
+  renderFunil();
+}
+function renderFunil() {
+  const c = document.getElementById('funilContainer'); if (!c) return;
+  c.innerHTML = dadosDinamicos.funil.map((f,i) => `
+    <div class="item-card">
+      <div class="item-header"><span class="item-number">Funil ${i+1}</span>
+        <button class="btn btn-remove" onclick="removerFunil(${f.id})">Remover</button></div>
+      <div class="form-group"><label>Vaga</label>
+        <input type="text" placeholder="Nome da vaga" value="${f.vaga}" oninput="dadosDinamicos.funil[${i}].vaga=this.value"/></div>
+      <div class="grid-3">
+        <div class="form-group"><label>Candidaturas</label><input type="number" value="${f.candidaturas}" oninput="dadosDinamicos.funil[${i}].candidaturas=this.value"/></div>
+        <div class="form-group"><label>Triados</label><input type="number" value="${f.triados}" oninput="dadosDinamicos.funil[${i}].triados=this.value"/></div>
+        <div class="form-group"><label>Entrev. Azumi</label><input type="number" value="${f.entrevistadosAzumi}" oninput="dadosDinamicos.funil[${i}].entrevistadosAzumi=this.value"/></div></div>
+      <div class="grid-3">
+        <div class="form-group"><label>Encaminhados</label><input type="number" value="${f.encaminhados}" oninput="dadosDinamicos.funil[${i}].encaminhados=this.value"/></div>
+        <div class="form-group"><label>Entrev. Cliente</label><input type="number" value="${f.entrevistadosCliente}" oninput="dadosDinamicos.funil[${i}].entrevistadosCliente=this.value"/></div>
+        <div class="form-group"><label>Aprovados</label><input type="number" value="${f.aprovados}" oninput="dadosDinamicos.funil[${i}].aprovados=this.value"/></div></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Contratados</label><input type="number" value="${f.contratados}" oninput="dadosDinamicos.funil[${i}].contratados=this.value"/></div>
+        <div class="form-group"><label>Desistências</label><input type="number" value="${f.desistencias}" oninput="dadosDinamicos.funil[${i}].desistencias=this.value"/></div></div>
+    </div>`).join('');
+}
+function removerFunil(id) { dadosDinamicos.funil=dadosDinamicos.funil.filter(x=>x.id!==id); renderFunil(); }
+
+// ── SOURCING ───────────────────────────────────────────────────────────────
+function adicionarSourcing() {
+  if (!dadosDinamicos.sourcing) dadosDinamicos.sourcing = [];
+  dadosDinamicos.sourcing.push({ id:Date.now(), canal:'', resultado:'' });
+  renderSourcing();
+}
+function renderSourcing() {
+  const c = document.getElementById('sourcingContainer'); if (!c) return;
+  c.innerHTML = dadosDinamicos.sourcing.map((s,i) => `
+    <div class="item-card">
+      <div class="item-header"><span class="item-number">Ação ${i+1}</span>
+        <button class="btn btn-remove" onclick="removerSourcing(${s.id})">Remover</button></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Canal</label>
+          <input type="text" placeholder="Ex: LinkedIn" value="${s.canal}" oninput="dadosDinamicos.sourcing[${i}].canal=this.value"/></div>
+        <div class="form-group"><label>Resultado</label>
+          <input type="text" placeholder="Ex: 15 candidatos" value="${s.resultado}" oninput="dadosDinamicos.sourcing[${i}].resultado=this.value"/></div></div>
+    </div>`).join('');
+}
+function removerSourcing(id) { dadosDinamicos.sourcing=dadosDinamicos.sourcing.filter(x=>x.id!==id); renderSourcing(); }
+
+// ── SHORTLIST ──────────────────────────────────────────────────────────────
+function adicionarShortlist() {
+  if (!dadosDinamicos.shortlist) dadosDinamicos.shortlist = [];
+  dadosDinamicos.shortlist.push({ id:Date.now(), nome:'', status:'', proximaEtapa:'' });
+  renderShortlist();
+}
+function renderShortlist() {
+  const c = document.getElementById('shortlistContainer'); if (!c) return;
+  c.innerHTML = dadosDinamicos.shortlist.map((s,i) => `
+    <div class="item-card">
+      <div class="item-header"><span class="item-number">Candidato ${i+1}</span>
+        <button class="btn btn-remove" onclick="removerShortlist(${s.id})">Remover</button></div>
+      <div class="grid-3">
+        <div class="form-group"><label>Nome/Identificador</label>
+          <input type="text" placeholder="Ex: Candidato A" value="${s.nome}" oninput="dadosDinamicos.shortlist[${i}].nome=this.value"/></div>
+        <div class="form-group"><label>Status</label>
+          <input type="text" placeholder="Ex: Interesse" value="${s.status}" oninput="dadosDinamicos.shortlist[${i}].status=this.value"/></div>
+        <div class="form-group"><label>Próxima Etapa</label>
+          <input type="text" placeholder="Ex: Entrevista" value="${s.proximaEtapa}" oninput="dadosDinamicos.shortlist[${i}].proximaEtapa=this.value"/></div></div>
+    </div>`).join('');
+}
+function removerShortlist(id) { dadosDinamicos.shortlist=dadosDinamicos.shortlist.filter(x=>x.id!==id); renderShortlist(); }
+
+// ── MATERIAIS ──────────────────────────────────────────────────────────────
+function adicionarMaterial() {
+  if (!dadosDinamicos.materiais) dadosDinamicos.materiais = [];
+  dadosDinamicos.materiais.push({ id:Date.now(), material:'', link:'' });
+  renderMateriais();
+}
+function renderMateriais() {
+  const c = document.getElementById('materiaisContainer'); if (!c) return;
+  c.innerHTML = dadosDinamicos.materiais.map((m,i) => `
+    <div class="item-card">
+      <div class="item-header"><span class="item-number">Material ${i+1}</span>
+        <button class="btn btn-remove" onclick="removerMaterial(${m.id})">Remover</button></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Material</label>
+          <input type="text" placeholder="Ex: Vídeo Institucional" value="${m.material}" oninput="dadosDinamicos.materiais[${i}].material=this.value"/></div>
+        <div class="form-group"><label>Link Interno</label>
+          <input type="text" placeholder="URL ou localização" value="${m.link}" oninput="dadosDinamicos.materiais[${i}].link=this.value"/></div></div>
+    </div>`).join('');
+}
+function removerMaterial(id) { dadosDinamicos.materiais=dadosDinamicos.materiais.filter(x=>x.id!==id); renderMateriais(); }
+
+// ── ENTREGAS COM DATA ──────────────────────────────────────────────────────
+function adicionarEntregaData() {
+  if (!dadosDinamicos.entregasConcluidas) dadosDinamicos.entregasConcluidas = [];
+  dadosDinamicos.entregasConcluidas.push({ id:Date.now(), entrega:'', data:'' });
+  renderEntregasData();
+}
+function renderEntregasData() {
+  const c = document.getElementById('entregasConcluidasContainer'); if (!c) return;
+  c.innerHTML = dadosDinamicos.entregasConcluidas.map((e,i) => `
+    <div class="item-card">
+      <div class="item-header"><span class="item-number">Entrega ${i+1}</span>
+        <button class="btn btn-remove" onclick="removerEntregaData(${e.id})">Remover</button></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Entrega</label>
+          <input type="text" placeholder="Descrição" value="${e.entrega}" oninput="dadosDinamicos.entregasConcluidas[${i}].entrega=this.value"/></div>
+        <div class="form-group"><label>Data</label>
+          <input type="text" placeholder="DD/MM/AAAA" value="${e.data}" oninput="dadosDinamicos.entregasConcluidas[${i}].data=this.value"/></div></div>
+    </div>`).join('');
+}
+function removerEntregaData(id) { dadosDinamicos.entregasConcluidas=dadosDinamicos.entregasConcluidas.filter(x=>x.id!==id); renderEntregasData(); }
+
+// ── ETAPA + RESPONSÁVEL ────────────────────────────────────────────────────
+function adicionarEtapaResponsavel() {
+  if (!dadosDinamicos.proximasEtapas) dadosDinamicos.proximasEtapas = [];
+  dadosDinamicos.proximasEtapas.push({ id:Date.now(), etapa:'', responsavel:'' });
+  renderEtapasResponsavel();
+}
+function renderEtapasResponsavel() {
+  const c = document.getElementById('proximasEtapasContainer') || document.getElementById('proximosPassosContainer');
+  if (!c) return;
+  c.innerHTML = dadosDinamicos.proximasEtapas.map((e,i) => `
+    <div class="item-card">
+      <div class="item-header"><span class="item-number">Etapa ${i+1}</span>
+        <button class="btn btn-remove" onclick="removerEtapaResponsavel(${e.id})">Remover</button></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Etapa</label>
+          <input type="text" placeholder="Descrição" value="${e.etapa}" oninput="dadosDinamicos.proximasEtapas[${i}].etapa=this.value"/></div>
+        <div class="form-group"><label>Responsável</label>
+          <input type="text" placeholder="Nome" value="${e.responsavel}" oninput="dadosDinamicos.proximasEtapas[${i}].responsavel=this.value"/></div></div>
+    </div>`).join('');
+}
+function removerEtapaResponsavel(id) { dadosDinamicos.proximasEtapas=dadosDinamicos.proximasEtapas.filter(x=>x.id!==id); renderEtapasResponsavel(); }
+
+// ── PASSO + DATA ───────────────────────────────────────────────────────────
+function adicionarPassoData() {
+  if (!dadosDinamicos.proximosPassos) dadosDinamicos.proximosPassos = [];
+  dadosDinamicos.proximosPassos.push({ id:Date.now(), passo:'', data:'' });
+  renderPassosData();
+}
+function renderPassosData() {
+  const c = document.getElementById('proximosPassosContainer'); if (!c) return;
+  c.innerHTML = dadosDinamicos.proximosPassos.map((p,i) => `
+    <div class="item-card">
+      <div class="item-header"><span class="item-number">Passo ${i+1}</span>
+        <button class="btn btn-remove" onclick="removerPassoData(${p.id})">Remover</button></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Passo</label>
+          <input type="text" placeholder="Descrição" value="${p.passo}" oninput="dadosDinamicos.proximosPassos[${i}].passo=this.value"/></div>
+        <div class="form-group"><label>Data</label>
+          <input type="text" placeholder="DD/MM/AAAA" value="${p.data}" oninput="dadosDinamicos.proximosPassos[${i}].data=this.value"/></div></div>
+    </div>`).join('');
+}
+function removerPassoData(id) { dadosDinamicos.proximosPassos=dadosDinamicos.proximosPassos.filter(x=>x.id!==id); renderPassosData(); }
+
+// ── SALVAR / CARREGAR ──────────────────────────────────────────────────────
+function salvarRascunho() {
+  const dados = {
+    contratante: document.getElementById('contratante').value,
+    cnpjContratante: document.getElementById('cnpjContratante').value,
+    referencia: document.getElementById('referencia').value,
+    horasContratadas: document.getElementById('horasContratadas').value,
+    tipoServico: document.getElementById('tipoServico').value,
+    consideracoes: document.getElementById('consideracoes').value,
+    nomeConsultor: document.getElementById('nomeConsultor').value,
+    cargoConsultor: document.getElementById('cargoConsultor').value,
+    localData: document.getElementById('localData').value,
+    protocolo: protocoloAtual,
+    dadosDinamicos
+  };
+  localStorage.setItem('azumi_relatorio_v3', JSON.stringify(dados));
+  alert('✅ Rascunho salvo com sucesso!\nProtocolo: ' + protocoloAtual);
+}
+
+function carregarRascunho() {
+  const dados = JSON.parse(localStorage.getItem('azumi_relatorio_v3'));
+  if (!dados) return alert('❌ Nenhum rascunho encontrado.');
+  document.getElementById('contratante').value = dados.contratante || '';
+  document.getElementById('cnpjContratante').value = dados.cnpjContratante || '';
+  document.getElementById('referencia').value = dados.referencia || '';
+  document.getElementById('horasContratadas').value = dados.horasContratadas || '';
+  document.getElementById('tipoServico').value = dados.tipoServico || '';
+  document.getElementById('consideracoes').value = dados.consideracoes || '';
+  document.getElementById('nomeConsultor').value = dados.nomeConsultor || '';
+  document.getElementById('cargoConsultor').value = dados.cargoConsultor || '';
+  document.getElementById('localData').value = dados.localData || '';
+  if (dados.protocolo) {
+    protocoloAtual = dados.protocolo;
+    document.getElementById('protocolo-display').textContent = 'Protocolo: ' + protocoloAtual;
+  }
+  trocarCampos();
+  dadosDinamicos = dados.dadosDinamicos || {};
+  setTimeout(() => {
+    Object.keys(dadosDinamicos).forEach(key => {
+      const fn = window['render' + key.charAt(0).toUpperCase() + key.slice(1)];
+      if (fn) fn();
+    });
+  }, 100);
+  alert('✅ Rascunho carregado!\nProtocolo: ' + protocoloAtual);
+}
+
+function limparTudo() {
+  if (!confirm('⚠️ Tem certeza que deseja limpar todo o formulário?')) return;
+  document.querySelectorAll('input, textarea, select').forEach(el => el.value = '');
+  dadosDinamicos = {};
+  document.getElementById('camposDinamicos').innerHTML = '';
+  alert('✅ Formulário limpo!');
+}
+
+// ── GERAR VISUALIZAÇÃO ─────────────────────────────────────────────────────
+function gerarVisualizacao() {
+  const contratante = document.getElementById('contratante').value;
+  const referencia  = document.getElementById('referencia').value;
+  if (!contratante || !referencia) {
+    alert('⚠️ Preencha pelo menos o Nome do Contratante e o Mês de Referência');
+    return;
+  }
+  const dados = coletarTodosDados();
+  const html  = gerarHTMLRelatorio(dados);
+  const blob  = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url   = URL.createObjectURL(blob);
+  const nova  = window.open(url, '_blank');
+  if (!nova) alert('⚠️ Pop-up bloqueado. Permita pop-ups para este site.');
+  setTimeout(() => URL.revokeObjectURL(url), 120000);
+}
+
+function coletarTodosDados() {
+  return {
+    contratante: document.getElementById('contratante').value,
+    cnpjContratante: document.getElementById('cnpjContratante').value,
+    referencia: document.getElementById('referencia').value,
+    horasContratadas: document.getElementById('horasContratadas').value,
+    tipoServico: document.getElementById('tipoServico').value,
+    tipoServicoTexto: document.getElementById('tipoServico').options[document.getElementById('tipoServico').selectedIndex]?.text || '',
+    sintese: document.getElementById('sintese')?.value || '',
+    consideracoes: document.getElementById('consideracoes').value,
+    nomeConsultor: document.getElementById('nomeConsultor').value,
+    cargoConsultor: document.getElementById('cargoConsultor').value,
+    localData: document.getElementById('localData').value,
+    protocolo: protocoloAtual,
+    dadosDinamicos
+  };
+}
+
+// ── HTML DO RELATÓRIO GERADO ───────────────────────────────────────────────
+function gerarHTMLRelatorio(dados) {
+  let conteudo = '';
+
+  if (dados.sintese) {
+    conteudo += `<div class="section"><h2 class="section-title">Síntese Executiva</h2>
+      <div class="text-content">${dados.sintese}</div></div>`;
+  }
+
+  const listas = ['objetivos','entregas','pendencias','backlog','riscos','escopo','atividades','bloqueios',
+    'coletas','achados','evidencias','hipoteses','recomendacoes','modulos','documentos','rituais','treinamentos',
+    'campanhas','calendario','proximasAcoes','temas','planoAcao','conteudo','acoes','evolucao','proximosPassos',
+    'politicas','comunicacao','dependencias','proximasEtapas','exercicios'];
+  listas.forEach(l => {
+    if (dados.dadosDinamicos[l]?.length) {
+      const titulo = l.charAt(0).toUpperCase()+l.slice(1).replace(/([A-Z])/g,' $1');
+      conteudo += `<div class="section"><h2 class="section-title">${titulo}</h2>
+        <div class="item-list">${dados.dadosDinamicos[l].map(x=>x.texto?`<div class="item">${x.texto}</div>`:'').join('')}</div></div>`;
+    }
+  });
+
+  if (dados.dadosDinamicos.tempoTarefa?.length) {
+    const total = dados.dadosDinamicos.tempoTarefa.reduce((s,t)=>s+(parseFloat(t.horas)||0),0);
+    conteudo += `<div class="section"><h2 class="section-title">Tempo por Tarefa</h2>
+      <table class="table"><thead><tr><th>Tarefa</th><th>Tipo</th><th>Status</th><th>Horas</th></tr></thead>
+      <tbody>${dados.dadosDinamicos.tempoTarefa.map(t=>`
+        <tr><td>${t.tarefa||'-'}</td><td>${t.tipo||'-'}</td><td>${t.status||'-'}</td><td>${t.horas||0}h</td></tr>`).join('')}
+        <tr style="font-weight:700;background:#e8f0fb"><td colspan="3" style="text-align:right">Total:</td><td>${total.toFixed(1)}h</td></tr>
+      </tbody></table></div>`;
+    if (dados.horasContratadas) {
+      const cont = parseFloat(dados.horasContratadas), dif = cont - total;
+      conteudo += `<div style="background:#fff3cd;border-left:4px solid ${dif>=0?'#22c55e':'#dc3545'};padding:14px;margin:18px 0;border-radius:8px;font-size:.88em">
+        <strong>Alerta de Horas:</strong><br>
+        Contratadas: ${cont}h · Realizadas: ${total.toFixed(1)}h · Diferença: ${Math.abs(dif).toFixed(1)}h ${dif>=0?'dentro':'acima'} do contratado</div>`;
+    }
+  }
+
+  if (dados.dadosDinamicos.vagas?.length) {
+    conteudo += `<div class="section"><h2 class="section-title">Vagas em Andamento</h2>
+      <table class="table"><thead><tr><th>Vaga</th><th>Área</th><th>Status</th><th>Data Abertura</th><th>SLA Previsto</th><th>SLA Real</th></tr></thead>
+      <tbody>${dados.dadosDinamicos.vagas.map(v=>`
+        <tr><td>${v.vaga||'-'}</td><td>${v.area||'-'}</td><td>${v.status||'-'}</td><td>${v.dataAbertura||'-'}</td><td>${v.slaPrevisto||'-'}</td><td>${v.slaReal||'-'}</td></tr>`).join('')}
+      </tbody></table></div>`;
+  }
+
+  if (dados.dadosDinamicos.funil?.length) {
+    conteudo += `<div class="section"><h2 class="section-title">Funil por Vaga</h2>
+      ${dados.dadosDinamicos.funil.map(f=>`
+        <div style="margin-bottom:18px"><h3 style="color:#034C8B;font-size:.95em;margin-bottom:8px">${f.vaga||'Vaga'}</h3>
+        <table class="table">
+          <tr><td>Candidaturas Recebidas</td><td>${f.candidaturas||0}</td></tr>
+          <tr><td>Triados</td><td>${f.triados||0}</td></tr>
+          <tr><td>Entrevistados Azumi</td><td>${f.entrevistadosAzumi||0}</td></tr>
+          <tr><td>Encaminhados ao Cliente</td><td>${f.encaminhados||0}</td></tr>
+          <tr><td>Entrevistados pelo Cliente</td><td>${f.entrevistadosCliente||0}</td></tr>
+          <tr><td>Aprovados</td><td>${f.aprovados||0}</td></tr>
+          <tr><td>Contratados</td><td>${f.contratados||0}</td></tr>
+          <tr><td>Desistências</td><td>${f.desistencias||0}</td></tr>
+        </table></div>`).join('')}</div>`;
+  }
+
+  return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório Mensal - ${dados.contratante}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,300&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.5;
-            color: #222222;
-            background: #ededed;
-            margin: 0;
-            padding: 20px 0;
-            font-size: 11pt;
-        }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Relatório Mensal — ${dados.contratante}</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Sora:wght@600;700;800&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--blue:#034C8B;--blue2:#3B82F6;--violet:#8B5CF6;--ice:#93C5FD;--gray:#778082;--light:#EDEDED;
+  --gm:linear-gradient(135deg,#034C8B 0%,#3B82F6 50%,#8B5CF6 100%);
+  --gh:linear-gradient(135deg,#031D38 0%,#034C8B 40%,#3B82F6 75%,#8B5CF6 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;line-height:1.5;color:#222;background:#ededed;padding:20px 0;font-size:11pt}
 
-        /* ── LOGO AZUMI RH PADRÃO ── */
-        .logo-azumi {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            text-transform: lowercase;
-        }
-        .logo-rh {
-            font-family: 'Avenir', 'Nunito', sans-serif;
-            font-weight: 300;
-            font-style: italic;
-            text-transform: uppercase;
-            margin-left: 2px;
-        }
+/* ── LOGO: REGRA POR FUNDO ──
+   Fundo escuro (header/gradient): azumi=branco, RH=ice sólido
+   Fundo claro (body, footer):     azumi=azul,   RH=gradiente clip
+*/
+.logo-on-dark .logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;color:#fff;letter-spacing:-.01em}
+.logo-on-dark .logo-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;color:#93C5FD;margin-left:1px}
 
-        .page {
-            max-width: 210mm;
-            min-height: 297mm;
-            margin: 0 auto;
-            background: white;
-            box-shadow: 0 0 24px rgba(0,0,0,.15);
-        }
+.logo-on-light .logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;color:#034C8B;letter-spacing:-.01em}
+.logo-on-light .logo-rh{
+  font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;
+  background:linear-gradient(135deg,#034C8B 0%,#3B82F6 50%,#8B5CF6 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-left:1px;
+}
 
-        .p-hdr {
-            background: #034c8b;
-            padding: 28px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+/* ── BARRA DE IMPRESSÃO ── */
+.print-bar{
+  max-width:210mm;margin:0 auto 14px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--gh);border-radius:12px;padding:10px 22px;
+  position:relative;overflow:hidden;
+}
+.print-bar::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 40% 80% at 90%,rgba(139,92,246,.2),transparent 60%)}
+.print-bar-inner{position:relative;display:flex;justify-content:space-between;align-items:center;width:100%}
+.print-logo{display:flex;align-items:center;gap:8px}
+.print-logo .logo-azumi{font-size:20px}
+.print-logo .logo-rh{font-size:20px}
+.print-btns{display:flex;gap:10px;align-items:center}
+.print-hint{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(147,197,253,.7);letter-spacing:.04em}
+.btn-print{background:#fff;color:var(--blue);border:none;border-radius:100px;padding:8px 20px;
+  font-size:12px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif}
 
-        .p-hdr-info {
-            text-align: left;
-        }
+/* ── PAGE ── */
+.page{max-width:210mm;min-height:297mm;margin:0 auto;background:#fff;box-shadow:0 0 24px rgba(0,0,0,.15)}
 
-        .p-hdr-info h1 {
-            font-size: 1.4em;
-            color: #ffffff;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
+/* ── HEADER DO RELATÓRIO ── */
+.p-hdr{
+  background:var(--gh);padding:26px 40px;
+  display:flex;justify-content:space-between;align-items:center;
+  position:relative;overflow:hidden;
+}
+.p-hdr::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.25),transparent 60%)}
+.p-hdr-inner{position:relative;display:flex;justify-content:space-between;align-items:center;width:100%}
+.p-hdr-info h1{font-family:'Sora',sans-serif;font-size:1.35em;font-weight:800;color:#fff;margin-bottom:3px}
+.p-hdr-info p{font-family:'JetBrains Mono',monospace;font-size:.78em;color:rgba(147,197,253,.8);letter-spacing:.06em}
+.p-hdr-logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.p-hdr-logo .logo-azumi{font-size:24px}
+.p-hdr-logo .logo-rh{font-size:24px}
 
-        .p-hdr-info p {
-            font-size: 0.9em;
-            color: rgba(255,255,255,0.85);
-        }
+/* ── BODY ── */
+.p-body{padding:28px 40px}
+.empresa-info{
+  background:#f5f8fc;padding:11px 14px;border-radius:8px;
+  margin-bottom:22px;font-size:.84em;border-left:3px solid var(--blue2);
+  font-family:'Space Grotesk',sans-serif;
+}
+.empresa-info strong{color:var(--blue)}
 
-        .p-hdr-logo {
-            font-size: 26px;
-            color: #ffffff;
-            line-height: 1;
-            text-align: right;
-        }
+/* Protocolo no relatório */
+.protocolo-info{
+  font-family:'JetBrains Mono',monospace;font-size:.72em;letter-spacing:.07em;
+  color:var(--gray);margin-top:5px;
+}
 
-        .p-body {
-            padding: 30px 40px;
-        }
+.section{margin-bottom:22px;page-break-inside:avoid}
+.section-title{
+  font-family:'Sora',sans-serif;font-size:1em;font-weight:700;color:var(--blue);
+  padding-bottom:6px;margin-bottom:11px;
+  border-bottom:2px solid;border-image:linear-gradient(90deg,#034C8B,#8B5CF6) 1;
+}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;margin-bottom:10px}
+.info-item{margin-bottom:6px}
+.info-label{font-family:'JetBrains Mono',monospace;font-size:.7em;font-weight:500;color:var(--gray);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px}
+.info-value{font-family:'Space Grotesk',sans-serif;font-size:.88em;color:#222}
+.text-content{font-size:.88em;line-height:1.6;color:#222;text-align:justify}
+.item-list{margin:10px 0}
+.item{margin-bottom:8px;padding-left:16px;position:relative;font-size:.88em}
+.item::before{content:"•";position:absolute;left:0;color:var(--blue2);font-weight:700;font-size:1.1em}
+.table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.84em}
+.table th{background:var(--gh);color:#fff;padding:8px 10px;text-align:left;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.88em}
+.table td{padding:7px 10px;border-bottom:1px solid var(--light)}
+.table tr:last-child td{border-bottom:none}
+.signature{margin-top:36px;text-align:right}
+.signature-line{border-top:1px solid #222;display:inline-block;min-width:260px;margin-top:48px;padding-top:6px}
+.signature-name{font-family:'Sora',sans-serif;font-weight:700;color:var(--blue);margin-bottom:2px;font-size:.93em}
+.signature-role{font-family:'Space Grotesk',sans-serif;font-size:.83em;color:var(--gray)}
+.footer{
+  margin-top:36px;padding-top:14px;border-top:1.5px solid var(--light);
+  text-align:center;font-family:'JetBrains Mono',monospace;font-size:.72em;color:var(--gray);letter-spacing:.04em;
+}
+.footer-logo{display:inline-flex;align-items:center;gap:6px;margin-bottom:4px}
+.footer-logo .logo-azumi{font-size:14px}
+.footer-logo .logo-rh{font-size:14px}
 
-        .empresa-info {
-            background: #fafafa;
-            padding: 12px 15px;
-            border-radius: 6px;
-            margin-bottom: 25px;
-            font-size: 0.85em;
-            border-left: 3px solid #017ccb;
-        }
-
-        .empresa-info strong {
-            color: #034c8b;
-        }
-
-        .section {
-            margin-bottom: 25px;
-            page-break-inside: avoid;
-        }
-
-        .section-title {
-            font-size: 1.05em;
-            font-weight: 600;
-            color: #034c8b;
-            padding-bottom: 6px;
-            border-bottom: 2px solid #017ccb;
-            margin-bottom: 12px;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px 25px;
-            margin-bottom: 12px;
-        }
-
-        .info-item {
-            margin-bottom: 8px;
-        }
-
-        .info-label {
-            font-size: 0.75em;
-            font-weight: 600;
-            color: #778082;
-            text-transform: uppercase;
-            margin-bottom: 2px;
-        }
-
-        .info-value {
-            font-size: 0.9em;
-            color: #222222;
-        }
-
-        .text-content {
-            font-size: 0.9em;
-            line-height: 1.6;
-            color: #222222;
-            text-align: justify;
-        }
-
-        .item-list {
-            margin: 12px 0;
-        }
-
-        .item {
-            margin-bottom: 10px;
-            padding-left: 18px;
-            position: relative;
-            font-size: 0.9em;
-        }
-
-        .item:before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: #017ccb;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 12px 0;
-            font-size: 0.85em;
-        }
-
-        .table th {
-            background: #034c8b;
-            color: white;
-            padding: 8px 10px;
-            text-align: left;
-            font-weight: 500;
-            font-size: 0.9em;
-        }
-
-        .table td {
-            padding: 8px 10px;
-            border-bottom: 1px solid #ededed;
-        }
-
-        .table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .signature {
-            margin-top: 40px;
-            text-align: right;
-        }
-
-        .signature-line {
-            border-top: 1px solid #222222;
-            display: inline-block;
-            min-width: 280px;
-            margin-top: 50px;
-            padding-top: 6px;
-        }
-
-        .signature-name {
-            font-weight: 600;
-            color: #034c8b;
-            margin-bottom: 2px;
-            font-size: 0.95em;
-        }
-
-        .signature-role {
-            font-size: 0.85em;
-            color: #778082;
-        }
-
-        .footer {
-            margin-top: 40px;
-            padding-top: 15px;
-            border-top: 2px solid #ededed;
-            text-align: center;
-            font-size: 0.75em;
-            color: #778082;
-        }
-
-        @media print {
-            body { padding: 0; background: #fff !important; }
-            .page { box-shadow: none !important; margin: 0 !important; width: 100% !important; }
-            .section { page-break-inside: avoid; }
-            @page { size: A4; margin: 0; }
-        }
-    </style>
+@media print{
+  body{padding:0;background:#fff!important}
+  .print-bar{display:none!important}
+  .page{box-shadow:none!important;margin:0!important;width:100%!important}
+  .section{page-break-inside:avoid}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  @page{size:A4;margin:0}
+}
+</style>
 </head>
 <body>
 
-    <div class="page">
-        <div class="p-hdr">
-            <div class="p-hdr-info">
-                <h1>RELATÓRIO MENSAL</h1>
-                <p>Prestação de Serviços</p>
-            </div>
-            <div class="p-hdr-logo">
-                <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
-            </div>
-        </div>
+<div class="print-bar">
+  <div class="print-bar-inner">
+    <div class="print-logo logo-on-dark">
+      <svg width="28" height="22" viewBox="0 0 120 96" fill="none">
+        <defs><linearGradient id="rpg" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/>
+        </linearGradient></defs>
+        <circle cx="44" cy="48" r="34" fill="url(#rpg)" opacity=".9"/>
+        <circle cx="76" cy="48" r="34" fill="url(#rpg)" opacity=".7"/>
+      </svg>
+      <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
+    </div>
+    <div class="print-btns">
+      <span class="print-hint">Ative "Gráficos de fundo" no Ctrl+P para preservar as cores</span>
+      <button class="btn-print" onclick="window.print()">🖨 Salvar como PDF (Ctrl+P)</button>
+    </div>
+  </div>
+</div>
 
-        <div class="p-body">
-            <div class="empresa-info">
-                <strong>AKAYKO AZUMI RH LTDA.</strong> | CNPJ: 56.660.675/0001-11 | Consultoria: Azumi RH
-            </div>
+<div class="page">
+  <div class="p-hdr">
+    <div class="p-hdr-inner">
+      <div class="p-hdr-info">
+        <h1>RELATÓRIO MENSAL</h1>
+        <p>PRESTAÇÃO DE SERVIÇOS · ${dados.tipoServicoTexto.toUpperCase()||'AZUMI RH'}</p>
+      </div>
+      <div class="p-hdr-logo logo-on-dark">
+        <svg width="30" height="24" viewBox="0 0 120 96" fill="none">
+          <defs><linearGradient id="rpg2" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/>
+          </linearGradient></defs>
+          <circle cx="44" cy="48" r="34" fill="url(#rpg2)" opacity=".9"/>
+          <circle cx="76" cy="48" r="34" fill="url(#rpg2)" opacity=".7"/>
+        </svg>
+        <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
+      </div>
+    </div>
+  </div>
 
-            <div class="section">
-                <h2 class="section-title">Identificação</h2>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">Contratante</div>
-                        <div class="info-value">${dados.contratante || '-'}</div>
-                    </div>
-                    ${dados.cnpjContratante ? `
-                    <div class="info-item">
-                        <div class="info-label">CNPJ do Contratante</div>
-                        <div class="info-value">${dados.cnpjContratante}</div>
-                    </div>
-                    ` : ''}
-                    <div class="info-item">
-                        <div class="info-label">Mês de Referência</div>
-                        <div class="info-value">${dados.referencia || '-'}</div>
-                    </div>
-                    ${dados.horasContratadas ? `
-                    <div class="info-item">
-                        <div class="info-label">Horas Contratadas</div>
-                        <div class="info-value">${dados.horasContratadas}h</div>
-                    </div>
-                    ` : ''}
-                    <div class="info-item">
-                        <div class="info-label">Tipo de Serviço</div>
-                        <div class="info-value">${dados.tipoServicoTexto || '-'}</div>
-                    </div>
-                </div>
-            </div>
-
-            ${conteudoDinamico}
-
-            ${dados.consideracoes ? `
-            <div class="section">
-                <h2 class="section-title">Considerações Finais</h2>
-                <div class="text-content">${dados.consideracoes}</div>
-            </div>
-            ` : ''}
-
-            <div class="signature">
-                <div class="signature-line">
-                    ${dados.nomeConsultor ? `<div class="signature-name">${dados.nomeConsultor}</div>` : ''}
-                    ${dados.cargoConsultor ? `<div class="signature-role">${dados.cargoConsultor}</div>` : ''}
-                    ${dados.localData ? `<div class="signature-role">${dados.localData}</div>` : ''}
-                </div>
-            </div>
-
-            <div class="footer">
-                <p><strong style="font-size: 14px; color: #034C8B;"><span class="logo-azumi">azumi</span><span class="logo-rh">RH</span></strong> - Gestão de Pessoas e Consultoria em Recursos Humanos</p>
-            </div>
-        </div>
+  <div class="p-body">
+    <div class="empresa-info">
+      <strong>AKAYKO AZUMI RH LTDA.</strong> | CNPJ: 56.660.675/0001-11 | Consultoria: Azumi RH
+      <div class="protocolo-info">Protocolo: ${dados.protocolo}</div>
     </div>
 
+    <div class="section">
+      <h2 class="section-title">Identificação</h2>
+      <div class="info-grid">
+        <div class="info-item"><div class="info-label">Contratante</div><div class="info-value">${dados.contratante||'-'}</div></div>
+        ${dados.cnpjContratante?`<div class="info-item"><div class="info-label">CNPJ do Contratante</div><div class="info-value">${dados.cnpjContratante}</div></div>`:''}
+        <div class="info-item"><div class="info-label">Mês de Referência</div><div class="info-value">${dados.referencia||'-'}</div></div>
+        ${dados.horasContratadas?`<div class="info-item"><div class="info-label">Horas Contratadas</div><div class="info-value">${dados.horasContratadas}h</div></div>`:''}
+        <div class="info-item"><div class="info-label">Tipo de Serviço</div><div class="info-value">${dados.tipoServicoTexto||'-'}</div></div>
+        <div class="info-item"><div class="info-label">Protocolo</div><div class="info-value">${dados.protocolo}</div></div>
+      </div>
+    </div>
+
+    ${conteudo}
+
+    ${dados.consideracoes?`<div class="section"><h2 class="section-title">Considerações Finais</h2>
+      <div class="text-content">${dados.consideracoes}</div></div>`:''}
+
+    <div class="signature">
+      <div class="signature-line">
+        ${dados.nomeConsultor?`<div class="signature-name">${dados.nomeConsultor}</div>`:''}
+        ${dados.cargoConsultor?`<div class="signature-role">${dados.cargoConsultor}</div>`:''}
+        ${dados.localData?`<div class="signature-role">${dados.localData}</div>`:''}
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-logo logo-on-light">
+        <svg width="20" height="16" viewBox="0 0 120 96" fill="none">
+          <defs><linearGradient id="rpg3" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/>
+          </linearGradient></defs>
+          <circle cx="44" cy="48" r="34" fill="url(#rpg3)" opacity=".9"/>
+          <circle cx="76" cy="48" r="34" fill="url(#rpg3)" opacity=".7"/>
+        </svg>
+        <span class="logo-azumi">azumi</span><span class="logo-rh">RH</span>
+      </div>
+      <div>Gestão de Pessoas e Consultoria em Recursos Humanos</div>
+      <div style="margin-top:2px">contato@azumirh.com.br · azumirh.com.br · +55 41 98835-0743</div>
+    </div>
+  </div>
+</div>
+
 </body>
-</html>
-            `;
-        }
-    </script>
+</html>`;
+}
+</script>
 </body>
 </html>
