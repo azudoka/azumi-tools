@@ -470,7 +470,7 @@ input,select,button{font-family:'Space Grotesk',Verdana,sans-serif}
         </div>
       </div>
 
-      <div class="footer">AZUMI RH · HRaaS Calculadora v4.4 · Uso interno · contato@azumirh.com.br</div>
+      <div class="footer">AZUMI RH · HRaaS Calculadora v4.4 · Uso interno · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c1a2aeafb5a0b5ae81a0bbb4aca8b3a9efa2aeacefa3b3">[email&#160;protected]</a></div>
     </div>
   </div>
 </div>
@@ -551,14 +551,14 @@ input,select,button{font-family:'Space Grotesk',Verdana,sans-serif}
       </div>
       <div class="p-sig">
         <div class="p-sig-name">Equipe AZUMI RH</div>
-        <div class="p-sig-det">contato@azumirh.com.br · azumirh.com.br · WhatsApp: +55 41 98835-0743</div>
+        <div class="p-sig-det"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c3a0acadb7a2b7ac83a2b9b6aeaab1abeda0acaeeda1b1">[email&#160;protected]</a> · azumirh.com.br · WhatsApp: +55 41 98835-0743</div>
         <div class="p-sig-det" style="margin-top:4px">Proposta válida por 15 dias a partir da data de emissão.</div>
       </div>
     </div>
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const PKGS = {
   START:  {bg:"#034c8b",horas:15,maxColab:50, maxUnid:1,maxVagas:1,maxFrentes:2,sla:"48h úteis",reunioes:"1 reunião/mês",   visitasInc:0,presencial:false,desc:"Para empresas iniciando a estruturação de RH."},
   ONGOING:{bg:"#034c8b",horas:25,maxColab:150,maxUnid:2,maxVagas:2,maxFrentes:3,sla:"24h úteis",reunioes:"2 reuniões/mês",   visitasInc:1,presencial:true, desc:"Para empresas com demandas recorrentes de RH.",destaque:true},
@@ -958,6 +958,40 @@ function calcular(){
     get("res-note").textContent=meses+"x "+brl(vD.mensal)+"/mês · Sem implantação";
   }
 
+  // ★ ALERTAS RH INTERNO — flags visuais no resumo, sem alterar valores
+  const alertBox = get("rh-alerts") || (() => {
+    const d = document.createElement("div");
+    d.id = "rh-alerts";
+    d.style.cssText = "margin-top:10px;display:flex;flex-direction:column;gap:6px;";
+    get("res-note").parentNode.appendChild(d);
+    return d;
+  })();
+  const alertas = [];
+  const rhVal = document.querySelector('input[name="rh_atual"]:checked');
+  const rhSen = document.querySelector('input[name="rh_senioridade"]:checked');
+  const rhNec = document.querySelector('input[name="rh_necessidade"]:checked');
+  const rhAb  = document.querySelector('input[name="rh_abertura"]:checked');
+  if (rhVal && rhVal.value !== 'sem_rh') {
+    if (rhAb && rhAb.value === 'resistencia_leve')
+      alertas.push({t:"⚠ RH interno com resistência à parceria — considere acréscimo de complexidade",c:"rgba(245,158,11,.2)"});
+    if (rhNec && rhNec.value === 'gestao_direta')
+      alertas.push({t:"📌 RH interno precisa de gestão direta — horas Azumi elevadas",c:"rgba(59,130,246,.15)"});
+    if (rhNec && rhNec.value === 'mentoria_dev')
+      alertas.push({t:"✓ RH interno em desenvolvimento — menor demanda de horas Azumi",c:"rgba(34,197,94,.15)"});
+    if (rhNec && rhNec.value === 'parceria_estrategica')
+      alertas.push({t:"✓ Parceria estratégica — implantação pode ser reduzida",c:"rgba(34,197,94,.15)"});
+    if (rhSen && (rhSen.value === 'assistente_junior'))
+      alertas.push({t:"⚠ RH interno júnior — complexidade de implantação elevada",c:"rgba(245,158,11,.2)"});
+  }
+  // Aviso limite compliance por pacote
+  if (togCompliance) {
+    const limites = {START:"não incluso no pacote START",ONGOING:"até 1 NR/ano",GROWTH:"até 3 NRs/ano"};
+    alertas.push({t:"📋 Compliance/NRs — limite: "+limites[pkgKey],c:"rgba(139,92,246,.18)"});
+  }
+  alertBox.innerHTML = alertas.map(a =>
+    `<div style="padding:7px 11px;border-radius:7px;background:${a.c};font-family:'JetBrains Mono',monospace;font-size:9px;color:#fff;letter-spacing:.03em;opacity:.9">${a.t}</div>`
+  ).join("");
+
   window._estado={pkgKey,pk,colab,unid,vagas,cidade,estado,fObj,
     totalMensal,totalContrato,implantacao,implantacaoBase,implHistorico,implCompliance,
     totalGeral,meses,implRate,desconto,vD,empresa,decisor,mT,mR,mF,base,
@@ -1028,6 +1062,19 @@ function gerarHTMLProposta(){
 
   const greetHTML=(empresa||decisor)?`<div class="p-greet">${decisor?"Olá, "+decisor:""}${empresa?(decisor?" · ":"")+empresa:""}</div>`:"";
 
+  // ★ Saudação grande pós-header
+  const greetBannerHTML=(empresa||decisor)?`
+  <div style="background:var(--gh);padding:20px 36px 18px;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 120% at 100% 50%,rgba(139,92,246,.18) 0%,transparent 60%)"></div>
+    <div style="position:relative;font-family:'Sora',sans-serif;font-size:26px;font-weight:800;color:rgba(255,255,255,.92);letter-spacing:-.5px;line-height:1.1">Olá, <span style="background:linear-gradient(135deg,#93C5FD 0%,#c4b5fd 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${decisor||empresa}</span>!</div>
+    ${empresa&&decisor?`<div style="position:relative;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(147,197,253,.7);letter-spacing:.1em;text-transform:uppercase;margin-top:5px">${empresa}</div>`:""}
+  </div>`:"";
+
+  // ★ Acessos Connect e limite compliance por pacote
+  const connectAcessos={START:2,ONGOING:3,GROWTH:4};
+  const nConnect=connectAcessos[pkgKey]||2;
+  const limiteCompliance={START:"não incluso neste pacote",ONGOING:"até 1 NR por ano",GROWTH:"até 3 NRs por ano"};
+
   const payTxt=implRate>0
     ?`Na assinatura: ${brl(vD.impl)} · ${meses}x mensais de ${brl(vD.mensal)} · Renovação automática após prazo mínimo.`
     :`${meses}x mensais de ${brl(vD.mensal)} · Sem implantação · Renovação automática após prazo mínimo.`;
@@ -1090,11 +1137,17 @@ body{font-family:'Space Grotesk',Verdana,sans-serif;background:#f0f2f7;color:#22
 .p-total-orig{font-size:10px;color:rgba(255,255,255,.45);text-decoration:line-through}
 .p-total-final{font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#fff}
 .p-pay{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gray);padding:5px 10px;background:var(--white);letter-spacing:.03em;margin-bottom:14px}
-.p-cond{font-family:'Space Grotesk',sans-serif;font-size:10px;color:#333;padding:4px 0 4px 14px;border-bottom:1px solid var(--light);position:relative}
-.p-cond::before{content:"·";position:absolute;left:0;color:var(--blue);font-weight:900;font-size:14px;top:3px}
-.p-sig{padding-top:12px;border-top:1.5px solid var(--light);margin-top:14px}
-.p-sig-name{font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:var(--blue)}
-.p-sig-det{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gray);margin-top:2px;letter-spacing:.03em}
+.p-cond{font-family:'Space Grotesk',sans-serif;font-size:10px;color:#333;padding:5px 0 5px 14px;border-bottom:1px solid var(--light);position:relative;line-height:1.5}
+.p-cond::before{content:"·";position:absolute;left:0;color:var(--blue);font-weight:900;font-size:14px;top:4px}
+.p-cond.hl{background:#f0f7ff;padding-right:8px;border-radius:0 6px 6px 0}
+.p-sig{padding:20px 0 4px;border-top:2px solid var(--light);margin-top:16px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.p-sig-left{flex:1}
+.p-sig-name{font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:var(--blue);margin-bottom:5px}
+.p-sig-det{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gray);margin-top:4px;letter-spacing:.03em;line-height:1.6}
+.p-sig-valid{font-size:10px;color:#aaa;margin-top:8px;font-style:italic;font-family:'Space Grotesk',sans-serif}
+.p-sig-logo{display:flex;align-items:center;gap:6px;opacity:.45}
+.p-sig-logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;font-size:18px;color:var(--blue)}
+.p-sig-logo-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;font-size:18px;background:var(--gm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 @media print{body{background:#fff!important}.no-print{display:none!important}.page{box-shadow:none!important;margin:0!important;width:100%!important}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}@page{size:A4;margin:8mm}}
 </style>
 </head>
@@ -1121,7 +1174,6 @@ body{font-family:'Space Grotesk',Verdana,sans-serif;background:#f0f2f7;color:#22
   <div class="p-hdr">
     <div class="p-hdr-inner">
       <div class="p-hl">
-        ${greetHTML}
         <div class="p-title">Proposta Comercial</div>
         <div class="p-sub">HR AS A SERVICE · PACOTE ${pkgKey}</div>
       </div>
@@ -1137,13 +1189,24 @@ body{font-family:'Space Grotesk',Verdana,sans-serif;background:#f0f2f7;color:#22
       </div>
     </div>
   </div>
+  ${greetBannerHTML}
   <div class="p-body">
     <div class="valid-bar">
       <span>📅 Emissão: <strong>${dataHoje()}</strong></span>
       <span>⏳ Válida até: <strong>${data15()}</strong> — 15 dias</span>
     </div>
-    <div class="p-stitle">Pacote Contratado</div>
+    <div class="p-stitle">Detalhes da Proposta</div>
     <div class="p-grid">${gridHTML}</div>
+    <div style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(3,76,139,.06),rgba(139,92,246,.06));border:1px solid rgba(59,130,246,.18);border-radius:10px;padding:10px 14px;margin:8px 0 14px">
+      <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#034C8B,#3B82F6,#8B5CF6);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="16" height="13" viewBox="0 0 120 96" fill="none"><circle cx="44" cy="48" r="34" fill="rgba(255,255,255,.9)"/><circle cx="76" cy="48" r="34" fill="rgba(255,255,255,.7)"/></svg>
+      </div>
+      <div style="flex:1">
+        <div style="font-family:'Sora',sans-serif;font-size:11px;font-weight:700;color:#034C8B">Plataforma Azumi Connect — inclusa no pacote</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:10px;color:#778082;margin-top:2px">Portal exclusivo para acompanhamento de entregas, documentos e comunicação com a consultoria</div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;background:linear-gradient(135deg,#034C8B,#3B82F6,#8B5CF6);color:#fff;padding:3px 10px;border-radius:100px;white-space:nowrap">${nConnect} acessos gratuitos</div>
+    </div>
     ${frentesHTML}
     <div class="p-stitle">Investimento</div>
     ${discBanner}
@@ -1157,18 +1220,30 @@ body{font-family:'Space Grotesk',Verdana,sans-serif;background:#f0f2f7;color:#22
         </div>
       </div>
     </div>
-    <div class="p-pay">${payTxt}</div>
     <div class="p-stitle">Condições Gerais</div>
+    <div class="p-cond hl">💳 ${payTxt}</div>
     <div class="p-cond">Rescisão antecipada dentro do prazo mínimo: multa de 20% do valor remanescente.</div>
     <div class="p-cond">Atraso no pagamento: multa de 2% + juros de 1% ao mês.</div>
     <div class="p-cond">Atraso superior a 15 dias: suspensão de entregas até regularização.</div>
     ${implRate>0?`<div class="p-cond">O valor de implantação não é reembolsável, pois cobre a integração, estruturação de processos e configurações necessárias ao início do contrato.</div>`:""}
+    ${togCompliance?`<div class="p-cond">Estruturação de Compliance / NRs obrigatórias: ${limiteCompliance[pkgKey]}.</div>`:""}
     <div class="p-cond">Não inclui: folha de pagamento, eSocial, contencioso trabalhista.</div>
     <div class="p-cond">Informações tratadas conforme a LGPD (Lei 13.709/2018).</div>
     <div class="p-sig">
-      <div class="p-sig-name">Equipe AZUMI RH</div>
-      <div class="p-sig-det">contato@azumirh.com.br · azumirh.com.br · WhatsApp: +55 41 98835-0743</div>
-      <div class="p-sig-det" style="margin-top:3px">Proposta válida por 15 dias a partir da data de emissão.</div>
+      <div class="p-sig-left">
+        <div class="p-sig-name">Equipe Azumi RH</div>
+        <div class="p-sig-det">📧 contato&#64;azumirh&#46;com&#46;br</div>
+        <div class="p-sig-det">🌐 azumirh.com.br</div>
+        <div class="p-sig-det">📱 WhatsApp: +55 41 98835-0743</div>
+        <div class="p-sig-valid">Proposta válida por 15 dias a partir da data de emissão.</div>
+      </div>
+      <div class="p-sig-logo">
+        <svg width="26" height="21" viewBox="0 0 120 96" fill="none">
+          <defs><linearGradient id="sg" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs>
+          <circle cx="44" cy="48" r="34" fill="url(#sg)" opacity=".9"/><circle cx="76" cy="48" r="34" fill="url(#sg)" opacity=".7"/>
+        </svg>
+        <span class="p-sig-logo-azumi">azumi</span><span class="p-sig-logo-rh">RH</span>
+      </div>
     </div>
   </div>
 </div>
