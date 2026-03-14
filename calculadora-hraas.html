@@ -380,10 +380,10 @@ input,select,button{font-family:'Space Grotesk',Verdana,sans-serif}
             <span class="sel-lbl" style="display:block">Como a Azumi vai atuar?</span>
             <select class="sel" id="rhi-atuacao" onchange="calcular()">
               <option value="">Selecione</option>
-              <option value="gestao_direta">Gestão direta — assume frentes que o RH não dá conta</option>
+              <option value="gestao_direta">Demanda intensa — gestão de pessoas e tempo</option>
               <option value="mentoria_dev">Mentoria / desenvolvimento — orienta o RH interno</option>
-              <option value="parceria_estrategica">Parceria estratégica — co-constrói com o RH sênior</option>
-              <option value="supervisao">Supervisão técnica — alinha com liderança</option>
+              <option value="parceria_estrategica">Co-construção estratégica — RH sênior</option>
+              <option value="supervisao">Supervisão e alinhamento estratégico</option>
             </select>
             <span class="sel-lbl" style="display:block">Abertura à parceria</span>
             <select class="sel" id="rhi-abertura" onchange="calcular()">
@@ -1106,8 +1106,8 @@ function gerarHTMLProposta(){
 
   // ★ Saudação grande pós-header
   const greetBannerHTML=(empresa||decisor)?`
-  <div style="background:linear-gradient(135deg,#031D38 0%,#034C8B 40%,#3B82F6 75%,#8B5CF6 100%);padding:20px 36px 18px;position:relative;overflow:hidden;">
-    <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.25) 0%,transparent 60%)"></div>
+  <div style="background:#031D38;padding:20px 36px 18px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.15) 0%,transparent 60%)"></div>
     <div style="position:relative;font-family:'Sora',sans-serif;font-size:26px;font-weight:800;color:rgba(255,255,255,.92);letter-spacing:-.5px;line-height:1.1">Olá, <span style="color:#93C5FD">${decisor||empresa}</span>!</div>
     ${empresa&&decisor?`<div style="position:relative;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(147,197,253,.7);letter-spacing:.1em;text-transform:uppercase;margin-top:5px">${empresa}</div>`:""}
   </div>`:"";
@@ -1116,6 +1116,24 @@ function gerarHTMLProposta(){
   const connectAcessos={START:2,ONGOING:3,GROWTH:4};
   const nConnect=connectAcessos[pkgKey]||2;
   const limiteCompliance={START:"não incluso neste pacote",ONGOING:"até 1 NR por ano",GROWTH:"até 3 NRs por ano"};
+
+  // ★ Nota RH interno na proposta
+  const rhInternoOn=get("tog-rh-interno")&&get("tog-rh-interno").classList.contains("on");
+  const rhiLabels={
+    senioridade:{assistente_junior:"Assistente/Júnior",analista_pleno:"Analista Pleno",analista_senior:"Analista Sênior",coord_gerente:"Coord./Gerente"},
+    atuacao:{gestao_direta:"Demanda intensa — gestão de pessoas e tempo",mentoria_dev:"Mentoria / desenvolvimento",parceria_estrategica:"Co-construção estratégica",supervisao:"Supervisão e alinhamento estratégico"},
+    abertura:{entusiasmada:"Aberta e entusiasmada",neutra:"Neutra — avaliando",resistencia_leve:"Resistência leve",nao_sabe:"A confirmar"}
+  };
+  const rhiSenVal=val("rhi-senioridade");
+  const rhiAtuVal=val("rhi-atuacao");
+  const rhiAbVal=val("rhi-abertura");
+  const rhInternoNotaHTML=(rhInternoOn&&(rhiSenVal||rhiAtuVal||rhiAbVal))?`
+    <div style="background:#f8faff;border:1px solid #e0e8f5;border-radius:8px;padding:8px 12px;margin-top:6px;margin-bottom:14px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#778082;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Perfil RH Interno</div>
+      ${rhiSenVal?`<div style="font-family:'Space Grotesk',sans-serif;font-size:10px;color:#334;margin-bottom:2px">· Senioridade: <strong>${rhiLabels.senioridade[rhiSenVal]||rhiSenVal}</strong></div>`:""}
+      ${rhiAtuVal?`<div style="font-family:'Space Grotesk',sans-serif;font-size:10px;color:#334;margin-bottom:2px">· Atuação Azumi: <strong>${rhiLabels.atuacao[rhiAtuVal]||rhiAtuVal}</strong></div>`:""}
+      ${rhiAbVal?`<div style="font-family:'Space Grotesk',sans-serif;font-size:10px;color:#334">· Abertura: <strong>${rhiLabels.abertura[rhiAbVal]||rhiAbVal}</strong></div>`:""}
+    </div>`:"";
 
   const payTxt=implRate>0
     ?`Na assinatura: ${brl(vD.impl)} · ${meses}x mensais de ${brl(vD.mensal)} · Renovação automática após prazo mínimo.`
@@ -1144,7 +1162,7 @@ body{font-family:'Space Grotesk',Verdana,sans-serif;background:#f0f2f7;color:#22
 .no-print-hint{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(147,197,253,.7);letter-spacing:.04em}
 .btn-print{background:#fff;color:var(--blue);border:none;border-radius:100px;padding:8px 20px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif}
 .page{width:210mm;min-height:297mm;margin:0 auto;background:#fff;box-shadow:0 0 24px rgba(0,0,0,.15)}
-.p-hdr{background:var(--gh);padding:24px 36px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;position:relative;overflow:hidden}
+.p-hdr{background:#031D38;padding:24px 36px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;position:relative;overflow:hidden}
 .p-hdr::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.25) 0%,transparent 60%)}
 .p-hdr-inner{position:relative;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;width:100%}
 .p-hl{flex:1}
@@ -1239,6 +1257,7 @@ body{font-family:'Space Grotesk',Verdana,sans-serif;background:#f0f2f7;color:#22
     </div>
     <div class="p-stitle">Detalhes da Proposta</div>
     <div class="p-grid">${gridHTML}</div>
+    ${rhInternoNotaHTML}
     <div style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(3,76,139,.06),rgba(139,92,246,.06));border:1px solid rgba(59,130,246,.18);border-radius:10px;padding:10px 14px;margin:8px 0 14px">
       <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#034C8B,#3B82F6,#8B5CF6);display:flex;align-items:center;justify-content:center;flex-shrink:0">
         <svg width="16" height="13" viewBox="0 0 120 96" fill="none"><circle cx="44" cy="48" r="34" fill="rgba(255,255,255,.9)"/><circle cx="76" cy="48" r="34" fill="rgba(255,255,255,.7)"/></svg>
