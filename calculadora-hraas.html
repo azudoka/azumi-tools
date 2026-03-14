@@ -361,6 +361,39 @@ input,select,button{font-family:'Space Grotesk',Verdana,sans-serif}
             <span class="tog-lbl">Treinamento avulso no mês</span>
             <div class="tog-track" id="tog-treino"><div class="tog-thumb"></div></div>
           </div>
+
+          <!-- ★ SEÇÃO RH INTERNO -->
+          <div class="sec-title">RH INTERNO DO CLIENTE</div>
+          <div class="tog-row" onclick="toggleRhInterno()">
+            <span class="tog-lbl">Cliente tem RH interno?</span>
+            <div class="tog-track" id="tog-rh-interno"><div class="tog-thumb"></div></div>
+          </div>
+          <div id="bloco-rh-interno-calc" style="display:none;margin-top:10px">
+            <span class="sel-lbl" style="display:block;margin-top:6px">Senioridade</span>
+            <select class="sel" id="rhi-senioridade" onchange="calcular()">
+              <option value="">Selecione</option>
+              <option value="assistente_junior">Assistente / Auxiliar — júnior</option>
+              <option value="analista_pleno">Analista pleno</option>
+              <option value="analista_senior">Analista sênior</option>
+              <option value="coord_gerente">Coordenador / Gerente</option>
+            </select>
+            <span class="sel-lbl" style="display:block">Como a Azumi vai atuar?</span>
+            <select class="sel" id="rhi-atuacao" onchange="calcular()">
+              <option value="">Selecione</option>
+              <option value="gestao_direta">Gestão direta — assume frentes que o RH não dá conta</option>
+              <option value="mentoria_dev">Mentoria / desenvolvimento — orienta o RH interno</option>
+              <option value="parceria_estrategica">Parceria estratégica — co-constrói com o RH sênior</option>
+              <option value="supervisao">Supervisão técnica — alinha com liderança</option>
+            </select>
+            <span class="sel-lbl" style="display:block">Abertura à parceria</span>
+            <select class="sel" id="rhi-abertura" onchange="calcular()">
+              <option value="">Selecione</option>
+              <option value="entusiasmada">Entusiasmada — quer crescer junto</option>
+              <option value="neutra">Neutra — ainda avaliando</option>
+              <option value="resistencia_leve">Resistência leve — sente que pode ser substituída</option>
+              <option value="nao_sabe">Não sabe / ainda não conversou</option>
+            </select>
+          </div>
         </div>
 
         <!-- ABA FRENTES -->
@@ -803,6 +836,15 @@ function toggleTog(id){
   calcular();
 }
 
+function toggleRhInterno(){
+  const track=get("tog-rh-interno");
+  const bloco=get("bloco-rh-interno-calc");
+  const isOn=track.classList.contains("on");
+  track.className="tog-track"+(isOn?"":" on");
+  bloco.style.display=isOn?"none":"block";
+  calcular();
+}
+
 function calcular(){
   const colab=num("sl-colab"),unid=num("sl-unid"),vagas=num("sl-vagas"),vagasX=num("sl-vagasX");
   get("v-colab").textContent=colab+" pessoas";
@@ -958,7 +1000,7 @@ function calcular(){
     get("res-note").textContent=meses+"x "+brl(vD.mensal)+"/mês · Sem implantação";
   }
 
-  // ★ ALERTAS RH INTERNO — flags visuais no resumo, sem alterar valores
+  // ★ ALERTAS RH INTERNO — lê dos selects internos da calculadora
   const alertBox = get("rh-alerts") || (() => {
     const d = document.createElement("div");
     d.id = "rh-alerts";
@@ -967,29 +1009,31 @@ function calcular(){
     return d;
   })();
   const alertas = [];
-  const rhVal = document.querySelector('input[name="rh_atual"]:checked');
-  const rhSen = document.querySelector('input[name="rh_senioridade"]:checked');
-  const rhNec = document.querySelector('input[name="rh_necessidade"]:checked');
-  const rhAb  = document.querySelector('input[name="rh_abertura"]:checked');
-  if (rhVal && rhVal.value !== 'sem_rh') {
-    if (rhAb && rhAb.value === 'resistencia_leve')
-      alertas.push({t:"⚠ RH interno com resistência à parceria — considere acréscimo de complexidade",c:"rgba(245,158,11,.2)"});
-    if (rhNec && rhNec.value === 'gestao_direta')
-      alertas.push({t:"📌 RH interno precisa de gestão direta — horas Azumi elevadas",c:"rgba(59,130,246,.15)"});
-    if (rhNec && rhNec.value === 'mentoria_dev')
-      alertas.push({t:"✓ RH interno em desenvolvimento — menor demanda de horas Azumi",c:"rgba(34,197,94,.15)"});
-    if (rhNec && rhNec.value === 'parceria_estrategica')
-      alertas.push({t:"✓ Parceria estratégica — implantação pode ser reduzida",c:"rgba(34,197,94,.15)"});
-    if (rhSen && (rhSen.value === 'assistente_junior'))
-      alertas.push({t:"⚠ RH interno júnior — complexidade de implantação elevada",c:"rgba(245,158,11,.2)"});
+  const rhInternoOn = get("tog-rh-interno") && get("tog-rh-interno").classList.contains("on");
+  if (rhInternoOn) {
+    const rhSen = val("rhi-senioridade");
+    const rhAtu = val("rhi-atuacao");
+    const rhAb  = val("rhi-abertura");
+    if (rhAb === "resistencia_leve")
+      alertas.push({t:"⚠ RH interno com resistência à parceria — considere acréscimo de complexidade",c:"rgba(245,158,11,.25)"});
+    if (rhAtu === "gestao_direta")
+      alertas.push({t:"📌 Gestão direta — demanda de horas Azumi elevada",c:"rgba(59,130,246,.2)"});
+    if (rhAtu === "mentoria_dev")
+      alertas.push({t:"✓ Mentoria / desenvolvimento — menor demanda de horas",c:"rgba(34,197,94,.2)"});
+    if (rhAtu === "parceria_estrategica")
+      alertas.push({t:"✓ Parceria estratégica — implantação pode ser reduzida",c:"rgba(34,197,94,.2)"});
+    if (rhSen === "assistente_junior")
+      alertas.push({t:"⚠ RH interno júnior — complexidade de implantação elevada",c:"rgba(245,158,11,.25)"});
+    if (rhSen === "coord_gerente" && rhAtu === "parceria_estrategica")
+      alertas.push({t:"✓ RH sênior + parceria — estrutura favorável para o contrato",c:"rgba(34,197,94,.2)"});
   }
   // Aviso limite compliance por pacote
   if (togCompliance) {
     const limites = {START:"não incluso no pacote START",ONGOING:"até 1 NR/ano",GROWTH:"até 3 NRs/ano"};
-    alertas.push({t:"📋 Compliance/NRs — limite: "+limites[pkgKey],c:"rgba(139,92,246,.18)"});
+    alertas.push({t:"📋 Compliance/NRs — limite: "+limites[pkgKey],c:"rgba(139,92,246,.22)"});
   }
   alertBox.innerHTML = alertas.map(a =>
-    `<div style="padding:7px 11px;border-radius:7px;background:${a.c};font-family:'JetBrains Mono',monospace;font-size:9px;color:#fff;letter-spacing:.03em;opacity:.9">${a.t}</div>`
+    `<div style="padding:7px 11px;border-radius:7px;background:${a.c};font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text);letter-spacing:.03em;">${a.t}</div>`
   ).join("");
 
   window._estado={pkgKey,pk,colab,unid,vagas,cidade,estado,fObj,
@@ -1009,8 +1053,6 @@ function gerarHTMLProposta(){
     togHistorico,togCompliance,pctHistorico}=s;
 
   const gi=[
-    empresa?["Empresa",empresa]:null,
-    decisor?["Responsável",decisor]:null,
     ["Modalidade",pkgKey],
     ["Horas mensais",pk.horas+"h/mês"],
     ["Colaboradores",colab+" pessoas"],
@@ -1064,9 +1106,9 @@ function gerarHTMLProposta(){
 
   // ★ Saudação grande pós-header
   const greetBannerHTML=(empresa||decisor)?`
-  <div style="background:var(--gh);padding:20px 36px 18px;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.08)">
-    <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 120% at 100% 50%,rgba(139,92,246,.18) 0%,transparent 60%)"></div>
-    <div style="position:relative;font-family:'Sora',sans-serif;font-size:26px;font-weight:800;color:rgba(255,255,255,.92);letter-spacing:-.5px;line-height:1.1">Olá, <span style="background:linear-gradient(135deg,#93C5FD 0%,#c4b5fd 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${decisor||empresa}</span>!</div>
+  <div style="background:linear-gradient(135deg,#031D38 0%,#034C8B 40%,#3B82F6 75%,#8B5CF6 100%);padding:20px 36px 18px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.25) 0%,transparent 60%)"></div>
+    <div style="position:relative;font-family:'Sora',sans-serif;font-size:26px;font-weight:800;color:rgba(255,255,255,.92);letter-spacing:-.5px;line-height:1.1">Olá, <span style="color:#93C5FD">${decisor||empresa}</span>!</div>
     ${empresa&&decisor?`<div style="position:relative;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(147,197,253,.7);letter-spacing:.1em;text-transform:uppercase;margin-top:5px">${empresa}</div>`:""}
   </div>`:"";
 
@@ -1111,7 +1153,7 @@ body{font-family:'Space Grotesk',Verdana,sans-serif;background:#f0f2f7;color:#22
 .p-sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(147,197,253,.7);letter-spacing:.1em;text-transform:uppercase}
 .p-logo-wrap{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .p-logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;font-size:26px;color:#fff;letter-spacing:-.01em}
-.p-logo-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;font-size:26px;background:var(--gm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.p-logo-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;font-size:26px;color:#93C5FD}
 .p-body{padding:20px 36px}
 .valid-bar{background:#fff8e1;border:1px solid #ffd54f;border-radius:8px;padding:7px 12px;margin-bottom:16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:10px;color:#7c6200;font-family:'Space Grotesk',sans-serif}
 .p-stitle{font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:var(--blue);border-bottom:2px solid;border-image:linear-gradient(90deg,#034C8B,#8B5CF6) 1;padding-bottom:5px;margin-bottom:8px}
@@ -1235,14 +1277,6 @@ body{font-family:'Space Grotesk',Verdana,sans-serif;background:#f0f2f7;color:#22
         <div class="p-sig-det">📧 contato&#64;azumirh&#46;com&#46;br</div>
         <div class="p-sig-det">🌐 azumirh.com.br</div>
         <div class="p-sig-det">📱 WhatsApp: +55 41 98835-0743</div>
-        <div class="p-sig-valid">Proposta válida por 15 dias a partir da data de emissão.</div>
-      </div>
-      <div class="p-sig-logo">
-        <svg width="26" height="21" viewBox="0 0 120 96" fill="none">
-          <defs><linearGradient id="sg" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs>
-          <circle cx="44" cy="48" r="34" fill="url(#sg)" opacity=".9"/><circle cx="76" cy="48" r="34" fill="url(#sg)" opacity=".7"/>
-        </svg>
-        <span class="p-sig-logo-azumi">azumi</span><span class="p-sig-logo-rh">RH</span>
       </div>
     </div>
   </div>
