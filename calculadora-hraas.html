@@ -510,7 +510,559 @@ input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
       </div>
       <div class="p-pay" id="p-pay"></div>
       <div style="margin:22px 0">
-            <div class="p-stitle">Condições Gerais</div>
+        <div class="p-stitle">Condições Gerais</div>
+        <div class="p-cond">Rescisão antecipada dentro do prazo mínimo: multa de 20% do valor remanescente.</div>
+        <div class="p-cond">Atraso no pagamento: multa de 2% + juros de 1% ao mês.</div>
+        <div class="p-cond">Atraso superior a 15 dias: suspensão de entregas até regularização.</div>
+        <div class="p-cond">O valor de implantação não é reembolsável, pois cobre a integração, estruturação de processos e configurações necessárias ao início do contrato.</div>
+        <div class="p-cond">Não inclui: folha de pagamento, eSocial, contencioso trabalhista.</div>
+        <div class="p-cond">Informações tratadas conforme a LGPD (Lei 13.709/2018).</div>
+      </div>
+      <div class="p-sig">
+        <div class="p-sig-name">Equipe AZUMI RH</div>
+        <div class="p-sig-det">contato@azumirh.com.br · azumirh.com.br · WhatsApp: +55 41 98835-0743</div>
+        <div class="p-sig-det" style="margin-top:4px">Proposta válida por 15 dias a partir da data de emissão.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PKGS = {
+  START:  {bg:"#034c8b",horas:15,maxColab:50, maxUnid:1,maxVagas:1,maxFrentes:2,sla:"48h úteis",reunioes:"1 reunião/mês",   visitasInc:0,presencial:false,desc:"Para empresas iniciando a estruturação de RH."},
+  ONGOING:{bg:"#034c8b",horas:25,maxColab:150,maxUnid:2,maxVagas:2,maxFrentes:3,sla:"24h úteis",reunioes:"2 reuniões/mês",   visitasInc:1,presencial:true, desc:"Para empresas com demandas recorrentes de RH.",destaque:true},
+  GROWTH: {bg:"#034c8b",horas:40,maxColab:300,maxUnid:4,maxVagas:3,maxFrentes:5,sla:"12h úteis",reunioes:"Semanal com liderança",visitasInc:2,presencial:true, desc:"Para empresas em crescimento acelerado."},
+};
+const PKG_ORDER={START:0,ONGOING:1,GROWTH:2};
+const FRENTES=[
+  {id:1,nome:"Recrutamento Estratégico",desc:"Atração de talentos alinhados à cultura e objetivos do negócio.",cx:"C2",peso:1.15,min:"START"},
+  {id:2,nome:"Onboarding Personalizado",desc:"Integração focada em acelerar a curva de aprendizado.",cx:"C1",peso:1.00,min:"START"},
+  {id:3,nome:"Cultura Organizacional",  desc:"Rituais e valores que fortalecem o pertencimento e a retenção.",cx:"C3",peso:1.30,min:"ONGOING"},
+  {id:4,nome:"Processos de RH",         desc:"Estruturação completa de fluxos operacionais e governança.",cx:"C2",peso:1.15,min:"START"},
+  {id:5,nome:"People Analytics",        desc:"Dados que viram inteligência para decisões de gestão.",cx:"C2",peso:1.15,min:"ONGOING"},
+  {id:6,nome:"Clima e Engajamento",     desc:"Pesquisas e ações contínuas para manter a satisfação do time.",cx:"C2",peso:1.10,min:"ONGOING"},
+  {id:7,nome:"Ciclos de Performance",   desc:"Avaliações de desempenho e planos de desenvolvimento (PDI).",cx:"C3",peso:1.25,min:"ONGOING"},
+  {id:8,nome:"Compliance Trabalhista",  desc:"Segurança jurídica e adequação de políticas internas.",cx:"C2",peso:1.15,min:"START"},
+];
+const REGIOES={
+  SP:{n:"São Paulo",c:{"São Paulo (capital)":1.40,"Campinas":1.20,"Santos":1.15,"São José dos Campos":1.12,"Ribeirão Preto":1.10,"Sorocaba":1.08,"Outras SP":1.05}},
+  RJ:{n:"Rio de Janeiro",c:{"Rio de Janeiro (capital)":1.35,"Niterói":1.20,"Petrópolis":1.10,"Outras RJ":1.05}},
+  DF:{n:"Distrito Federal",c:{"Brasília":1.30}},
+  MG:{n:"Minas Gerais",c:{"Belo Horizonte":1.25,"Uberlândia":1.12,"Contagem":1.10,"Juiz de Fora":1.08,"Outras MG":1.00}},
+  SC:{n:"Santa Catarina",c:{"Florianópolis":1.10,"Joinville":1.05,"Blumenau":1.02,"Outras SC":0.95}},
+  RS:{n:"Rio Grande do Sul",c:{"Porto Alegre":1.15,"Caxias do Sul":1.05,"Outras RS":0.92}},
+  GO:{n:"Goiás",c:{"Goiânia":1.10,"Outras GO":0.90}},
+  BA:{n:"Bahia",c:{"Salvador":1.10,"Outras BA":0.88}},
+  PE:{n:"Pernambuco",c:{"Recife":1.12,"Outras PE":0.88}},
+  CE:{n:"Ceará",c:{"Fortaleza":1.08,"Outras CE":0.88}},
+  ES:{n:"Espírito Santo",c:{"Vitória":1.10,"Vila Velha":1.08,"Outras ES":0.92}},
+  PR:{n:"Paraná",c:{"Curitiba":1.00,"S.J. Pinhais":0.97,"Maringá":0.95,"Londrina":0.95,"Ponta Grossa":0.90,"Cascavel":0.90,"Outras PR":0.88}},
+  MT:{n:"Mato Grosso",c:{"Cuiabá":1.05,"Outras MT":0.88}},
+  MS:{n:"Mato Grosso do Sul",c:{"Campo Grande":1.05,"Outras MS":0.88}},
+  PA:{n:"Pará",c:{"Belém":1.05,"Outras PA":0.85}},
+  AM:{n:"Amazonas",c:{"Manaus":1.08,"Outras AM":0.85}},
+  RN:{n:"Rio Grande do Norte",c:{"Natal":1.00,"Outras RN":0.87}},
+  AL:{n:"Alagoas",c:{"Maceió":0.95,"Outras AL":0.85}},
+  MA:{n:"Maranhão",c:{"São Luís":0.95,"Outras MA":0.83}},
+  TO:{n:"Tocantins",c:{"Palmas":0.90}},
+  RO:{n:"Rondônia",c:{"Porto Velho":0.88}},
+  AC:{n:"Acre",c:{"Rio Branco":0.85}},
+  RR:{n:"Roraima",c:{"Boa Vista":0.85}},
+  AP:{n:"Amapá",c:{"Macapá":0.85}},
+  PI:{n:"Piauí",c:{"Teresina":0.92}},
+  PB:{n:"Paraíba",c:{"João Pessoa":0.98}},
+  SE:{n:"Sergipe",c:{"Aracaju":0.93}},
+};
+
+function classeDeslocamento(estado,cidade){if(!estado||!cidade)return'free';if(estado!=='PR')return'ext';const livres=['Curitiba','S.J. Pinhais','Pinhais'];return livres.includes(cidade)?'free':'paid';}
+function qtdVisitas(sel){if(!sel||sel==='nenhuma')return 0;return sel.includes('2x')?2:1;}
+function valorVisita(sel){if(!sel||sel==='nenhuma')return 0;const bp=num("p-visitaPatricia")||480;const bc=num("p-visitaConsultora")||380;return sel.includes('patricia')?bp:bc;}
+function labelVisita(sel){if(!sel||sel==='nenhuma')return null;const tipo=sel.includes('patricia')?'Patrícia (fundadora)':'Consultora de conta';const freq=sel.includes('2x')?'2x/mês':'1x/mês';return`Visita presencial — ${tipo} · ${freq}`;}
+
+let fSel=[1,2],meses=5,implRate=25,forcado=null,togTreino=false,togCompliance=false,togHistorico=false;
+let frentePesos=Object.fromEntries(FRENTES.map(f=>[f.id,f.peso]));
+
+function brl(v){return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});}
+function r50(v){return Math.round(v/50)*50;}
+function dataHoje(){return new Date().toLocaleDateString("pt-BR");}
+function data15(){const d=new Date();d.setDate(d.getDate()+15);return d.toLocaleDateString("pt-BR");}
+function get(id){return document.getElementById(id);}
+function val(id){return get(id)?get(id).value:"";}
+function num(id){return Number(val(id));}
+function autoPkg(c,u,v){return c<=50&&u<=1&&v<=1?"START":c<=150&&u<=2&&v<=2?"ONGOING":"GROWTH";}
+function multT(c,pk){
+  const ws={START:num("w-start")||0.30,ONGOING:num("w-ongoing")||0.35,GROWTH:num("w-growth")||0.45};
+  if(pk==="START")return 1+((c-10)/40)*ws.START;
+  if(pk==="ONGOING")return 1+((c-51)/99)*ws.ONGOING;
+  return 1+((c-151)/149)*ws.GROWTH;
+}
+function multF(fs){return !fs.length?1:parseFloat(Math.max(1,fs.reduce((s,f)=>s+f.peso,0)/fs.length).toFixed(2));}
+function multR(){const e=val("sel-estado"),c=val("sel-cidade");return e&&c&&REGIOES[e]&&REGIOES[e].c[c]?REGIOES[e].c[c]:1.0;}
+
+function onVisitaChange(){calcular();atualizarBadgeDeslocamento();}
+function atualizarBadgeDeslocamento(){
+  const sel=val("sel-visita"),estado=val("sel-estado"),cidade=val("sel-cidade");
+  get("desl-badge-free").style.display="none";
+  get("desl-badge-paid").style.display="none";
+  get("desl-badge-ext").style.display="none";
+  if(!sel||sel==="nenhuma")return;
+  const classe=classeDeslocamento(estado,cidade);
+  get("desl-badge-"+classe).style.display="block";
+}
+
+window.onload=function(){
+  const sel=get("sel-estado");
+  Object.entries(REGIOES).sort((a,b)=>a[1].n.localeCompare(b[1].n)).forEach(([k,v])=>{
+    const o=document.createElement("option");o.value=k;o.textContent=v.n;sel.appendChild(o);
+  });
+  sel.value="PR";
+  onEstado(true);
+  const bm=get("btns-meses");
+  [5,6,12].forEach(m=>{
+    const b=document.createElement("button");
+    b.className="btn-opt"+(m===5?" ap":"");
+    b.textContent=m+"m"+(m===5?" ★":"");
+    b.onclick=()=>{meses=m;document.querySelectorAll("#btns-meses .btn-opt").forEach(x=>x.className="btn-opt");b.className="btn-opt ap";calcular();};
+    bm.appendChild(b);
+  });
+  const bi=get("btns-impl");
+  [{label:"S/ IMPL",rate:0},{label:"20%",rate:20},{label:"25% ★",rate:25},{label:"30%",rate:30}].forEach(op=>{
+    const b=document.createElement("button");
+    b.className="btn-opt"+(op.rate===25?" ai":"");
+    b.textContent=op.label;
+    b.onclick=()=>{implRate=op.rate;document.querySelectorAll("#btns-impl .btn-opt").forEach(x=>x.className="btn-opt");b.className="btn-opt ai";calcular();};
+    bi.appendChild(b);
+  });
+  const bp=get("btns-pkg");
+  [null,"START","ONGOING","GROWTH"].forEach(op=>{
+    const b=document.createElement("button");
+    b.className="btn-pkg"+(op===null?" ap":"");
+    b.textContent=op||"AUTO";
+    b.onclick=()=>{forcado=op;document.querySelectorAll("#btns-pkg .btn-pkg").forEach(x=>x.className="btn-pkg");b.className="btn-pkg ap";calcular();};
+    bp.appendChild(b);
+  });
+  buildFrentes();
+  const cg=get("cfg-frentes-grid");
+  FRENTES.forEach(f=>{
+    const d=document.createElement("div");
+    const lbl=document.createElement("div");lbl.className="cfg-label";lbl.textContent=f.nome.split(" ").slice(0,2).join(" ");
+    const inp=document.createElement("input");inp.className="cfg-input";inp.type="number";
+    inp.value=f.peso;inp.step="0.05";inp.min="1";inp.max="2";
+    inp.oninput=()=>{frentePesos[f.id]=Number(inp.value);calcular();};
+    inp.id="fp-"+f.id;
+    d.appendChild(lbl);d.appendChild(inp);cg.appendChild(d);
+  });
+  calcular();
+};
+
+function onEstado(init){
+  const e=val("sel-estado"),sel=get("sel-cidade");
+  sel.innerHTML="<option value=''>Selecione a cidade</option>";
+  if(e&&REGIOES[e]){
+    Object.keys(REGIOES[e].c).forEach(c=>{
+      const o=document.createElement("option");o.value=c;o.textContent=c;sel.appendChild(o);
+    });
+    if(init)sel.value="Curitiba";
+  }
+  calcular();
+  atualizarBadgeDeslocamento();
+}
+
+function buildFrentes(){
+  const container=get("fr-list");
+  container.innerHTML="";
+  const pkgKey=forcado||autoPkg(num("sl-colab"),num("sl-unid"),num("sl-vagas"));
+  FRENTES.forEach(f=>{
+    const avail=PKG_ORDER[f.min]<=PKG_ORDER[pkgKey];
+    const sel=fSel.includes(f.id);
+    const d=document.createElement("div");
+    d.className="fr-card"+(sel?" sel":"")+(avail?"":" off");
+    d.innerHTML=`<div class="fr-top"><span class="fr-name">${sel?"✓ ":""}${f.nome}</span><div class="fr-badges"><span class="cx cx-${f.cx}">${f.cx}</span>${!avail?`<span class="fr-min-tag">${f.min}+</span>`:""}</div></div><div class="fr-desc">${f.desc}</div>`;
+    if(avail){d.onclick=()=>{if(fSel.includes(f.id)){fSel=fSel.filter(x=>x!==f.id);}else{fSel.push(f.id);}buildFrentes();calcular();};}
+    container.appendChild(d);
+  });
+}
+
+function setTab(t){
+  ["dados","frentes","contrato"].forEach(x=>{
+    get("aba-"+x).style.display=x===t?"block":"none";
+    get("tab-"+x).className="tab"+(x===t?" active":"");
+  });
+  if(t==="frentes")buildFrentes();
+}
+
+function toggleCfg(){get("cfg-box").classList.toggle("open");}
+function toggleTog(id){
+  const el=get(id);
+  if(id==="tog-treino")togTreino=!togTreino;
+  else if(id==="tog-compliance")togCompliance=!togCompliance;
+  else if(id==="tog-historico")togHistorico=!togHistorico;
+  const state=id==="tog-treino"?togTreino:id==="tog-compliance"?togCompliance:togHistorico;
+  el.className="tog-track"+(state?" on":"");
+  calcular();
+}
+function toggleRhInterno(){
+  const track=get("tog-rh-interno"),bloco=get("bloco-rh-interno-calc");
+  const isOn=track.classList.contains("on");
+  track.className="tog-track"+(isOn?"":" on");
+  bloco.style.display=isOn?"none":"block";
+  calcular();
+}
+
+function calcular(){
+  const colab=num("sl-colab"),unid=num("sl-unid"),vagas=num("sl-vagas"),vagasX=num("sl-vagasX");
+  get("v-colab").textContent=colab+" pessoas";
+  get("v-unid").textContent=unid+" un.";
+  get("v-vagas").textContent=vagas+" vagas";
+  get("v-vagasX").textContent=vagasX+" vagas";
+  const empresa=val("empresa"),decisor=val("decisor");
+  const pkgKey=forcado||autoPkg(colab,unid,vagas);
+  const pk=PKGS[pkgKey];
+  const mR=multR();
+  const cidade=val("sel-cidade"),estado=val("sel-estado");
+  const mb=get("mult-badge");
+  if(cidade){mb.style.display="inline-block";mb.textContent="Multiplicador regional: "+mR.toFixed(2)+"x "+(mR>1?"↑":mR<1?"↓":"=");}
+  else mb.style.display="none";
+  get("pkg-name").textContent=pkgKey;
+  get("pill-destaque").style.display=pk.destaque?"inline":"none";
+  get("pill-auto").style.display=forcado?"none":"inline";
+  const pe=get("pill-empresa");
+  if(empresa){pe.style.display="inline";pe.textContent=empresa;}else pe.style.display="none";
+  get("pkg-info").textContent=pk.horas+"h/mês · SLA "+pk.sla+" · "+pk.reunioes;
+  get("pkg-desc").textContent=pk.desc;
+  const frentesObj=FRENTES.map(f=>({...f,peso:frentePesos[f.id]||f.peso}));
+  const fObjAll=fSel.map(id=>frentesObj.find(f=>f.id===id)).filter(Boolean);
+  const fObj=fObjAll.filter(f=>PKG_ORDER[f.min]<=PKG_ORDER[pkgKey]);
+  const mT=multT(colab,pkgKey);
+  const mF=multF(fObj);
+  const frTab=get("tab-frentes");
+  if(frTab)frTab.textContent="FRENTES"+(fObj.length?" ("+fObj.length+")":"");
+  const frCount=get("fr-count");
+  if(frCount){frCount.textContent=fObj.length+"/"+pk.maxFrentes;frCount.style.color=fObj.length>pk.maxFrentes?"#ef4444":"#22c55e";}
+  const frWarn=get("fr-warn");
+  if(frWarn){if(fObj.length>pk.maxFrentes){frWarn.style.display="block";frWarn.textContent="⚠️ Excede "+pk.maxFrentes+" frentes. As extras geram horas excedentes.";}else frWarn.style.display="none";}
+  const base=num("p-"+pkgKey)||2800;
+  const mensal=r50(base*mT*mR*mF);
+  const selVisita=val("sel-visita");
+  const nVisitas=qtdVisitas(selVisita);
+  const vVisita=valorVisita(selVisita);
+  const classeDesl=classeDeslocamento(estado,cidade);
+  const valorDesl=classeDesl==='paid'?(num("p-deslRegiao")||80):0;
+  const totalVisita=nVisitas*vVisita;
+  const totalDesl=nVisitas*valorDesl;
+  const extras=[];
+  if(vagasX>0)extras.push({l:vagasX+" vaga(s) extra",v:vagasX*(num("p-vagaExtra")||420)});
+  if(nVisitas>0){
+    extras.push({l:labelVisita(selVisita),v:totalVisita});
+    if(totalDesl>0)extras.push({l:"Deslocamento ("+nVisitas+"x R$"+valorDesl+")",v:totalDesl});
+    if(classeDesl==='ext')extras.push({l:"⚠ Deslocamento fora PR — custos por conta da empresa",v:0,warn:true});
+  }
+  if(togTreino)extras.push({l:"Treinamento avulso",v:num("p-treino")||1400});
+  const totalMensal=mensal+extras.filter(e=>!e.warn).reduce((s,e)=>s+e.v,0);
+  const totalContrato=totalMensal*meses;
+  const implantacaoBase=implRate>0?r50(totalContrato*implRate/100):0;
+  const pctHistorico=togHistorico?(num("p-implHistorico")||15)/100:0;
+  const implHistorico=togHistorico&&implRate>0?r50(implantacaoBase*pctHistorico):0;
+  const implCompliance=togCompliance?(num("p-implCompliance")||1800):0;
+  const implantacao=implantacaoBase+implHistorico+implCompliance;
+  const totalGeral=totalContrato+implantacao;
+  const desconto=Math.min(50,Math.max(0,num("inp-desc")||0));
+  const vD=desconto>0?{
+    mensal:r50(totalMensal*(1-desconto/100)),contrato:r50(totalContrato*(1-desconto/100)),
+    impl:implRate>0?r50(implantacao*(1-desconto/100)):0,total:r50(totalGeral*(1-desconto/100)),
+  }:{mensal:totalMensal,contrato:totalContrato,impl:implantacao,total:totalGeral};
+  const di=get("inp-desc");
+  di.className="desc-inp"+(desconto>0?" hv":"");
+  const dn=get("desc-note");
+  if(desconto>0){dn.style.display="block";dn.textContent="Com desconto: "+brl(r50(totalGeral*(1-desconto/100)))+" · economia de "+brl(r50(totalGeral*desconto/100));}
+  else dn.style.display="none";
+  const chks=[
+    {l:"Colaboradores",cur:colab,lim:"até "+pk.maxColab,ok:colab<=pk.maxColab},
+    {l:"Unidades",cur:unid,lim:"até "+pk.maxUnid,ok:unid<=pk.maxUnid},
+    {l:"Vagas/mês",cur:vagas,lim:"até "+pk.maxVagas,ok:vagas<=pk.maxVagas},
+    {l:"Frentes ativas",cur:fObj.length,lim:"até "+pk.maxFrentes,ok:fObj.length<=pk.maxFrentes},
+  ];
+  get("checks").innerHTML=chks.map(c=>`<div class="chk-row"><span class="chk-lbl">${c.l}</span><div class="chk-r"><span class="chk-lim">${c.lim}</span><span>${c.ok?"✅":"⚠️"}</span><span class="chk-v" style="color:${c.ok?"var(--blue)":"#ef4444"}">${c.cur}</span></div></div>`).join("");
+  const compRows=[
+    {l:"Base do pacote",v:brl(base)},
+    {l:"× tamanho ("+colab+" pessoas)",v:mT.toFixed(2)+"x",c:"var(--blue)"},
+    {l:"× região ("+(cidade||estado||"—")+")",v:mR.toFixed(2)+"x",c:"var(--blue)"},
+    {l:"× frentes",v:mF+"x",c:fObj.length>pk.maxFrentes?"#ef4444":"var(--blue)"},
+    ...extras.filter(e=>!e.warn).map(e=>({l:"+ "+e.l,v:brl(e.v),c:"var(--gray)"})),
+    ...(extras.some(e=>e.warn)?[{l:"⚠ Desl. fora PR",v:"A definir",c:"#ef4444"}]:[]),
+  ];
+  get("comp").innerHTML=compRows.map(r=>`<div class="comp-row"><span class="comp-l">${r.l}</span><span class="comp-v" style="color:${r.c||"var(--text)"}">${r.v}</span></div>`).join("");
+  get("t-mensal").textContent=brl(totalMensal);
+  const tdr=get("t-desc-row");
+  if(desconto>0){tdr.style.display="flex";get("t-desc-lbl").textContent="COM "+desconto+"% DESCONTO";get("t-desc-val").textContent=brl(vD.mensal);}
+  else tdr.style.display="none";
+  const resRowsData=[
+    {l:"Total geral ("+meses+"x"+(implRate>0?" + implantação":"")+")",v:brl(totalGeral),d:desconto>0?brl(vD.total):null},
+    {l:"Total contrato ("+meses+" meses)",v:brl(totalContrato),d:desconto>0?brl(vD.contrato):null},
+    ...(implRate>0?[{l:"Implantação (base "+implRate+"%)",v:brl(implantacaoBase),d:null}]:[]),
+    ...(togHistorico&&implRate>0?[{l:"  + Histórico desorg. (+"+Math.round(pctHistorico*100)+"%)",v:brl(implHistorico),d:null,sub:true}]:[]),
+    ...(togCompliance?[{l:"  + Compliance / NRs",v:brl(implCompliance),d:null,sub:true}]:[]),
+  ];
+  get("res-rows").innerHTML=resRowsData.map(r=>`<div class="res-row"><span class="res-lbl" style="${r.sub?"opacity:.75;font-size:10px":""}">${r.l}</span><div class="res-val">${r.d?`<div class="res-orig">${r.v}</div>`:""} ${r.d||r.v}</div></div>`).join("");
+  const ro=get("res-mensal-orig");
+  if(desconto>0){ro.style.display="block";ro.textContent=brl(totalMensal);}else ro.style.display="none";
+  get("res-mensal-final").textContent=brl(vD.mensal);
+  if(implRate>0){get("res-note").textContent="Assinatura: "+brl(vD.impl)+" · "+meses+"x "+brl(vD.mensal)+"/mês";}
+  else{get("res-note").textContent=meses+"x "+brl(vD.mensal)+"/mês · Sem implantação";}
+  const alertBox=get("rh-alerts")||(() => {
+    const d=document.createElement("div");d.id="rh-alerts";d.style.cssText="margin-top:10px;display:flex;flex-direction:column;gap:6px;";
+    get("res-note").parentNode.appendChild(d);return d;
+  })();
+  const alertas=[];
+  const rhInternoOn=get("tog-rh-interno")&&get("tog-rh-interno").classList.contains("on");
+  if(rhInternoOn){
+    const rhSen=val("rhi-senioridade"),rhAtu=val("rhi-atuacao"),rhAb=val("rhi-abertura");
+    if(rhAb==="resistencia_leve")alertas.push({t:"⚠ RH interno com resistência — considere acréscimo de complexidade",c:"rgba(245,158,11,.25)"});
+    if(rhAtu==="gestao_direta")alertas.push({t:"📌 Gestão direta — demanda de horas Azumi elevada",c:"rgba(59,130,246,.2)"});
+    if(rhAtu==="mentoria_dev")alertas.push({t:"✓ Mentoria / desenvolvimento — menor demanda de horas",c:"rgba(34,197,94,.2)"});
+    if(rhAtu==="parceria_estrategica")alertas.push({t:"✓ Parceria estratégica — implantação pode ser reduzida",c:"rgba(34,197,94,.2)"});
+    if(rhSen==="assistente_junior")alertas.push({t:"⚠ RH interno júnior — complexidade de implantação elevada",c:"rgba(245,158,11,.25)"});
+    if(rhSen==="coord_gerente"&&rhAtu==="parceria_estrategica")alertas.push({t:"✓ RH sênior + parceria — estrutura favorável para o contrato",c:"rgba(34,197,94,.2)"});
+  }
+  if(togCompliance){const limites={START:"não incluso no pacote START",ONGOING:"até 1 NR/ano",GROWTH:"até 3 NRs/ano"};alertas.push({t:"📋 Compliance/NRs — limite: "+limites[pkgKey],c:"rgba(139,92,246,.22)"});}
+  alertBox.innerHTML=alertas.map(a=>`<div style="padding:7px 11px;border-radius:7px;background:${a.c};font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text);letter-spacing:.03em;">${a.t}</div>`).join("");
+  window._estado={pkgKey,pk,colab,unid,vagas,cidade,estado,fObj,
+    totalMensal,totalContrato,implantacao,implantacaoBase,implHistorico,implCompliance,
+    totalGeral,meses,implRate,desconto,vD,empresa,decisor,mT,mR,mF,base,
+    selVisita,nVisitas,totalVisita,totalDesl,classeDesl,togHistorico,togCompliance,pctHistorico};
+}
+
+function gerarHTMLProposta(){
+  const s=window._estado;
+  if(!s)return "";
+  const{pkgKey,pk,colab,unid,vagas,cidade,estado,fObj,
+    totalMensal,totalContrato,implantacao,implantacaoBase,implHistorico,implCompliance,
+    totalGeral,meses,implRate,desconto,vD,empresa,decisor,
+    selVisita,nVisitas,totalVisita,totalDesl,classeDesl,
+    togHistorico,togCompliance,pctHistorico}=s;
+
+  const gi=[
+    ["Modalidade",pkgKey],
+    ["Horas mensais",pk.horas+"h/mês"],
+    ["Colaboradores",colab+" pessoas"],
+    ["Unidades",unid+" unidade(s)"],
+    ["Vagas/mês",vagas+" vaga(s)"],
+    ["SLA",pk.sla],
+    ["Reuniões",pk.reunioes],
+    nVisitas>0?["Visita presencial",labelVisita(selVisita)]:["Presencial","Atendimento remoto"],
+    classeDesl==='ext'?["Deslocamento","Custos por conta da empresa contratante"]:
+    classeDesl==='paid'?["Deslocamento","Adicional incluso no contrato"]:
+    ["Deslocamento","Sem custo (Curitiba/SJP/Pinhais)"],
+    ["Região",cidade?cidade+" — "+estado:estado||"—"],
+    ["Prazo mínimo",meses+" meses"],
+  ].filter(Boolean);
+
+  const gridHTML=gi.map((g,i)=>`
+    <div class="p-gi" style="background:${i%2===0?"#fafafa":"#fff"}">
+      <div class="p-gl">${g[0]}</div>
+      <div class="p-gv">${g[1]}</div>
+    </div>`).join("");
+
+  const frentesHTML=fObj.length?`
+    <div style="margin-bottom:16px">
+      <div class="p-stitle">Frentes de Atuação</div>
+      ${fObj.map(f=>`<div class="p-fr-row">
+        <span style="font-size:12px;color:#222">${f.nome}</span>
+        <span class="cx cx-${f.cx}">${f.cx}</span>
+      </div>`).join("")}
+    </div>`:"";
+
+  const invRows=[
+    ["Total contrato ("+meses+" meses)",brl(totalContrato),desconto>0?brl(vD.contrato):null],
+    ...(implRate>0?[["Implantação base ("+implRate+"%)",brl(implantacaoBase),null]]:[]),
+    ...(togHistorico&&implRate>0?[["  + Acréscimo histórico desorganizado (+"+Math.round(pctHistorico*100)+"%)",brl(implHistorico),null]]:[]),
+    ...(togCompliance?[["  + Estruturação Compliance / NRs obrigatórias",brl(implCompliance),null]]:[]),
+    ...(implRate>0?[["Valor referente à implantação",brl(implantacao),desconto>0?brl(vD.impl):null]]:[]),
+    ["Total geral",brl(totalGeral),desconto>0?brl(vD.total):null],
+  ];
+  const invHTML=invRows.map(([l,orig,com])=>`
+    <div class="p-inv-row">
+      <span class="p-inv-l">${l}</span>
+      <div class="p-inv-r">
+        ${com?`<div class="p-inv-orig">${orig}</div>`:""}
+        <div class="p-inv-final${com?" desconto":""}">${com||orig}</div>
+      </div>
+    </div>`).join("");
+
+  // ★ SAUDAÇÃO MAIOR — nome do decisor/empresa em destaque
+  const greetBannerHTML=(empresa||decisor)?`
+  <div style="background:#031D38;padding:22px 40px 20px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.15) 0%,transparent 60%)"></div>
+    <div style="position:relative;font-family:'Sora',sans-serif;font-size:30px;font-weight:800;color:rgba(255,255,255,.92);letter-spacing:-.5px;line-height:1.1">Olá, <span style="color:#93C5FD">${decisor||empresa}</span>!</div>
+    ${empresa&&decisor?`<div style="position:relative;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(147,197,253,.65);letter-spacing:.1em;text-transform:uppercase;margin-top:5px">${empresa}</div>`:""}
+  </div>`:"";
+
+  const connectAcessos={START:2,ONGOING:3,GROWTH:4};
+  const nConnect=connectAcessos[pkgKey]||2;
+  const limiteCompliance={START:"não incluso neste pacote",ONGOING:"até 1 NR por ano",GROWTH:"até 3 NRs por ano"};
+
+  // ★ RH INTERNO
+  const rhInternoOn=get("tog-rh-interno")&&get("tog-rh-interno").classList.contains("on");
+  const rhiLabels={
+    senioridade:{assistente_junior:"Assistente/Júnior",analista_pleno:"Analista Pleno",analista_senior:"Analista Sênior",coord_gerente:"Coord./Gerente"},
+    atuacao:{gestao_direta:"Demanda intensa — gestão de pessoas e tempo",mentoria_dev:"Mentoria / desenvolvimento",parceria_estrategica:"Co-construção estratégica",supervisao:"Supervisão e alinhamento estratégico"},
+    abertura:{entusiasmada:"Aberta e entusiasmada",neutra:"Neutra — avaliando",resistencia_leve:"Resistência leve",nao_sabe:"A confirmar"}
+  };
+  const rhiSenVal=val("rhi-senioridade"),rhiAtuVal=val("rhi-atuacao"),rhiAbVal=val("rhi-abertura");
+  const rhInternoNotaHTML=(rhInternoOn&&(rhiSenVal||rhiAtuVal||rhiAbVal))?`
+    <div style="background:#f8faff;border:1px solid #e0e8f5;border-radius:8px;padding:8px 12px;margin-top:6px;margin-bottom:14px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#778082;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Perfil RH Interno</div>
+      ${rhiSenVal?`<div style="font-family:'Space Grotesk',sans-serif;font-size:10px;color:#334;margin-bottom:2px">· Senioridade: <strong>${rhiLabels.senioridade[rhiSenVal]||rhiSenVal}</strong></div>`:""}
+      ${rhiAtuVal?`<div style="font-family:'Space Grotesk',sans-serif;font-size:10px;color:#334;margin-bottom:2px">· Atuação Azumi: <strong>${rhiLabels.atuacao[rhiAtuVal]||rhiAtuVal}</strong></div>`:""}
+      ${rhiAbVal?`<div style="font-family:'Space Grotesk',sans-serif;font-size:10px;color:#334">· Abertura: <strong>${rhiLabels.abertura[rhiAbVal]||rhiAbVal}</strong></div>`:""}
+    </div>`:"";
+
+  // ★ OBSERVAÇÕES digitadas na calculadora
+  const obsTexto=val("obs-proposta")||"";
+
+  const payTxt=implRate>0
+    ?`Na assinatura: ${brl(vD.impl)} (implantação) + ${meses}x mensais de ${brl(vD.mensal)}. Renovação automática após prazo mínimo.`
+    :`${meses}x mensais de ${brl(vD.mensal)}. Sem implantação. Renovação automática após prazo mínimo.`;
+
+  return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<title>Proposta AZUMI RH${empresa?" — "+empresa:""}</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--blue:#034C8B;--gray:#778082;--light:#EDEDED;--white:#FAFAFA;--text:#222;
+  --gm:linear-gradient(135deg,#034C8B 0%,#3B82F6 50%,#8B5CF6 100%);
+  --gh:linear-gradient(135deg,#031D38 0%,#034C8B 40%,#3B82F6 75%,#8B5CF6 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',Verdana,sans-serif;background:#f0f2f7;color:#222}
+.no-print{max-width:860px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;background:var(--gh);border-radius:12px;padding:10px 20px;position:relative;overflow:hidden}
+.no-print::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90%,rgba(139,92,246,.2) 0%,transparent 60%)}
+.no-print-inner{position:relative;display:flex;justify-content:space-between;align-items:center;width:100%}
+.np-logo{display:flex;align-items:center;gap:9px}
+.np-azumi{font-family:'Poppins',sans-serif;font-weight:600;font-size:20px;color:#fff;letter-spacing:-.01em}
+.np-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;font-size:20px;background:var(--gm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.no-print-btns{display:flex;gap:10px;align-items:center}
+.no-print-hint{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(147,197,253,.7);letter-spacing:.04em}
+.btn-print{background:#fff;color:var(--blue);border:none;border-radius:100px;padding:8px 20px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif}
+.page{width:210mm;min-height:297mm;margin:0 auto;background:#fff;box-shadow:0 0 24px rgba(0,0,0,.15)}
+.p-hdr{background:#031D38;padding:24px 40px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;position:relative;overflow:hidden}
+.p-hdr::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.25) 0%,transparent 60%)}
+.p-hdr-inner{position:relative;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;width:100%}
+.p-hl{flex:1}
+.p-title{font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:#fff;margin-bottom:2px}
+.p-sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(147,197,253,.7);letter-spacing:.1em;text-transform:uppercase}
+.p-logo-wrap{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.p-logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;font-size:26px;color:#fff;letter-spacing:-.01em}
+.p-logo-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;font-size:26px;color:#93C5FD}
+.p-body{padding:22px 40px 32px}
+.valid-bar{background:#fff8e1;border:1px solid #ffd54f;border-radius:8px;padding:7px 12px;margin-bottom:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:10px;color:#7c6200;font-family:'Space Grotesk',sans-serif}
+.p-stitle{font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:var(--blue);border-bottom:2px solid;border-image:linear-gradient(90deg,#034C8B,#8B5CF6) 1;padding-bottom:5px;margin-bottom:12px;margin-top:20px}
+.p-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:14px}
+.p-gi{padding:5px 9px;border-radius:6px;border:1px solid var(--light)}
+.p-gl{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--gray);font-weight:500;text-transform:uppercase;letter-spacing:.07em;margin-bottom:1px}
+.p-gv{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;color:#222}
+.p-fr-row{display:flex;justify-content:space-between;align-items:center;padding:6px 9px;border-bottom:1px solid var(--light)}
+.cx{font-size:9px;font-weight:700;color:#fff;border-radius:100px;padding:2px 8px;font-family:'JetBrains Mono',monospace}
+.cx-C1{background:#22c55e}.cx-C2{background:#f59e0b}.cx-C3{background:#ef4444}
+.p-inv-row{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border-bottom:1px solid var(--light);background:var(--white)}
+.p-inv-l{font-family:'Space Grotesk',sans-serif;font-size:11px;color:#222}
+.p-inv-r{text-align:right}
+.p-inv-orig{font-size:10px;color:#aaa;text-decoration:line-through}
+.p-inv-final{font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:#222}
+.p-inv-final.desconto{color:var(--blue)}
+.p-disc{background:#fef9f0;border:1px solid #f59e0b;border-radius:7px;padding:10px 15px;font-size:13px;font-weight:700;color:#92400e;margin-bottom:10px;font-family:'Space Grotesk',sans-serif}
+.p-total-bar{background:var(--gh);padding:11px 14px;display:flex;justify-content:space-between;align-items:flex-end;position:relative;overflow:hidden}
+.p-total-bar::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 50% 80% at 90%,rgba(139,92,246,.2) 0%,transparent 60%)}
+.p-total-bar-inner{position:relative;display:flex;justify-content:space-between;align-items:flex-end;width:100%}
+.p-total-l-wrap{display:flex;flex-direction:column}
+.p-total-l{font-family:'Sora',sans-serif;font-size:15px;font-weight:800;color:#fff}
+.p-total-desc{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(147,197,253,.75);margin-top:2px}
+.p-total-r{text-align:right}
+.p-total-orig{font-size:11px;color:rgba(255,255,255,.45);text-decoration:line-through}
+.p-total-final{font-family:'Sora',sans-serif;font-size:22px;font-weight:800;color:#fff}
+.p-pay{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gray);padding:5px 10px;background:var(--white);letter-spacing:.03em;margin-bottom:14px}
+.p-cond{font-family:'Space Grotesk',sans-serif;font-size:10.5px;color:#333;padding:7px 0 7px 16px;border-bottom:1px solid var(--light);position:relative;line-height:1.65}
+.p-cond::before{content:"·";position:absolute;left:0;color:var(--blue);font-weight:900;font-size:14px;top:5px}
+@media print{body{background:#fff!important}.no-print{display:none!important}.page{box-shadow:none!important;margin:0!important;width:100%!important}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}@page{size:A4;margin:8mm}}
+</style>
+</head>
+<body>
+<div class="no-print">
+  <div class="no-print-inner">
+    <div class="np-logo">
+      <svg width="30" height="24" viewBox="0 0 120 96" fill="none">
+        <defs><linearGradient id="npg" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/>
+        </linearGradient></defs>
+        <circle cx="44" cy="48" r="34" fill="url(#npg)" opacity=".9"/>
+        <circle cx="76" cy="48" r="34" fill="url(#npg)" opacity=".7"/>
+      </svg>
+      <span class="np-azumi">azumi</span><span class="np-rh">RH</span>
+    </div>
+    <div class="no-print-btns">
+      <span class="no-print-hint">Ative "Gráficos de fundo" no Ctrl+P para preservar as cores</span>
+      <button class="btn-print" onclick="window.print()">🖨 Salvar como PDF (Ctrl+P)</button>
+    </div>
+  </div>
+</div>
+<div class="page">
+  <div class="p-hdr">
+    <div class="p-hdr-inner">
+      <div class="p-hl">
+        <div class="p-title">Proposta Comercial</div>
+        <div class="p-sub">HR AS A SERVICE · PACOTE ${pkgKey}</div>
+      </div>
+      <div class="p-logo-wrap">
+        <svg width="32" height="26" viewBox="0 0 120 96" fill="none">
+          <defs><linearGradient id="pg3" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/>
+          </linearGradient></defs>
+          <circle cx="44" cy="48" r="34" fill="url(#pg3)" opacity=".9"/>
+          <circle cx="76" cy="48" r="34" fill="url(#pg3)" opacity=".7"/>
+        </svg>
+        <span class="p-logo-azumi">azumi</span><span class="p-logo-rh">RH</span>
+      </div>
+    </div>
+  </div>
+  ${greetBannerHTML}
+  <div class="p-body">
+    <div class="valid-bar">
+      <span>📅 Emissão: <strong>${dataHoje()}</strong></span>
+      <span>⏳ Válida até: <strong>${data15()}</strong> — 15 dias</span>
+    </div>
+    ${obsTexto?`<div style="background:#f8f9fb;border-left:3px solid #3B82F6;border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:16px;"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:#034C8B;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Detalhes / Observações</div><div style="font-family:'Space Grotesk',sans-serif;font-size:11px;color:#333;line-height:1.75;">${obsTexto.replace(/\n/g,"<br>")}</div></div>`:""}
+    <div class="p-stitle">Detalhes da Proposta</div>
+    <div class="p-grid">${gridHTML}</div>
+    ${rhInternoNotaHTML}
+    <div style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(3,76,139,.06),rgba(139,92,246,.06));border:1px solid rgba(59,130,246,.18);border-radius:10px;padding:10px 14px;margin:0 0 14px">
+      <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#034C8B,#3B82F6,#8B5CF6);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="16" height="13" viewBox="0 0 120 96" fill="none"><circle cx="44" cy="48" r="34" fill="rgba(255,255,255,.9)"/><circle cx="76" cy="48" r="34" fill="rgba(255,255,255,.7)"/></svg>
+      </div>
+      <div style="flex:1">
+        <div style="font-family:'Sora',sans-serif;font-size:11px;font-weight:700;color:#034C8B">Plataforma Azumi Connect — inclusa no pacote</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:10px;color:#778082;margin-top:2px">Portal exclusivo para acompanhamento de entregas, documentos e comunicação com a consultoria</div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;background:linear-gradient(135deg,#034C8B,#3B82F6,#8B5CF6);color:#fff;padding:3px 10px;border-radius:100px;white-space:nowrap">${nConnect} acessos gratuitos</div>
+    </div>
+    ${frentesHTML}
+    <div class="p-stitle">Investimento</div>
+    ${desconto>0?`<div class="p-disc">🎁 Desconto especial de ${desconto}% aplicado nesta proposta.</div>`:""}
+    ${invHTML}
+    <div class="p-total-bar">
+      <div class="p-total-bar-inner">
+        <div class="p-total-l-wrap">
+          <span class="p-total-l">MENSALIDADE</span>
+        </div>
+        <div class="p-total-r">
+          ${desconto>0?`<div class="p-total-orig">${brl(totalMensal)}</div>`:""}
+          <div class="p-total-final">${brl(vD.mensal)}</div>
+        </div>
+      </div>
+    </div>
+    <div class="p-pay">${payTxt}</div>
+    <div class="p-stitle">Condições Gerais</div>
     <div class="p-cond">Renovação automática após prazo mínimo.</div>
     <div class="p-cond">Rescisão antecipada dentro do prazo mínimo: multa de 20% do valor remanescente + 30 dias de aviso prévio.</div>
     <div class="p-cond">Atraso no pagamento: multa de 2% + juros de 1% ao mês sobre o valor em atraso.</div>
