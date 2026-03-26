@@ -16,11 +16,9 @@
 body{font-family:'Space Grotesk',sans-serif;background:#f0f2f7;color:var(--text);font-size:14px}
 input,select,button,textarea{font-family:'Space Grotesk',sans-serif}
 
-/* ── LOGO: FUNDO ESCURO (padrão header) ── */
 .logo-dark .logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;color:#fff;letter-spacing:-.01em}
 .logo-dark .logo-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;color:#93C5FD;margin-left:1px}
 
-/* ── LOGO: FUNDO CLARO (footer, corpo) ── */
 .logo-light .logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;color:var(--blue);letter-spacing:-.01em}
 .logo-light .logo-rh{
   font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;
@@ -28,10 +26,8 @@ input,select,button,textarea{font-family:'Space Grotesk',sans-serif}
   margin-left:1px;
 }
 
-/* ── CONTAINER ── */
 .container{max-width:920px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(3,29,56,.1);overflow:hidden}
 
-/* ── HEADER ── */
 .header{
   background:var(--gh);padding:24px 35px;
   display:flex;justify-content:space-between;align-items:center;
@@ -48,7 +44,6 @@ input,select,button,textarea{font-family:'Space Grotesk',sans-serif}
 .header-logo .logo-azumi{font-size:26px}
 .header-logo .logo-rh{font-size:26px}
 
-/* PROTOCOLO badge no header */
 .protocolo-badge{
   font-family:'JetBrains Mono',monospace;font-size:10px;
   background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
@@ -57,12 +52,10 @@ input,select,button,textarea{font-family:'Space Grotesk',sans-serif}
   margin-top:6px;display:inline-block;
 }
 
-/* ── CONTEÚDO ── */
 .content{padding:28px 35px}
 .section{margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--light)}
 .section:last-of-type{border-bottom:none}
 
-/* ── SECTION TITLE ── */
 .section-title{
   font-family:'Sora',sans-serif;font-size:1em;font-weight:700;
   color:var(--blue);margin-bottom:14px;padding-bottom:7px;
@@ -73,7 +66,6 @@ input,select,button,textarea{font-family:'Space Grotesk',sans-serif}
   border-radius:100px;background:var(--gm);flex-shrink:0;
 }
 
-/* ── FORM ── */
 .form-group{margin-bottom:14px}
 label{
   display:block;font-family:'JetBrains Mono',monospace;
@@ -97,7 +89,6 @@ textarea{resize:vertical;min-height:80px;font-size:.84em;line-height:1.5}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 
-/* ── HINT ── */
 .hint{
   background:#e8f0fb;border-left:3px solid var(--blue2);
   padding:9px 12px;margin-bottom:12px;
@@ -105,7 +96,6 @@ textarea{resize:vertical;min-height:80px;font-size:.84em;line-height:1.5}
   border-radius:4px;
 }
 
-/* ── ITEM CARDS ── */
 .item-card{
   background:var(--white);border:1.5px solid var(--light);
   padding:14px;border-radius:10px;margin-bottom:10px;
@@ -116,7 +106,6 @@ textarea{resize:vertical;min-height:80px;font-size:.84em;line-height:1.5}
   color:var(--blue);letter-spacing:.05em;
 }
 
-/* ── BOTÕES ── */
 .btn{
   padding:9px 18px;border:none;border-radius:100px;cursor:pointer;
   font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.84em;
@@ -141,7 +130,6 @@ textarea{resize:vertical;min-height:80px;font-size:.84em;line-height:1.5}
 .btn-danger{background:#dc3545;color:#fff}
 .btn-danger:hover{background:#b52a37}
 
-/* ── FOOTER AÇÕES ── */
 .footer-actions{
   background:var(--white);padding:24px;text-align:center;
   border-top:1px solid var(--light);
@@ -156,7 +144,6 @@ textarea{resize:vertical;min-height:80px;font-size:.84em;line-height:1.5}
   margin-top:10px;letter-spacing:.04em;
 }
 
-/* ── LOADING ── */
 #loading{
   display:none;position:fixed;inset:0;background:rgba(255,255,255,.96);
   z-index:9999;justify-content:center;align-items:center;flex-direction:column;
@@ -167,7 +154,6 @@ textarea{resize:vertical;min-height:80px;font-size:.84em;line-height:1.5}
 }
 @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 
-/* ── RESPONSIVE ── */
 @media(max-width:768px){
   body{padding:8px}
   .content{padding:18px}
@@ -248,6 +234,7 @@ textarea{resize:vertical;min-height:80px;font-size:.84em;line-height:1.5}
           <option value="cultura">Cultura e Rituais de Gestão</option>
           <option value="personalizados">Projetos Personalizados em Gestão de Pessoas</option>
           <option value="mentoria">Mentoria Impulso (B2C)</option>
+          <option value="entrevistaComportamental">Relatório de Entrevista Comportamental</option>
         </select>
       </div>
     </div>
@@ -297,8 +284,6 @@ textarea{resize:vertical;min-height:80px;font-size:.84em;line-height:1.5}
 
 <script>
 // ── PROTOCOLO AUTO-INCREMENTAL ─────────────────────────────────────────────
-// Formato: AZ-YYYYMMDD-NNNNN
-// Persiste no localStorage: nunca repete no mesmo navegador/máquina
 let protocoloAtual = '';
 
 function gerarProtocolo() {
@@ -307,12 +292,9 @@ function gerarProtocolo() {
   const mm = String(hoje.getMonth()+1).padStart(2,'0');
   const dd = String(hoje.getDate()).padStart(2,'0');
   const dataStr = `${yyyy}${mm}${dd}`;
-
-  // Contador global — nunca zera, garante unicidade absoluta
   const contadorKey = 'azumi_protocolo_counter';
   let counter = parseInt(localStorage.getItem(contadorKey) || '0', 10) + 1;
   localStorage.setItem(contadorKey, String(counter));
-
   return `AZ-${dataStr}-${String(counter).padStart(5,'0')}`;
 }
 
@@ -661,7 +643,81 @@ const templatesCampos = {
       <div id="tempoTarefaContainer"></div>
       <button class="btn btn-add" onclick="adicionarTarefaTempo()">+ Adicionar</button>
       <div style="margin-top:14px;text-align:right;font-family:'Sora',sans-serif;font-weight:700;color:var(--blue)">
-        Total: <span id="totalHoras">0</span>h</div></div>`
+        Total: <span id="totalHoras">0</span>h</div></div>`,
+
+  // ── NOVO: ENTREVISTA COMPORTAMENTAL ─────────────────────────────────────
+  entrevistaComportamental: `
+    <div class="section"><h2 class="section-title">Identificação da Entrevista</h2>
+      <div class="grid-2">
+        <div class="form-group"><label>Área / Departamento</label>
+          <input type="text" id="areaEntrevista" placeholder="Ex: Comercial"/></div>
+        <div class="form-group"><label>Gestor Solicitante</label>
+          <input type="text" id="gestorSolicitante" placeholder="Ex: João Pereira"/></div></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Cargo Alvo</label>
+          <input type="text" id="cargoAlvo" placeholder="Ex: Analista de Vendas Sênior"/></div>
+        <div class="form-group"><label>Etapa do Processo</label>
+          <select id="etapaProcesso">
+            <option value="">Selecione...</option>
+            <option>1ª Entrevista</option>
+            <option>2ª Entrevista</option>
+            <option>Entrevista Final</option>
+            <option>Mapeamento Interno</option>
+            <option>Avaliação para Promoção</option>
+          </select></div></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Data da Entrevista</label>
+          <input type="text" id="dataEntrevista" placeholder="Ex: 20/03/2026"/></div>
+        <div class="form-group"><label>Duração</label>
+          <input type="text" id="duracaoEntrevista" placeholder="Ex: 1h20min"/></div></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Modalidade</label>
+          <select id="modalidadeEntrevista">
+            <option value="">Selecione...</option>
+            <option>Presencial</option>
+            <option>On-line</option>
+          </select></div>
+        <div class="form-group"><label>Metodologia Utilizada</label>
+          <select id="metodologiaEntrevista">
+            <option value="">Selecione...</option>
+            <option value="STAR">STAR (Situação, Tarefa, Ação, Resultado)</option>
+            <option value="CARE">CARE (Contexto, Ação, Resultado, Evolução)</option>
+            <option value="Comportamental">Comportamental por Competências</option>
+          </select></div></div></div>
+
+    <div class="section"><h2 class="section-title">Dados do Candidato</h2>
+      <div class="hint">Use identificador neutro se preferir preservar a confidencialidade nesta etapa.</div>
+      <div class="grid-2">
+        <div class="form-group"><label>Nome / Identificador</label>
+          <input type="text" id="nomeCandidato" placeholder="Ex: Candidato A ou Nome Completo"/></div>
+        <div class="form-group"><label>Cargo Atual</label>
+          <input type="text" id="cargoAtualCandidato" placeholder="Ex: Analista de Vendas Pleno"/></div></div></div>
+
+    <div class="section"><h2 class="section-title">Competências Avaliadas</h2>
+      <div class="hint"><strong>Escala:</strong> A = Acima do esperado · B = Dentro do esperado · C = Abaixo do esperado</div>
+      <div id="competenciasContainer"></div>
+      <button class="btn btn-add" onclick="adicionarCompetencia()">+ Adicionar Competência</button></div>
+
+    <div class="section"><h2 class="section-title">Fit Cultural e Aderência ao Cargo</h2>
+      <div class="form-group"><label>Aderência à Cultura da Empresa</label>
+        <textarea id="fitCultura" placeholder="Como o candidato demonstrou alinhamento com os valores e cultura da organização..."></textarea></div>
+      <div class="form-group"><label>Aderência às Exigências do Cargo</label>
+        <textarea id="fitCargo" placeholder="Nível de autonomia, pressão, perfil de relacionamento, liderança etc..."></textarea></div></div>
+
+    <div class="section"><h2 class="section-title">Síntese Final</h2>
+      <div class="form-group"><label>Pontos Fortes Comportamentais</label>
+        <textarea id="pontosFortes" placeholder="Liste os principais diferenciais observados..."></textarea></div>
+      <div class="form-group"><label>Pontos de Atenção / Risco</label>
+        <textarea id="pontosAtencao" placeholder="Liste comportamentos ou lacunas que merecem atenção..."></textarea></div>
+      <div class="form-group"><label>Recomendação Final <span class="required">*</span></label>
+        <select id="recomendacaoFinal">
+          <option value="">Selecione...</option>
+          <option value="Recomendado">✅ Recomendado</option>
+          <option value="Recomendado com Reservas">⚠️ Recomendado com Reservas</option>
+          <option value="Não Recomendado">❌ Não Recomendado</option>
+        </select></div>
+      <div class="form-group"><label>Sugestões de Desenvolvimento</label>
+        <textarea id="sugestoesDesenvolvimento" placeholder="Recomendações de desenvolvimento mesmo quando aprovado..."></textarea></div></div>`
 };
 
 // ── INIT ───────────────────────────────────────────────────────────────────
@@ -700,6 +756,58 @@ function renderItens(tipo, label) {
 function removerItem(tipo, id) {
   dadosDinamicos[tipo] = dadosDinamicos[tipo].filter(x => x.id !== id);
   renderItens(tipo, tipo.charAt(0).toUpperCase()+tipo.slice(1));
+}
+
+// ── COMPETÊNCIAS — ENTREVISTA COMPORTAMENTAL ───────────────────────────────
+function adicionarCompetencia() {
+  if (!dadosDinamicos.competencias) dadosDinamicos.competencias = [];
+  dadosDinamicos.competencias.push({
+    id: Date.now(),
+    nome: '',
+    perguntas: '',
+    comportamentos: '',
+    observacoes: '',
+    conceito: ''
+  });
+  renderCompetencias();
+}
+
+function renderCompetencias() {
+  const c = document.getElementById('competenciasContainer');
+  if (!c) return;
+  c.innerHTML = dadosDinamicos.competencias.map((comp, i) => `
+    <div class="item-card">
+      <div class="item-header">
+        <span class="item-number">Competência ${i+1}</span>
+        <button class="btn btn-remove" onclick="removerCompetencia(${comp.id})">Remover</button>
+      </div>
+      <div class="grid-2">
+        <div class="form-group"><label>Nome da Competência</label>
+          <input type="text" placeholder="Ex: Comunicação, Liderança, Resiliência..."
+            value="${comp.nome}"
+            oninput="dadosDinamicos.competencias[${i}].nome=this.value"/></div>
+        <div class="form-group"><label>Conceito</label>
+          <select oninput="dadosDinamicos.competencias[${i}].conceito=this.value">
+            <option value="">Selecione...</option>
+            <option ${comp.conceito==='A'?'selected':''} value="A">A — Acima do esperado</option>
+            <option ${comp.conceito==='B'?'selected':''} value="B">B — Dentro do esperado</option>
+            <option ${comp.conceito==='C'?'selected':''} value="C">C — Abaixo do esperado</option>
+          </select></div></div>
+      <div class="form-group"><label>Perguntas Aplicadas (resumo)</label>
+        <textarea placeholder="Ex: Conte uma situação em que precisou comunicar uma decisão difícil..."
+          oninput="dadosDinamicos.competencias[${i}].perguntas=this.value">${comp.perguntas}</textarea></div>
+      <div class="form-group"><label>Comportamentos / Exemplos Relatados (Situação › Ação › Resultado)</label>
+        <textarea placeholder="Descreva os exemplos concretos que o candidato trouxe..."
+          oninput="dadosDinamicos.competencias[${i}].comportamentos=this.value">${comp.comportamentos}</textarea></div>
+      <div class="form-group"><label>Observações do Entrevistador</label>
+        <textarea placeholder="Postura, coerência, clareza, consistência com histórico..."
+          oninput="dadosDinamicos.competencias[${i}].observacoes=this.value">${comp.observacoes}</textarea></div>
+    </div>`).join('');
+}
+
+function removerCompetencia(id) {
+  dadosDinamicos.competencias = dadosDinamicos.competencias.filter(x => x.id !== id);
+  renderCompetencias();
 }
 
 // ── TEMPO POR TAREFA ───────────────────────────────────────────────────────
@@ -981,6 +1089,7 @@ function carregarRascunho() {
   trocarCampos();
   dadosDinamicos = dados.dadosDinamicos || {};
   setTimeout(() => {
+    if (dadosDinamicos.competencias?.length) renderCompetencias();
     Object.keys(dadosDinamicos).forEach(key => {
       const fn = window['render' + key.charAt(0).toUpperCase() + key.slice(1)];
       if (fn) fn();
@@ -1015,19 +1124,37 @@ function gerarVisualizacao() {
 }
 
 function coletarTodosDados() {
+  const tipoSel = document.getElementById('tipoServico');
   return {
     contratante: document.getElementById('contratante').value,
     cnpjContratante: document.getElementById('cnpjContratante').value,
     referencia: document.getElementById('referencia').value,
     horasContratadas: document.getElementById('horasContratadas').value,
-    tipoServico: document.getElementById('tipoServico').value,
-    tipoServicoTexto: document.getElementById('tipoServico').options[document.getElementById('tipoServico').selectedIndex]?.text || '',
+    tipoServico: tipoSel.value,
+    tipoServicoTexto: tipoSel.options[tipoSel.selectedIndex]?.text || '',
     sintese: document.getElementById('sintese')?.value || '',
     consideracoes: document.getElementById('consideracoes').value,
     nomeConsultor: document.getElementById('nomeConsultor').value,
     cargoConsultor: document.getElementById('cargoConsultor').value,
     localData: document.getElementById('localData').value,
     protocolo: protocoloAtual,
+    // campos específicos entrevista comportamental
+    areaEntrevista: document.getElementById('areaEntrevista')?.value || '',
+    gestorSolicitante: document.getElementById('gestorSolicitante')?.value || '',
+    cargoAlvo: document.getElementById('cargoAlvo')?.value || '',
+    etapaProcesso: document.getElementById('etapaProcesso')?.value || '',
+    dataEntrevista: document.getElementById('dataEntrevista')?.value || '',
+    duracaoEntrevista: document.getElementById('duracaoEntrevista')?.value || '',
+    modalidadeEntrevista: document.getElementById('modalidadeEntrevista')?.value || '',
+    metodologiaEntrevista: document.getElementById('metodologiaEntrevista')?.value || '',
+    nomeCandidato: document.getElementById('nomeCandidato')?.value || '',
+    cargoAtualCandidato: document.getElementById('cargoAtualCandidato')?.value || '',
+    fitCultura: document.getElementById('fitCultura')?.value || '',
+    fitCargo: document.getElementById('fitCargo')?.value || '',
+    pontosFortes: document.getElementById('pontosFortes')?.value || '',
+    pontosAtencao: document.getElementById('pontosAtencao')?.value || '',
+    recomendacaoFinal: document.getElementById('recomendacaoFinal')?.value || '',
+    sugestoesDesenvolvimento: document.getElementById('sugestoesDesenvolvimento')?.value || '',
     dadosDinamicos
   };
 }
@@ -1036,69 +1163,177 @@ function coletarTodosDados() {
 function gerarHTMLRelatorio(dados) {
   let conteudo = '';
 
-  if (dados.sintese) {
-    conteudo += `<div class="section"><h2 class="section-title">Síntese Executiva</h2>
-      <div class="text-content">${dados.sintese}</div></div>`;
-  }
+  // ── BLOCO ESPECÍFICO: ENTREVISTA COMPORTAMENTAL ──────────────────────────
+  if (dados.tipoServico === 'entrevistaComportamental') {
+    // Cabeçalho da entrevista
+    conteudo += `<div class="section"><h2 class="section-title">Identificação da Entrevista</h2>
+      <div class="info-grid">
+        ${dados.areaEntrevista?`<div class="info-item"><div class="info-label">Área / Departamento</div><div class="info-value">${dados.areaEntrevista}</div></div>`:''}
+        ${dados.gestorSolicitante?`<div class="info-item"><div class="info-label">Gestor Solicitante</div><div class="info-value">${dados.gestorSolicitante}</div></div>`:''}
+        ${dados.cargoAlvo?`<div class="info-item"><div class="info-label">Cargo Alvo</div><div class="info-value">${dados.cargoAlvo}</div></div>`:''}
+        ${dados.etapaProcesso?`<div class="info-item"><div class="info-label">Etapa do Processo</div><div class="info-value">${dados.etapaProcesso}</div></div>`:''}
+        ${dados.dataEntrevista?`<div class="info-item"><div class="info-label">Data da Entrevista</div><div class="info-value">${dados.dataEntrevista}</div></div>`:''}
+        ${dados.duracaoEntrevista?`<div class="info-item"><div class="info-label">Duração</div><div class="info-value">${dados.duracaoEntrevista}</div></div>`:''}
+        ${dados.modalidadeEntrevista?`<div class="info-item"><div class="info-label">Modalidade</div><div class="info-value">${dados.modalidadeEntrevista}</div></div>`:''}
+        ${dados.metodologiaEntrevista?`<div class="info-item"><div class="info-label">Metodologia</div><div class="info-value">${dados.metodologiaEntrevista}</div></div>`:''}
+      </div></div>`;
 
-  const listas = ['objetivos','entregas','pendencias','backlog','riscos','escopo','atividades','bloqueios',
-    'coletas','achados','evidencias','hipoteses','recomendacoes','modulos','documentos','rituais','treinamentos',
-    'campanhas','calendario','proximasAcoes','temas','planoAcao','conteudo','acoes','evolucao','proximosPassos',
-    'politicas','comunicacao','dependencias','proximasEtapas','exercicios'];
-  listas.forEach(l => {
-    if (dados.dadosDinamicos[l]?.length) {
-      const titulo = l.charAt(0).toUpperCase()+l.slice(1).replace(/([A-Z])/g,' $1');
-      conteudo += `<div class="section"><h2 class="section-title">${titulo}</h2>
-        <div class="item-list">${dados.dadosDinamicos[l].map(x=>x.texto?`<div class="item">${x.texto}</div>`:'').join('')}</div></div>`;
+    // Dados do candidato
+    if (dados.nomeCandidato || dados.cargoAtualCandidato) {
+      conteudo += `<div class="section"><h2 class="section-title">Dados do Candidato</h2>
+        <div class="info-grid">
+          ${dados.nomeCandidato?`<div class="info-item"><div class="info-label">Nome / Identificador</div><div class="info-value">${dados.nomeCandidato}</div></div>`:''}
+          ${dados.cargoAtualCandidato?`<div class="info-item"><div class="info-label">Cargo Atual</div><div class="info-value">${dados.cargoAtualCandidato}</div></div>`:''}
+        </div></div>`;
     }
-  });
 
-  if (dados.dadosDinamicos.tempoTarefa?.length) {
-    const total = dados.dadosDinamicos.tempoTarefa.reduce((s,t)=>s+(parseFloat(t.horas)||0),0);
-    conteudo += `<div class="section"><h2 class="section-title">Tempo por Tarefa</h2>
-      <table class="table"><thead><tr><th>Tarefa</th><th>Tipo</th><th>Status</th><th>Horas</th></tr></thead>
-      <tbody>${dados.dadosDinamicos.tempoTarefa.map(t=>`
-        <tr><td>${t.tarefa||'-'}</td><td>${t.tipo||'-'}</td><td>${t.status||'-'}</td><td>${t.horas||0}h</td></tr>`).join('')}
-        <tr style="font-weight:700;background:#e8f0fb"><td colspan="3" style="text-align:right">Total:</td><td>${total.toFixed(1)}h</td></tr>
-      </tbody></table></div>`;
-    if (dados.horasContratadas) {
-      const cont = parseFloat(dados.horasContratadas), dif = cont - total;
-      conteudo += `<div style="background:#fff3cd;border-left:4px solid ${dif>=0?'#22c55e':'#dc3545'};padding:14px;margin:18px 0;border-radius:8px;font-size:.88em">
-        <strong>Alerta de Horas:</strong><br>
-        Contratadas: ${cont}h · Realizadas: ${total.toFixed(1)}h · Diferença: ${Math.abs(dif).toFixed(1)}h ${dif>=0?'dentro':'acima'} do contratado</div>`;
-    }
-  }
+    // Tabela resumo de competências
+    if (dados.dadosDinamicos.competencias?.length) {
+      const conceitoLabel = { A:'Acima do esperado', B:'Dentro do esperado', C:'Abaixo do esperado' };
+      const conceitoCor   = { A:'#22c55e', B:'#3B82F6', C:'#dc3545' };
 
-  if (dados.dadosDinamicos.vagas?.length) {
-    conteudo += `<div class="section"><h2 class="section-title">Vagas em Andamento</h2>
-      <table class="table"><thead><tr><th>Vaga</th><th>Área</th><th>Status</th><th>Data Abertura</th><th>SLA Previsto</th><th>SLA Real</th></tr></thead>
-      <tbody>${dados.dadosDinamicos.vagas.map(v=>`
-        <tr><td>${v.vaga||'-'}</td><td>${v.area||'-'}</td><td>${v.status||'-'}</td><td>${v.dataAbertura||'-'}</td><td>${v.slaPrevisto||'-'}</td><td>${v.slaReal||'-'}</td></tr>`).join('')}
-      </tbody></table></div>`;
-  }
-
-  if (dados.dadosDinamicos.funil?.length) {
-    conteudo += `<div class="section"><h2 class="section-title">Funil por Vaga</h2>
-      ${dados.dadosDinamicos.funil.map(f=>`
-        <div style="margin-bottom:18px"><h3 style="color:#034C8B;font-size:.95em;margin-bottom:8px">${f.vaga||'Vaga'}</h3>
+      conteudo += `<div class="section"><h2 class="section-title">Avaliação por Competência — Resumo</h2>
         <table class="table">
-          <tr><td>Candidaturas Recebidas</td><td>${f.candidaturas||0}</td></tr>
-          <tr><td>Triados</td><td>${f.triados||0}</td></tr>
-          <tr><td>Entrevistados Azumi</td><td>${f.entrevistadosAzumi||0}</td></tr>
-          <tr><td>Encaminhados ao Cliente</td><td>${f.encaminhados||0}</td></tr>
-          <tr><td>Entrevistados pelo Cliente</td><td>${f.entrevistadosCliente||0}</td></tr>
-          <tr><td>Aprovados</td><td>${f.aprovados||0}</td></tr>
-          <tr><td>Contratados</td><td>${f.contratados||0}</td></tr>
-          <tr><td>Desistências</td><td>${f.desistencias||0}</td></tr>
-        </table></div>`).join('')}</div>`;
+          <thead><tr>
+            <th>Competência</th>
+            <th>Evidências (resumo)</th>
+            <th style="text-align:center;white-space:nowrap">Conceito</th>
+          </tr></thead>
+          <tbody>
+            ${dados.dadosDinamicos.competencias.map(comp => `
+              <tr>
+                <td style="font-weight:600;color:#034C8B">${comp.nome||'—'}</td>
+                <td style="font-size:.84em">${comp.comportamentos||'—'}</td>
+                <td style="text-align:center">
+                  ${comp.conceito
+                    ? `<span style="display:inline-block;padding:3px 10px;border-radius:100px;font-weight:700;font-size:.82em;color:#fff;background:${conceitoCor[comp.conceito]||'#778082'}">${comp.conceito}</span>`
+                    : '—'}
+                </td>
+              </tr>`).join('')}
+          </tbody>
+        </table></div>`;
+
+      // Blocos detalhados por competência
+      conteudo += `<div class="section"><h2 class="section-title">Detalhamento por Competência</h2>`;
+      dados.dadosDinamicos.competencias.forEach((comp, idx) => {
+        const cor = conceitoCor[comp.conceito] || '#778082';
+        conteudo += `
+          <div style="margin-bottom:20px;border:1.5px solid #EDEDED;border-radius:10px;overflow:hidden">
+            <div style="background:linear-gradient(135deg,#031D38 0%,#034C8B 40%,#3B82F6 75%,#8B5CF6 100%);padding:10px 16px;display:flex;justify-content:space-between;align-items:center">
+              <span style="font-family:'Sora',sans-serif;font-weight:700;color:#fff;font-size:.93em">${idx+1}. ${comp.nome||'Competência'}</span>
+              ${comp.conceito?`<span style="background:${cor};color:#fff;border-radius:100px;padding:3px 12px;font-size:.8em;font-weight:700">${comp.conceito} · ${conceitoLabel[comp.conceito]||''}</span>`:''}
+            </div>
+            <div style="padding:14px 16px">
+              ${comp.perguntas?`<div style="margin-bottom:10px"><div style="font-family:'JetBrains Mono',monospace;font-size:.72em;text-transform:uppercase;letter-spacing:.07em;color:#778082;margin-bottom:4px">Perguntas Aplicadas</div><div style="font-size:.86em">${comp.perguntas}</div></div>`:''}
+              ${comp.comportamentos?`<div style="margin-bottom:10px"><div style="font-family:'JetBrains Mono',monospace;font-size:.72em;text-transform:uppercase;letter-spacing:.07em;color:#778082;margin-bottom:4px">Comportamentos / Exemplos (SAR)</div><div style="font-size:.86em">${comp.comportamentos}</div></div>`:''}
+              ${comp.observacoes?`<div><div style="font-family:'JetBrains Mono',monospace;font-size:.72em;text-transform:uppercase;letter-spacing:.07em;color:#778082;margin-bottom:4px">Observações do Entrevistador</div><div style="font-size:.86em">${comp.observacoes}</div></div>`:''}
+            </div>
+          </div>`;
+      });
+      conteudo += `</div>`;
+    }
+
+    // Fit cultural
+    if (dados.fitCultura || dados.fitCargo) {
+      conteudo += `<div class="section"><h2 class="section-title">Fit Cultural e Aderência ao Cargo</h2>
+        ${dados.fitCultura?`<div style="margin-bottom:12px"><div class="info-label">Aderência à Cultura</div><div class="text-content">${dados.fitCultura}</div></div>`:''}
+        ${dados.fitCargo?`<div><div class="info-label">Aderência ao Cargo</div><div class="text-content">${dados.fitCargo}</div></div>`:''}
+        </div>`;
+    }
+
+    // Síntese final com recomendação em destaque
+    const recCores = {
+      'Recomendado':              { bg:'#dcfce7', border:'#22c55e', text:'#15803d' },
+      'Recomendado com Reservas': { bg:'#fef9c3', border:'#f59e0b', text:'#b45309' },
+      'Não Recomendado':          { bg:'#fee2e2', border:'#dc3545', text:'#b91c1c' }
+    };
+    const recCor = recCores[dados.recomendacaoFinal] || { bg:'#f0f2f7', border:'#778082', text:'#222' };
+
+    conteudo += `<div class="section"><h2 class="section-title">Síntese Final</h2>`;
+    if (dados.pontosFortes) {
+      conteudo += `<div style="margin-bottom:12px"><div class="info-label">Pontos Fortes</div><div class="text-content">${dados.pontosFortes}</div></div>`;
+    }
+    if (dados.pontosAtencao) {
+      conteudo += `<div style="margin-bottom:12px"><div class="info-label">Pontos de Atenção / Risco</div><div class="text-content">${dados.pontosAtencao}</div></div>`;
+    }
+    if (dados.recomendacaoFinal) {
+      conteudo += `<div style="background:${recCor.bg};border:2px solid ${recCor.border};border-radius:10px;padding:16px 20px;margin:16px 0;text-align:center">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.72em;text-transform:uppercase;letter-spacing:.1em;color:${recCor.text};margin-bottom:4px">Recomendação Final</div>
+        <div style="font-family:'Sora',sans-serif;font-size:1.1em;font-weight:800;color:${recCor.text}">${dados.recomendacaoFinal}</div>
+      </div>`;
+    }
+    if (dados.sugestoesDesenvolvimento) {
+      conteudo += `<div><div class="info-label">Sugestões de Desenvolvimento</div><div class="text-content">${dados.sugestoesDesenvolvimento}</div></div>`;
+    }
+    conteudo += `</div>`;
+
+  } else {
+    // ── FLUXO PADRÃO (todos os outros tipos) ────────────────────────────────
+    if (dados.sintese) {
+      conteudo += `<div class="section"><h2 class="section-title">Síntese Executiva</h2>
+        <div class="text-content">${dados.sintese}</div></div>`;
+    }
+
+    const listas = ['objetivos','entregas','pendencias','backlog','riscos','escopo','atividades','bloqueios',
+      'coletas','achados','evidencias','hipoteses','recomendacoes','modulos','documentos','rituais','treinamentos',
+      'campanhas','calendario','proximasAcoes','temas','planoAcao','conteudo','acoes','evolucao','proximosPassos',
+      'politicas','comunicacao','dependencias','proximasEtapas','exercicios'];
+    listas.forEach(l => {
+      if (dados.dadosDinamicos[l]?.length) {
+        const titulo = l.charAt(0).toUpperCase()+l.slice(1).replace(/([A-Z])/g,' $1');
+        conteudo += `<div class="section"><h2 class="section-title">${titulo}</h2>
+          <div class="item-list">${dados.dadosDinamicos[l].map(x=>x.texto?`<div class="item">${x.texto}</div>`:'').join('')}</div></div>`;
+      }
+    });
+
+    if (dados.dadosDinamicos.tempoTarefa?.length) {
+      const total = dados.dadosDinamicos.tempoTarefa.reduce((s,t)=>s+(parseFloat(t.horas)||0),0);
+      conteudo += `<div class="section"><h2 class="section-title">Tempo por Tarefa</h2>
+        <table class="table"><thead><tr><th>Tarefa</th><th>Tipo</th><th>Status</th><th>Horas</th></tr></thead>
+        <tbody>${dados.dadosDinamicos.tempoTarefa.map(t=>`
+          <tr><td>${t.tarefa||'-'}</td><td>${t.tipo||'-'}</td><td>${t.status||'-'}</td><td>${t.horas||0}h</td></tr>`).join('')}
+          <tr style="font-weight:700;background:#e8f0fb"><td colspan="3" style="text-align:right">Total:</td><td>${total.toFixed(1)}h</td></tr>
+        </tbody></table></div>`;
+      if (dados.horasContratadas) {
+        const cont = parseFloat(dados.horasContratadas), dif = cont - total;
+        conteudo += `<div style="background:#fff3cd;border-left:4px solid ${dif>=0?'#22c55e':'#dc3545'};padding:14px;margin:18px 0;border-radius:8px;font-size:.88em">
+          <strong>Alerta de Horas:</strong><br>
+          Contratadas: ${cont}h · Realizadas: ${total.toFixed(1)}h · Diferença: ${Math.abs(dif).toFixed(1)}h ${dif>=0?'dentro':'acima'} do contratado</div>`;
+      }
+    }
+
+    if (dados.dadosDinamicos.vagas?.length) {
+      conteudo += `<div class="section"><h2 class="section-title">Vagas em Andamento</h2>
+        <table class="table"><thead><tr><th>Vaga</th><th>Área</th><th>Status</th><th>Data Abertura</th><th>SLA Previsto</th><th>SLA Real</th></tr></thead>
+        <tbody>${dados.dadosDinamicos.vagas.map(v=>`
+          <tr><td>${v.vaga||'-'}</td><td>${v.area||'-'}</td><td>${v.status||'-'}</td><td>${v.dataAbertura||'-'}</td><td>${v.slaPrevisto||'-'}</td><td>${v.slaReal||'-'}</td></tr>`).join('')}
+        </tbody></table></div>`;
+    }
+
+    if (dados.dadosDinamicos.funil?.length) {
+      conteudo += `<div class="section"><h2 class="section-title">Funil por Vaga</h2>
+        ${dados.dadosDinamicos.funil.map(f=>`
+          <div style="margin-bottom:18px"><h3 style="color:#034C8B;font-size:.95em;margin-bottom:8px">${f.vaga||'Vaga'}</h3>
+          <table class="table">
+            <tr><td>Candidaturas Recebidas</td><td>${f.candidaturas||0}</td></tr>
+            <tr><td>Triados</td><td>${f.triados||0}</td></tr>
+            <tr><td>Entrevistados Azumi</td><td>${f.entrevistadosAzumi||0}</td></tr>
+            <tr><td>Encaminhados ao Cliente</td><td>${f.encaminhados||0}</td></tr>
+            <tr><td>Entrevistados pelo Cliente</td><td>${f.entrevistadosCliente||0}</td></tr>
+            <tr><td>Aprovados</td><td>${f.aprovados||0}</td></tr>
+            <tr><td>Contratados</td><td>${f.contratados||0}</td></tr>
+            <tr><td>Desistências</td><td>${f.desistencias||0}</td></tr>
+          </table></div>`).join('')}</div>`;
+    }
   }
 
+  // ── CSS + HTML DO RELATÓRIO GERADO ──────────────────────────────────────
   return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Relatório Mensal — ${dados.contratante}</title>
+<title>Relatório — ${dados.contratante}</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Sora:wght@600;700;800&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 :root{--blue:#034C8B;--blue2:#3B82F6;--violet:#8B5CF6;--ice:#93C5FD;--gray:#778082;--light:#EDEDED;
@@ -1107,28 +1342,16 @@ function gerarHTMLRelatorio(dados) {
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Space Grotesk',sans-serif;line-height:1.5;color:#222;background:#ededed;padding:20px 0;font-size:11pt}
-
-/* ── LOGO: REGRA POR FUNDO ──
-   Fundo escuro (header/gradient): azumi=branco, RH=ice sólido
-   Fundo claro (body, footer):     azumi=azul,   RH=gradiente clip
-*/
 .logo-on-dark .logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;color:#fff;letter-spacing:-.01em}
 .logo-on-dark .logo-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;color:#93C5FD;margin-left:1px}
-
 .logo-on-light .logo-azumi{font-family:'Poppins',sans-serif;font-weight:600;color:#034C8B;letter-spacing:-.01em}
 .logo-on-light .logo-rh{
   font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;
   background:linear-gradient(135deg,#034C8B 0%,#3B82F6 50%,#8B5CF6 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-left:1px;
 }
-
-/* ── BARRA DE IMPRESSÃO ── */
-.print-bar{
-  max-width:210mm;margin:0 auto 14px;
-  display:flex;justify-content:space-between;align-items:center;
-  background:var(--gh);border-radius:12px;padding:10px 22px;
-  position:relative;overflow:hidden;
-}
+.print-bar{max-width:210mm;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;
+  background:var(--gh);border-radius:12px;padding:10px 22px;position:relative;overflow:hidden;}
 .print-bar::before{content:'';position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(ellipse 40% 80% at 90%,rgba(139,92,246,.2),transparent 60%)}
 .print-bar-inner{position:relative;display:flex;justify-content:space-between;align-items:center;width:100%}
@@ -1139,16 +1362,9 @@ body{font-family:'Space Grotesk',sans-serif;line-height:1.5;color:#222;backgroun
 .print-hint{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(147,197,253,.7);letter-spacing:.04em}
 .btn-print{background:#fff;color:var(--blue);border:none;border-radius:100px;padding:8px 20px;
   font-size:12px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif}
-
-/* ── PAGE ── */
 .page{max-width:210mm;min-height:297mm;margin:0 auto;background:#fff;box-shadow:0 0 24px rgba(0,0,0,.15)}
-
-/* ── HEADER DO RELATÓRIO ── */
-.p-hdr{
-  background:var(--gh);padding:26px 40px;
-  display:flex;justify-content:space-between;align-items:center;
-  position:relative;overflow:hidden;
-}
+.p-hdr{background:var(--gh);padding:26px 40px;display:flex;justify-content:space-between;align-items:center;
+  position:relative;overflow:hidden;}
 .p-hdr::before{content:'';position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.25),transparent 60%)}
 .p-hdr-inner{position:relative;display:flex;justify-content:space-between;align-items:center;width:100%}
@@ -1157,28 +1373,14 @@ body{font-family:'Space Grotesk',sans-serif;line-height:1.5;color:#222;backgroun
 .p-hdr-logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .p-hdr-logo .logo-azumi{font-size:24px}
 .p-hdr-logo .logo-rh{font-size:24px}
-
-/* ── BODY ── */
 .p-body{padding:28px 40px}
-.empresa-info{
-  background:#f5f8fc;padding:11px 14px;border-radius:8px;
-  margin-bottom:22px;font-size:.84em;border-left:3px solid var(--blue2);
-  font-family:'Space Grotesk',sans-serif;
-}
+.empresa-info{background:#f5f8fc;padding:11px 14px;border-radius:8px;margin-bottom:22px;
+  font-size:.84em;border-left:3px solid var(--blue2);font-family:'Space Grotesk',sans-serif;}
 .empresa-info strong{color:var(--blue)}
-
-/* Protocolo no relatório */
-.protocolo-info{
-  font-family:'JetBrains Mono',monospace;font-size:.72em;letter-spacing:.07em;
-  color:var(--gray);margin-top:5px;
-}
-
+.protocolo-info{font-family:'JetBrains Mono',monospace;font-size:.72em;letter-spacing:.07em;color:var(--gray);margin-top:5px;}
 .section{margin-bottom:22px;page-break-inside:avoid}
-.section-title{
-  font-family:'Sora',sans-serif;font-size:1em;font-weight:700;color:var(--blue);
-  padding-bottom:6px;margin-bottom:11px;
-  border-bottom:2px solid;border-image:linear-gradient(90deg,#034C8B,#8B5CF6) 1;
-}
+.section-title{font-family:'Sora',sans-serif;font-size:1em;font-weight:700;color:var(--blue);
+  padding-bottom:6px;margin-bottom:11px;border-bottom:2px solid;border-image:linear-gradient(90deg,#034C8B,#8B5CF6) 1;}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;margin-bottom:10px}
 .info-item{margin-bottom:6px}
 .info-label{font-family:'JetBrains Mono',monospace;font-size:.7em;font-weight:500;color:var(--gray);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px}
@@ -1195,14 +1397,11 @@ body{font-family:'Space Grotesk',sans-serif;line-height:1.5;color:#222;backgroun
 .signature-line{border-top:1px solid #222;display:inline-block;min-width:260px;margin-top:48px;padding-top:6px}
 .signature-name{font-family:'Sora',sans-serif;font-weight:700;color:var(--blue);margin-bottom:2px;font-size:.93em}
 .signature-role{font-family:'Space Grotesk',sans-serif;font-size:.83em;color:var(--gray)}
-.footer{
-  margin-top:36px;padding-top:14px;border-top:1.5px solid var(--light);
-  text-align:center;font-family:'JetBrains Mono',monospace;font-size:.72em;color:var(--gray);letter-spacing:.04em;
-}
+.footer{margin-top:36px;padding-top:14px;border-top:1.5px solid var(--light);
+  text-align:center;font-family:'JetBrains Mono',monospace;font-size:.72em;color:var(--gray);letter-spacing:.04em;}
 .footer-logo{display:inline-flex;align-items:center;gap:6px;margin-bottom:4px}
 .footer-logo .logo-azumi{font-size:14px}
 .footer-logo .logo-rh{font-size:14px}
-
 @media print{
   body{padding:0;background:#fff!important}
   .print-bar{display:none!important}
@@ -1238,8 +1437,8 @@ body{font-family:'Space Grotesk',sans-serif;line-height:1.5;color:#222;backgroun
   <div class="p-hdr">
     <div class="p-hdr-inner">
       <div class="p-hdr-info">
-        <h1>RELATÓRIO MENSAL</h1>
-        <p>PRESTAÇÃO DE SERVIÇOS · ${dados.tipoServicoTexto.toUpperCase()||'AZUMI RH'}</p>
+        <h1>${dados.tipoServico === 'entrevistaComportamental' ? 'RELATÓRIO DE ENTREVISTA' : 'RELATÓRIO MENSAL'}</h1>
+        <p>${dados.tipoServicoTexto.toUpperCase()||'AZUMI RH'}</p>
       </div>
       <div class="p-hdr-logo logo-on-dark">
         <svg width="30" height="24" viewBox="0 0 120 96" fill="none">
