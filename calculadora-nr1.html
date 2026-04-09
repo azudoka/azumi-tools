@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>AZUMI RH — Calculadora NR-1</title>
+<title>AZUMI RH — Calculadora NR-1 / Governança</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -18,9 +18,8 @@ body{font-family:'Space Grotesk',Verdana,sans-serif;background:#f0f2f7;color:var
 input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
 #app{max-width:980px;margin:0 auto;padding:20px 16px}
 
-/* HEADER */
-.hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;background:var(--gh);border-radius:16px;padding:14px 22px;position:relative;overflow:hidden;}
-.hdr::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.2) 0%,transparent 60%);}
+.hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;background:var(--gh);border-radius:16px;padding:14px 22px;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.2) 0%,transparent 60%)}
 .brand{display:inline-flex;align-items:center;gap:10px;position:relative}
 .logo-az{font-family:'Poppins',sans-serif;font-weight:600;font-size:22px;color:#fff;letter-spacing:-.01em}
 .logo-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;font-size:22px;background:var(--gm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -32,14 +31,12 @@ input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
 .btn-prop:hover{box-shadow:0 4px 14px rgba(59,130,246,.45);transform:translateY(-1px)}
 .hdr-actions{display:flex;gap:8px;position:relative}
 
-/* LAYOUT */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .tabs{display:flex;gap:3px}
 .tab{flex:1;padding:10px 4px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;border:none;border-radius:10px 10px 0 0;cursor:pointer;background:#e2e7f0;color:var(--gray);transition:all .15s}
 .tab.active{background:var(--gm);color:#fff;box-shadow:0 -2px 10px rgba(59,130,246,.2)}
 .tab-content{background:#fff;border-radius:0 0 14px 14px;padding:18px;min-height:280px;box-shadow:0 4px 16px rgba(3,29,56,.07);margin-bottom:12px}
 
-/* CAMPOS */
 .text-input{width:100%;padding:8px 11px;border:1.5px solid var(--light);border-radius:8px;font-size:12px;color:var(--text);margin-bottom:8px;font-family:'Space Grotesk',sans-serif;transition:border-color .15s}
 .text-input:focus{outline:none;border-color:var(--blue2);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
 .text-area{width:100%;padding:8px 11px;border:1.5px solid var(--light);border-radius:8px;font-size:12px;color:var(--text);margin-bottom:8px;font-family:'Space Grotesk',sans-serif;resize:vertical;min-height:60px;line-height:1.55}
@@ -47,7 +44,6 @@ input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
 .sel-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--gray);margin-bottom:4px;display:block}
 .sel{width:100%;padding:8px 11px;border:1.5px solid var(--light);border-radius:8px;font-size:11px;color:var(--text);background:#fff;margin-bottom:10px}
 
-/* SLIDER */
 .sl-row{margin-bottom:14px}
 .sl-top{display:flex;justify-content:space-between;margin-bottom:4px}
 .sl-lbl{font-size:11px;color:var(--text);font-family:'Space Grotesk',sans-serif}
@@ -56,25 +52,36 @@ input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
 .sl-mm{display:flex;justify-content:space-between}
 .sl-mm span{font-family:'JetBrains Mono',monospace;font-size:9px;color:#aaa}
 
-/* TOGGLE */
 .tog-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--light);cursor:pointer;user-select:none}
-.tog-lbl{font-size:11px;color:var(--text);font-family:'Space Grotesk',sans-serif}
+.tog-lbl{font-size:11px;color:var(--text);font-family:'Space Grotesk',sans-serif;flex:1;padding-right:8px}
+.tog-sub{font-size:10px;color:var(--gray);display:block;margin-top:2px}
 .tog-track{width:38px;height:20px;border-radius:100px;position:relative;transition:background .2s;flex-shrink:0;background:var(--light)}
 .tog-track.on{background:var(--blue)}
 .tog-thumb{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s}
 .tog-track.on .tog-thumb{left:20px}
 
-/* SECTION */
 .sec-title{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin:14px 0 10px;padding-top:12px;border-top:1px solid var(--light)}
 .section-bar-wrap{display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .section-bar{width:4px;height:18px;border-radius:100px;background:var(--gm);flex-shrink:0}
 .card-title{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
 
-/* COLUNA DIREITA */
+/* SEGMENTO CARDS */
+.seg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.seg-card{border:1.5px solid var(--light);border-radius:10px;padding:10px 12px;cursor:pointer;background:#fff;transition:all .15s;text-align:center}
+.seg-card.sel{border-color:var(--blue);background:#e8f0fb}
+.seg-card:hover{border-color:var(--blue2);background:#f0f6ff}
+.seg-icon{font-size:20px;margin-bottom:4px}
+.seg-name{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;color:var(--text)}
+.seg-card.sel .seg-name{color:var(--blue)}
+.seg-grau{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gray);margin-top:2px}
+
+/* FATORES DE RISCO */
+.fatores-section{background:#f8faff;border:1px solid #dbeafe;border-radius:10px;padding:12px;margin:10px 0}
+.fatores-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+
 .pkg-badge{border-radius:12px;padding:16px;margin-bottom:12px;color:#fff;background:var(--gh);position:relative;overflow:hidden}
 .pkg-badge::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.2) 0%,transparent 60%)}
 .pkg-badge-inner{position:relative}
-.pkg-name{font-family:'Sora',sans-serif;font-size:18px;font-weight:800}
 .card-w{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid var(--light);box-shadow:0 2px 10px rgba(3,29,56,.05)}
 .comp-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f5f5f5}
 .comp-l{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gray)}
@@ -87,6 +94,7 @@ input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
 .res-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15)}
 .res-lbl{font-family:'Space Grotesk',sans-serif;font-size:11px;opacity:.85}
 .res-val{font-family:'Sora',sans-serif;font-size:12px;font-weight:700;text-align:right}
+.res-orig{font-size:10px;opacity:.5;text-decoration:line-through}
 .res-total{display:flex;justify-content:space-between;padding:12px 0 4px;align-items:flex-end}
 .res-tl{font-family:'Sora',sans-serif;font-size:13px;font-weight:700}
 .res-tv{font-family:'Sora',sans-serif;font-size:20px;font-weight:800}
@@ -94,14 +102,12 @@ input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
 .btn-gerar{width:100%;margin-top:12px;padding:12px;background:#fff;color:var(--blue);border:none;border-radius:100px;font-family:'Sora',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .18s}
 .btn-gerar:hover{background:var(--white);box-shadow:0 4px 14px rgba(255,255,255,.3)}
 
-/* ALERTAS */
-.alert{padding:8px 12px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.03em;margin-bottom:6px;display:flex;align-items:flex-start;gap:8px}
+.alert{padding:8px 12px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.03em;margin-bottom:6px}
 .alert-red{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
 .alert-amber{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
 .alert-green{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
 .alert-blue{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe}
 
-/* CAMPO VALOR PARCEIRO */
 .parceiro-box{background:#fff8e1;border:1.5px solid #ffc107;border-radius:10px;padding:12px;margin-top:10px}
 .parceiro-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:#7c6200;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
 .parceiro-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
@@ -109,17 +115,17 @@ input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
 .parceiro-inp{width:90px;padding:6px 8px;border:1.5px solid #ffc107;border-radius:7px;font-size:12px;font-weight:700;text-align:center;font-family:'Sora',sans-serif;color:#7c6200}
 .parceiro-nota{font-family:'JetBrains Mono',monospace;font-size:9px;color:#7c6200;background:rgba(255,193,7,.15);border-radius:6px;padding:5px 8px;margin-top:6px}
 
-/* BTN GROUP */
-.btn-grp{display:flex;gap:6px;margin-bottom:10px}
-.btn-opt{flex:1;padding:8px 4px;font-size:11px;font-weight:600;border:1.5px solid var(--light);border-radius:100px;cursor:pointer;background:#fff;color:var(--gray);font-family:'Space Grotesk',sans-serif;transition:all .15s}
-.btn-opt.ap{background:var(--gm);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(59,130,246,.25)}
+/* DESCONTO */
+.desc-box{background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:12px;margin-top:10px}
+.desc-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:#166534;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.desc-row{display:flex;align-items:center;gap:10px}
+.desc-inp{width:70px;padding:6px 8px;border:1.5px solid #86efac;border-radius:7px;font-size:14px;font-weight:700;text-align:center;font-family:'Sora',sans-serif;color:#166534}
+.desc-note{font-family:'JetBrains Mono',monospace;font-size:9px;color:#166534;margin-top:6px}
 
-/* CHECKLIST */
+.footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gray);margin-top:14px;letter-spacing:.05em}
 .chk-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--light)}
 .chk-lbl{font-size:11px;color:var(--text);font-family:'Space Grotesk',sans-serif}
 .chk-v{font-family:'Sora',sans-serif;font-size:12px;font-weight:700}
-
-.footer{text-align:center;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gray);margin-top:14px;letter-spacing:.05em}
 </style>
 </head>
 <body>
@@ -136,12 +142,11 @@ input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
     </div>
     <div class="hdr-actions">
       <a href="index.html" class="btn btn-back">← Tools</a>
-      <button class="btn btn-prop" onclick="gerarProposta()">📄 VISUALIZAR PROPOSTA</button>
+      <button class="btn btn-prop" onclick="gerarProposta()">📄 GERAR PROPOSTA</button>
     </div>
   </div>
 
   <div class="two-col">
-    <!-- COLUNA ESQUERDA -->
     <div>
       <div class="tabs">
         <button class="tab active" id="tab-empresa" onclick="setTab('empresa')">EMPRESA</button>
@@ -157,7 +162,10 @@ input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
           <input class="text-input" id="decisor" placeholder="Nome do decisor" oninput="calcular()"/>
           <textarea class="text-area" id="obs" placeholder="Observações para a proposta..." oninput="calcular()"></textarea>
 
-          <div class="sec-title">DADOS DA EMPRESA</div>
+          <div class="sec-title">SEGMENTO DA EMPRESA</div>
+          <div class="seg-grid" id="seg-grid"></div>
+
+          <div class="sec-title">DADOS</div>
           <div class="sl-row">
             <div class="sl-top"><span class="sl-lbl">Número de colaboradores</span><span class="sl-val" id="v-colab">10</span></div>
             <input class="slider" type="range" id="sl-colab" min="1" max="300" value="10" oninput="calcular()"/>
@@ -167,108 +175,102 @@ input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
           <span class="sel-lbl">Grau de risco (CNAE)</span>
           <select class="sel" id="sel-grau" onchange="calcular()">
             <option value="1">Grau 1 — Baixo risco</option>
-            <option value="2" selected>Grau 2 — Médio-baixo (Comércio varejista)</option>
+            <option value="2" selected>Grau 2 — Médio-baixo</option>
             <option value="3">Grau 3 — Médio-alto</option>
             <option value="4">Grau 4 — Alto risco</option>
           </select>
+          <div id="grau-auto-badge" style="display:none;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--blue);background:#eff6ff;border-radius:6px;padding:4px 8px;margin:-4px 0 10px;display:none">⚡ Grau sugerido automaticamente pelo segmento</div>
 
-          <span class="sel-lbl">Situação atual dos documentos</span>
+          <span class="sel-lbl">Situação documental atual</span>
           <select class="sel" id="sel-docs" onchange="calcular()">
             <option value="nenhum">Sem PGR, PCMSO ou documentação SST</option>
             <option value="parcial">Documentação parcial / desatualizada</option>
             <option value="completo">PGR e PCMSO vigentes e atualizados</option>
           </select>
 
-          <div class="sec-title">CARACTERÍSTICAS OPERACIONAIS</div>
-          <div class="tog-row" onclick="tog('tog-pe')">
-            <span class="tog-lbl">Colaboradores trabalham em pé por longos períodos</span>
-            <div class="tog-track" id="tog-pe"><div class="tog-thumb"></div></div>
-          </div>
-          <div class="tog-row" onclick="tog('tog-carga')">
-            <span class="tog-lbl">Movimentação de carga / mercadoria pesada</span>
-            <div class="tog-track" id="tog-carga"><div class="tog-thumb"></div></div>
-          </div>
-          <div class="tog-row" onclick="tog('tog-caixa')">
-            <span class="tog-lbl">Operadores de caixa / posição repetitiva</span>
-            <div class="tog-track" id="tog-caixa"><div class="tog-thumb"></div></div>
-          </div>
-          <div class="tog-row" onclick="tog('tog-atendimento')">
-            <span class="tog-lbl">Contato direto com público / atendimento</span>
-            <div class="tog-track" id="tog-atendimento"><div class="tog-thumb"></div></div>
-          </div>
-          <div class="tog-row" onclick="tog('tog-metas')">
-            <span class="tog-lbl">Pressão por metas de vendas / produção</span>
-            <div class="tog-track" id="tog-metas"><div class="tog-thumb"></div></div>
+          <div id="fatores-box" style="display:none" class="fatores-section">
+            <div class="fatores-title">⚠ Fatores de risco típicos do segmento</div>
+            <div id="fatores-lista"></div>
           </div>
         </div>
 
         <!-- ABA ESCOPO -->
         <div id="aba-escopo" style="display:none">
-          <div class="section-bar-wrap"><div class="section-bar"></div><div class="card-title">O QUE ESTÁ INCLUÍDO</div></div>
-          <p style="font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--gray);margin-bottom:14px;line-height:1.6">Selecione os módulos que farão parte desta proposta. O diagnóstico psicossocial é sempre incluído — é a base de tudo.</p>
+          <div class="section-bar-wrap"><div class="section-bar"></div><div class="card-title">MÓDULOS INCLUÍDOS</div></div>
+          <p style="font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--gray);margin-bottom:14px;line-height:1.6">O diagnóstico psicossocial é sempre incluído. Selecione os demais módulos.</p>
 
-          <div class="tog-row" style="opacity:.6;cursor:not-allowed">
-            <span class="tog-lbl">✓ Diagnóstico psicossocial (base — sempre incluído)</span>
+          <div class="tog-row" style="cursor:default;opacity:.6">
+            <div><span class="tog-lbl">✓ Diagnóstico Psicossocial</span><span class="tog-sub">Base de todo o processo — sempre incluído</span></div>
             <div class="tog-track on"><div class="tog-thumb" style="left:20px"></div></div>
           </div>
           <div class="tog-row" onclick="tog('tog-pgr')">
-            <span class="tog-lbl">PGR — Programa de Gerenciamento de Riscos</span>
+            <div><span class="tog-lbl">PGR — Programa de Gerenciamento de Riscos</span><span class="tog-sub">Elaboração e assinatura técnica pelo parceiro SST</span></div>
             <div class="tog-track on" id="tog-pgr"><div class="tog-thumb" style="left:20px"></div></div>
           </div>
           <div class="tog-row" onclick="tog('tog-canal')">
-            <span class="tog-lbl">Canal de denúncias — implantação + gestão Azumi</span>
+            <div><span class="tog-lbl">Canal de Denúncias</span><span class="tog-sub">Implantação + gestão externa pela Azumi RH</span></div>
             <div class="tog-track on" id="tog-canal"><div class="tog-thumb" style="left:20px"></div></div>
           </div>
           <div class="tog-row" onclick="tog('tog-plano')">
-            <span class="tog-lbl">Plano de ação documentado (5W2H)</span>
+            <div><span class="tog-lbl">Plano de Ação (5W2H)</span><span class="tog-sub">Documentado com prazos e responsáveis</span></div>
             <div class="tog-track on" id="tog-plano"><div class="tog-thumb" style="left:20px"></div></div>
           </div>
           <div class="tog-row" onclick="tog('tog-treino')">
-            <span class="tog-lbl">Treinamento de lideranças sobre riscos psicossociais</span>
+            <div><span class="tog-lbl">Treinamento de Lideranças</span><span class="tog-sub">Remoto por padrão — presencial disponível mediante solicitação</span></div>
             <div class="tog-track on" id="tog-treino"><div class="tog-thumb" style="left:20px"></div></div>
           </div>
+          <div class="tog-row" onclick="tog('tog-treino-pres')">
+            <div><span class="tog-lbl">Treinamento presencial (adicional)</span><span class="tog-sub">Inclui deslocamento — confirmar região</span></div>
+            <div class="tog-track" id="tog-treino-pres"><div class="tog-thumb"></div></div>
+          </div>
           <div class="tog-row" onclick="tog('tog-monit')">
-            <span class="tog-lbl">Monitoramento mensal + relatórios</span>
+            <div><span class="tog-lbl">Monitoramento Mensal + Relatórios</span><span class="tog-sub">Revisão periódica do PGR e indicadores</span></div>
             <div class="tog-track on" id="tog-monit"><div class="tog-thumb" style="left:20px"></div></div>
           </div>
 
-          <div class="sec-title">MANUTENÇÃO MENSAL</div>
-          <p style="font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--gray);margin-bottom:10px;line-height:1.6">Após a implantação, o cliente pode contratar a manutenção recorrente. Altamente recomendada quando há canal de denúncias ativo.</p>
-          <div class="tog-row" onclick="tog('tog-manutencao')">
-            <span class="tog-lbl">Contratar manutenção mensal</span>
-            <div class="tog-track" id="tog-manutencao"><div class="tog-thumb"></div></div>
+          <div class="sec-title">MANUTENÇÃO RECORRENTE</div>
+          <div class="tog-row" onclick="tog('tog-manut')">
+            <div><span class="tog-lbl">Contratar manutenção mensal</span><span class="tog-sub">Altamente recomendada quando há canal de denúncias ativo</span></div>
+            <div class="tog-track" id="tog-manut"><div class="tog-thumb"></div></div>
+          </div>
+
+          <!-- DESCONTO -->
+          <div class="desc-box">
+            <div class="desc-title">🎁 Desconto especial</div>
+            <div class="desc-row">
+              <input class="desc-inp" type="number" id="inp-desc" value="0" min="0" max="50" step="1" oninput="calcular()"/>
+              <span style="font-size:12px;color:#166534;font-family:'Space Grotesk',sans-serif">% sobre o total</span>
+            </div>
+            <div class="desc-note" id="desc-note"></div>
           </div>
         </div>
 
         <!-- ABA PARCEIRO -->
         <div id="aba-parceiro" style="display:none">
-          <div class="section-bar-wrap"><div class="section-bar"></div><div class="card-title">PARCEIRO SST — USO INTERNO</div></div>
+          <div class="section-bar-wrap"><div class="section-bar"></div><div class="card-title">PARCEIRO SST — USO INTERNO 🔒</div></div>
           <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:8px 12px;margin-bottom:14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#991b1b">
-            🔒 Estes valores são INTERNOS — não aparecem na proposta para o cliente. Servem para calcular sua margem.
+            Estes valores são INTERNOS — não aparecem na proposta. Servem para calcular sua margem.
           </div>
 
           <div class="parceiro-box">
-            <div class="parceiro-title">Valores do parceiro SST (a preencher após negociação)</div>
+            <div class="parceiro-title">Valores do parceiro SST (preencher após negociação)</div>
             <div class="parceiro-row">
-              <span class="parceiro-lbl">AEP — Avaliação Ergonômica Preliminar</span>
-              <input class="parceiro-inp" type="number" id="p-aep" value="0" min="0" step="50" oninput="calcular()" placeholder="R$"/>
+              <span class="parceiro-lbl">AEP — Avaliação Ergonômica Preliminar<br><span style="font-size:10px;color:#b45309">⚑ Exige visita presencial do parceiro</span></span>
+              <input class="parceiro-inp" type="number" id="p-aep" value="0" min="0" step="50" oninput="calcular()"/>
             </div>
             <div class="parceiro-row">
               <span class="parceiro-lbl">Elaboração e assinatura do PGR</span>
-              <input class="parceiro-inp" type="number" id="p-pgr-sst" value="0" min="0" step="50" oninput="calcular()" placeholder="R$"/>
+              <input class="parceiro-inp" type="number" id="p-pgr-sst" value="0" min="0" step="50" oninput="calcular()"/>
             </div>
-            <div class="parceiro-row">
-              <span class="parceiro-lbl">AET — Análise Ergonômica do Trabalho (se necessária)</span>
-              <input class="parceiro-inp" type="number" id="p-aet" value="0" min="0" step="50" oninput="calcular()" placeholder="R$"/>
+            <div class="parceiro-row" id="row-aet">
+              <span class="parceiro-lbl">AET — Análise Ergonômica do Trabalho<br><span style="font-size:10px;color:#b45309">⚑ Exige visita presencial — apenas se AEP indicar necessidade</span></span>
+              <input class="parceiro-inp" type="number" id="p-aet" value="0" min="0" step="50" oninput="calcular()"/>
             </div>
-            <div class="parceiro-nota">Preencha após receber os valores dos parceiros indicados. A AET só é necessária se a AEP indicar risco ergonômico significativo.</div>
+            <div class="parceiro-nota" id="aet-nota">A AET é necessária quando a AEP identifica risco ergonômico significativo. Para este segmento, a probabilidade está indicada nos alertas.</div>
           </div>
 
-          <div class="sec-title">CONFIGURAÇÃO DE VALORES BASE (Azumi)</div>
-          <p style="font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--gray);margin-bottom:10px">Ajuste os valores base da Azumi para este serviço:</p>
-
-          <div class="parceiro-box" style="background:#eef6fb;border-color:var(--blue2)">
-            <div class="parceiro-title" style="color:var(--blue)">Implantação — valores Azumi</div>
+          <div class="parceiro-box" style="background:#eef6fb;border-color:var(--blue2);margin-top:12px">
+            <div class="parceiro-title" style="color:var(--blue)">Valores Azumi — Ativação</div>
             <div class="parceiro-row">
               <span class="parceiro-lbl" style="color:var(--blue)">Base fixa (até 20 colab.)</span>
               <input class="parceiro-inp" type="number" id="p-base" value="4800" min="0" step="100" oninput="calcular()" style="border-color:var(--blue2);color:var(--blue)"/>
@@ -282,41 +284,45 @@ input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
               <input class="parceiro-inp" type="number" id="p-semdoc" value="25" min="0" max="50" step="5" oninput="calcular()" style="border-color:var(--blue2);color:var(--blue)"/>
             </div>
             <div class="parceiro-row">
-              <span class="parceiro-lbl" style="color:var(--blue)">Manutenção mensal — canal de denúncias</span>
+              <span class="parceiro-lbl" style="color:var(--blue)">Treinamento presencial (adicional)</span>
+              <input class="parceiro-inp" type="number" id="p-treino-pres" value="800" min="0" step="50" oninput="calcular()" style="border-color:var(--blue2);color:var(--blue)"/>
+            </div>
+            <div class="parceiro-row">
+              <span class="parceiro-lbl" style="color:var(--blue)">Manutenção — canal de denúncias/mês</span>
               <input class="parceiro-inp" type="number" id="p-canal-mes" value="900" min="0" step="50" oninput="calcular()" style="border-color:var(--blue2);color:var(--blue)"/>
             </div>
             <div class="parceiro-row">
-              <span class="parceiro-lbl" style="color:var(--blue)">Manutenção mensal — monitoramento NR</span>
+              <span class="parceiro-lbl" style="color:var(--blue)">Manutenção — monitoramento NR/mês</span>
               <input class="parceiro-inp" type="number" id="p-monit-mes" value="600" min="0" step="50" oninput="calcular()" style="border-color:var(--blue2);color:var(--blue)"/>
             </div>
           </div>
         </div>
-
       </div>
     </div>
 
     <!-- COLUNA DIREITA -->
     <div>
-      <!-- ALERTAS INTELIGENTES -->
       <div id="alertas" style="margin-bottom:12px"></div>
 
-      <!-- MÓDULOS -->
       <div class="card-w">
-        <div class="section-bar-wrap"><div class="section-bar"></div><div class="card-title">MÓDULOS SELECIONADOS</div></div>
+        <div class="section-bar-wrap"><div class="section-bar"></div><div class="card-title">MÓDULOS</div></div>
         <div id="modulos"></div>
       </div>
 
-      <!-- COMPOSIÇÃO -->
       <div class="card-w">
-        <div class="section-bar-wrap"><div class="section-bar"></div><div class="card-title">COMPOSIÇÃO — IMPLANTAÇÃO</div></div>
+        <div class="section-bar-wrap"><div class="section-bar"></div><div class="card-title">COMPOSIÇÃO — ATIVAÇÃO</div></div>
         <div id="comp-impl"></div>
         <div class="total-sep">
           <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:var(--text)">IMPLANTAÇÃO TOTAL</span>
+            <span style="font-family:'Sora',sans-serif;font-size:13px;font-weight:700">ATIVAÇÃO</span>
             <span style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;background:var(--gm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" id="t-impl">R$ 0</span>
           </div>
-          <div id="comp-manut" style="display:none">
-            <div style="display:flex;justify-content:space-between;margin-top:8px">
+          <div id="t-desc-row" style="display:none;flex-direction:row;justify-content:space-between;margin-top:4px">
+            <span style="font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:#166534" id="t-desc-lbl"></span>
+            <span style="font-family:'Sora',sans-serif;font-size:16px;font-weight:800;color:#166534" id="t-desc-val"></span>
+          </div>
+          <div id="comp-manut" style="display:none;margin-top:8px">
+            <div style="display:flex;justify-content:space-between">
               <span style="font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:var(--blue)">MANUTENÇÃO MENSAL</span>
               <span style="font-family:'Sora',sans-serif;font-size:16px;font-weight:800;color:var(--blue)" id="t-manut">R$ 0</span>
             </div>
@@ -324,55 +330,82 @@ input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
         </div>
       </div>
 
-      <!-- MARGEM INTERNA -->
-      <div class="card-w" id="box-margem">
+      <div class="card-w">
         <div class="section-bar-wrap"><div class="section-bar"></div><div class="card-title">MARGEM INTERNA 🔒</div></div>
         <div id="margem-rows"></div>
       </div>
 
-      <!-- RESUMO FINAL -->
       <div class="res-box">
         <div class="res-box-inner">
           <div class="res-hdr">RESUMO DA PROPOSTA</div>
           <div id="res-rows"></div>
           <div class="res-total">
-            <span class="res-tl">IMPLANTAÇÃO</span>
-            <span class="res-tv" id="res-impl-final">R$ 0</span>
+            <span class="res-tl">ATIVAÇÃO</span>
+            <div>
+              <div class="res-orig" id="res-orig" style="display:none"></div>
+              <span class="res-tv" id="res-impl-final">R$ 0</span>
+            </div>
           </div>
           <div id="res-manut-total" style="display:none;flex-direction:row;justify-content:space-between;padding:6px 0">
             <span style="font-family:'Sora',sans-serif;font-size:12px;font-weight:700;opacity:.85">MANUTENÇÃO/MÊS</span>
             <span style="font-family:'Sora',sans-serif;font-size:16px;font-weight:800" id="res-manut-val">R$ 0</span>
           </div>
-          <div class="res-note" id="res-note">Preencha os dados da empresa para calcular.</div>
+          <div class="res-note" id="res-note">Selecione o segmento e preencha os dados.</div>
           <button class="btn-gerar" onclick="gerarProposta()">📄 VISUALIZAR E IMPRIMIR PROPOSTA</button>
         </div>
       </div>
-      <div class="footer">AZUMI RH · Calculadora NR-1 v1.0 · Uso interno · contato@azumirh.com.br</div>
+      <div class="footer">AZUMI RH · Calculadora NR-1 v2.0 · Uso interno · contato@azumirh.com.br</div>
     </div>
   </div>
 </div>
 
 <script>
-// ── ESTADO ──────────────────────────────────────────────────────────
-var togs={
-  'tog-pe':false,'tog-carga':false,'tog-caixa':false,
-  'tog-atendimento':false,'tog-metas':false,
+// ── SEGMENTOS COM FATORES E GRAU SUGERIDO ───────────────────────────
+var SEGMENTOS = [
+  {
+    id:'varejo', icon:'🛒', nome:'Varejo / Comércio', grau:2,
+    fatores:['Trabalho em pé por longos períodos','Operadores de caixa em posição repetitiva','Movimentação de mercadoria e carga','Contato direto com público / atendimento','Pressão por metas de vendas','Jornadas em finais de semana e feriados'],
+    aet_alerta:true, aet_msg:'Varejo: alta probabilidade de AET indicada (trabalho em pé + caixa + carga).'
+  },
+  {
+    id:'escritorio', icon:'💼', nome:'Escritório / Serviços / Marketing', grau:1,
+    fatores:['Trabalho prolongado em posição sentada','Uso intenso de tela / computador','Pressão por prazos e entregas','Sobrecarga de demandas simultâneas','Jornadas longas ou fora do horário','Falta de clareza sobre responsabilidades'],
+    aet_alerta:false, aet_msg:'Escritório: AET geralmente não necessária, mas possível em casos de mobiliário inadequado ou home office.'
+  },
+  {
+    id:'tecnologia', icon:'💻', nome:'Tecnologia / Startup', grau:1,
+    fatores:['Hiperconectividade e disponibilidade fora do horário','Pressão por entrega e metas de sprint','Trabalho remoto / isolamento social','Incerteza de crescimento acelerado','Conflito entre equipes técnicas e de negócio','Cultura de alta performance com baixo suporte emocional'],
+    aet_alerta:false, aet_msg:'Tecnologia: AET raramente necessária, mas investigar ergonomia de home office se aplicável.'
+  },
+  {
+    id:'saude', icon:'🏥', nome:'Saúde / Clínicas', grau:3,
+    fatores:['Contato contínuo com sofrimento e morte','Plantões noturnos e jornadas extensas','Risco de violência de pacientes ou familiares','Alta responsabilidade com baixa autonomia','Sobrecarga emocional acumulada (burnout clínico)','Falta de suporte psicológico para a equipe'],
+    aet_alerta:true, aet_msg:'Saúde: AET provável — postura em procedimentos, movimentação de pacientes, ergonomia de posto de trabalho.'
+  },
+  {
+    id:'industria', icon:'🏭', nome:'Indústria / Logística', grau:3,
+    fatores:['Trabalho repetitivo em linha de produção','Pressão por produtividade e metas de output','Ruído e condições ambientais adversas','Risco de acidentes com alta responsabilidade','Turnos noturnos e alternância de jornada','Hierarquia rígida com baixa autonomia operacional'],
+    aet_alerta:true, aet_msg:'Indústria: AET quase sempre necessária — postura, esforço físico, ritmo de produção.'
+  },
+  {
+    id:'alimentacao', icon:'🍽', nome:'Alimentação / Restaurantes', grau:2,
+    fatores:['Trabalho em pé em ambiente quente e acelerado','Jornadas intensas em horários de pico','Alta rotatividade e instabilidade de equipe','Contato constante com clientes exigentes','Pressão por velocidade e qualidade simultâneos','Risco de acidentes (cortes, queimaduras, quedas)'],
+    aet_alerta:true, aet_msg:'Alimentação: AET provável — ergonomia de cozinha, postura, esforço físico e calor.'
+  },
+];
+
+var segSel = null;
+var togs = {
   'tog-pgr':true,'tog-canal':true,'tog-plano':true,
-  'tog-treino':true,'tog-monit':true,'tog-manutencao':false
+  'tog-treino':true,'tog-treino-pres':false,'tog-monit':true,'tog-manut':false
 };
 
 function tog(id){
-  if(id==='tog-pe'||id==='tog-carga'||id==='tog-caixa'||
-     id==='tog-atendimento'||id==='tog-metas'||
-     id==='tog-pgr'||id==='tog-canal'||id==='tog-plano'||
-     id==='tog-treino'||id==='tog-monit'||id==='tog-manutencao'){
-    togs[id]=!togs[id];
-    var el=document.getElementById(id);
-    if(el){el.className='tog-track'+(togs[id]?' on':'');el.querySelector('.tog-thumb').style.left=togs[id]?'20px':'2px';}
-    calcular();
-  }
+  togs[id]=!togs[id];
+  var el=document.getElementById(id);
+  if(el){el.className='tog-track'+(togs[id]?' on':'');el.querySelector('.tog-thumb').style.left=togs[id]?'20px':'2px';}
+  calcular();
 }
-
 function brl(v){return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});}
 function r50(v){return Math.round(v/50)*50;}
 function num(id){return Number(document.getElementById(id)?document.getElementById(id).value:0)||0;}
@@ -380,172 +413,40 @@ function val(id){return document.getElementById(id)?document.getElementById(id).
 function dataHoje(){return new Date().toLocaleDateString('pt-BR');}
 function data15(){var d=new Date();d.setDate(d.getDate()+15);return d.toLocaleDateString('pt-BR');}
 
-function calcular(){
-  var colab=num('sl-colab');
-  var grau=parseInt(val('sel-grau'))||2;
-  var docs=val('sel-docs');
-  var empresa=val('empresa');
-  var decisor=val('decisor');
+// ── BUILD SEGMENTOS ──────────────────────────────────────────────────
+window.onload = function(){
+  var grid = document.getElementById('seg-grid');
+  SEGMENTOS.forEach(function(s){
+    var d = document.createElement('div');
+    d.className = 'seg-card';
+    d.id = 'seg-'+s.id;
+    d.innerHTML = '<div class="seg-icon">'+s.icon+'</div><div class="seg-name">'+s.nome+'</div><div class="seg-grau">Grau '+s.grau+' sugerido</div>';
+    d.onclick = function(){ selecionarSeg(s.id); };
+    grid.appendChild(d);
+  });
+  calcular();
+};
 
-  document.getElementById('v-colab').textContent=colab+' colaboradores';
-
-  // ── ALERTAS INTELIGENTES ─────────────────────────────────────────
-  var alertas=[];
-
-  // CIPA
-  if(grau<=2&&colab>=51){
-    alertas.push({tipo:'red',txt:'🚨 CIPA obrigatória — empresa com '+colab+' colaboradores e grau de risco '+grau+'. Exige constituição formal da CIPA/CIPAA com eleição e treinamento (NR-5).'});
-  } else if(grau>=3&&colab>=20){
-    alertas.push({tipo:'red',txt:'🚨 CIPA obrigatória — grau de risco '+grau+' com '+colab+' colaboradores exige CIPA formal (NR-5). Incluir na proposta ou orientar o cliente.'});
-  } else {
-    alertas.push({tipo:'amber',txt:'⚠ Empresa não obrigada a constituir CIPA formal, mas deve nomear um Designado CIPA por escrito (NR-5). A Azumi pode apoiar essa estruturação.'});
+function selecionarSeg(id){
+  segSel = id;
+  SEGMENTOS.forEach(function(s){
+    var el = document.getElementById('seg-'+s.id);
+    if(el) el.className = 'seg-card'+(s.id===id?' sel':'');
+  });
+  var seg = SEGMENTOS.find(function(s){return s.id===id;});
+  if(seg){
+    document.getElementById('sel-grau').value = String(seg.grau);
+    var badge = document.getElementById('grau-auto-badge');
+    badge.style.display = 'inline-block';
+    // Mostrar fatores
+    var box = document.getElementById('fatores-box');
+    var lista = document.getElementById('fatores-lista');
+    box.style.display = 'block';
+    lista.innerHTML = seg.fatores.map(function(f){
+      return '<div style="font-family:\'Space Grotesk\',sans-serif;font-size:11px;color:#1e40af;padding:3px 0;border-bottom:1px solid #dbeafe">• '+f+'</div>';
+    }).join('');
   }
-
-  // AEP e possível AET
-  if(togs['tog-pe']||togs['tog-carga']||togs['tog-caixa']){
-    alertas.push({tipo:'amber',txt:'⚠ Características ergonômicas identificadas (trabalho em pé, carga ou caixa). A AEP é obrigatória e provavelmente indicará necessidade de AET. Confirmar com parceiro SST antes de fechar proposta.'});
-  } else {
-    alertas.push({tipo:'green',txt:'✓ Sem características ergonômicas de alto risco indicadas. AEP deve ser suficiente — AET provavelmente não necessária.'});
-  }
-
-  // Prazo NR-1
-  alertas.push({tipo:'blue',txt:'📅 Prazo de fiscalização punitiva da NR-1: 26 de maio de 2026. Urgência real para o cliente se antecipar.'});
-
-  // Sem documentação
-  if(docs==='nenhum'){
-    alertas.push({tipo:'red',txt:'🚨 Empresa sem PGR ou PCMSO. Implantação mais complexa — aplicar acréscimo de documentação desorganizada.'});
-  } else if(docs==='parcial'){
-    alertas.push({tipo:'amber',txt:'⚠ Documentação parcial. Será necessário revisar e atualizar o que existe antes de incluir os riscos psicossociais.'});
-  }
-
-  // Canal sem manutenção
-  if(togs['tog-canal']&&!togs['tog-manutencao']){
-    alertas.push({tipo:'amber',txt:'⚠ Canal de denúncias selecionado sem manutenção mensal. Um canal sem gestão não funciona — recomendar fortemente a manutenção ou alertar o cliente sobre o risco.'});
-  }
-
-  // Metas / atendimento ao público
-  if(togs['tog-metas']&&togs['tog-atendimento']){
-    alertas.push({tipo:'amber',txt:'⚠ Pressão por metas + atendimento ao público = combinação de alto risco psicossocial. O diagnóstico vai identificar esses fatores — destacar no diagnóstico e no plano de ação.'});
-  }
-
-  var alertasDiv=document.getElementById('alertas');
-  alertasDiv.innerHTML=alertas.map(function(a){
-    return '<div class="alert alert-'+a.tipo+'">'+a.txt+'</div>';
-  }).join('');
-
-  // ── MÓDULOS ──────────────────────────────────────────────────────
-  var modulos=[
-    {id:'diag',nome:'Diagnóstico Psicossocial',sempre:true},
-    {id:'pgr',nome:'PGR — elaboração e assinatura (parceiro SST)',tog:'tog-pgr'},
-    {id:'canal',nome:'Canal de Denúncias — implantação + gestão Azumi',tog:'tog-canal'},
-    {id:'plano',nome:'Plano de Ação 5W2H',tog:'tog-plano'},
-    {id:'treino',nome:'Treinamento de Lideranças',tog:'tog-treino'},
-    {id:'monit',nome:'Monitoramento e Relatórios',tog:'tog-monit'},
-  ];
-  document.getElementById('modulos').innerHTML=modulos.map(function(m){
-    var ativo=m.sempre||togs[m.tog];
-    return '<div class="chk-row"><span class="chk-lbl">'+m.nome+'</span><span class="chk-v" style="color:'+(ativo?'var(--green)':'#ccc')+'">'+(ativo?'✓ Incluso':'– Não incluso')+'</span></div>';
-  }).join('');
-
-  // ── CÁLCULO IMPLANTAÇÃO ──────────────────────────────────────────
-  var base=num('p-base')||4800;
-  var perColab=num('p-percolab')||60;
-  var semDocPct=(num('p-semdoc')||25)/100;
-
-  // Base Azumi
-  var baseAzumi=base;
-  if(colab>20) baseAzumi+=Math.ceil(colab-20)*perColab;
-
-  // Acréscimo documentação
-  var acrescimoDoc=0;
-  if(docs==='nenhum') acrescimoDoc=r50(baseAzumi*semDocPct);
-  else if(docs==='parcial') acrescimoDoc=r50(baseAzumi*(semDocPct/2));
-
-  // Parceiro SST
-  var vAEP=num('p-aep')||0;
-  var vPGRsst=num('p-pgr-sst')||0;
-  var vAET=num('p-aet')||0;
-  var totalParceiro=vAEP+vPGRsst+(togs['tog-pe']||togs['tog-carga']||togs['tog-caixa']?vAET:0);
-
-  var totalImpl=r50(baseAzumi+acrescimoDoc+(togs['tog-pgr']?totalParceiro:0));
-
-  // ── MANUTENÇÃO MENSAL ────────────────────────────────────────────
-  var vCanalMes=num('p-canal-mes')||900;
-  var vMonitMes=num('p-monit-mes')||600;
-  var totalManut=0;
-  if(togs['tog-manutencao']){
-    if(togs['tog-canal']) totalManut+=vCanalMes;
-    if(togs['tog-monit']) totalManut+=vMonitMes;
-  }
-
-  // ── RENDERIZAR COMPOSIÇÃO ────────────────────────────────────────
-  var compRows=[
-    {l:'Base Azumi (diagnóstico + documentação)',v:brl(base)},
-  ];
-  if(colab>20) compRows.push({l:'+ '+(colab-20)+' colaboradores adicionais ('+brl(perColab)+'/un.)',v:brl(Math.ceil(colab-20)*perColab),c:'var(--blue)'});
-  if(acrescimoDoc>0) compRows.push({l:'+ Acréscimo documentação desorganizada',v:brl(acrescimoDoc),c:'var(--amber)'});
-  if(togs['tog-pgr']&&totalParceiro>0) compRows.push({l:'+ Parceiro SST (AEP + PGR'+(vAET>0?'+ AET':'')+') — custo repassado',v:brl(totalParceiro),c:'var(--gray)'});
-  else if(togs['tog-pgr']&&totalParceiro===0) compRows.push({l:'+ Parceiro SST — valor a preencher na aba Parceiro',v:'⚠ A definir',c:'var(--amber)'});
-
-  document.getElementById('comp-impl').innerHTML=compRows.map(function(r){
-    return '<div class="comp-row"><span class="comp-l">'+r.l+'</span><span class="comp-v" style="color:'+(r.c||'var(--text)')+'">'+r.v+'</span></div>';
-  }).join('');
-  document.getElementById('t-impl').textContent=brl(totalImpl);
-
-  var compManut=document.getElementById('comp-manut');
-  if(togs['tog-manutencao']){
-    compManut.style.display='block';
-    document.getElementById('t-manut').textContent=brl(totalManut);
-  } else {
-    compManut.style.display='none';
-  }
-
-  // ── MARGEM INTERNA ───────────────────────────────────────────────
-  var custoAzumi=baseAzumi+acrescimoDoc;
-  var margemBruta=totalImpl-totalParceiro;
-  var pctMargem=totalImpl>0?Math.round((margemBruta/totalImpl)*100):0;
-  document.getElementById('margem-rows').innerHTML=[
-    {l:'Custo Azumi (sem parceiro)',v:brl(custoAzumi)},
-    {l:'Custo parceiro SST',v:brl(totalParceiro)},
-    {l:'Receita bruta Azumi',v:brl(margemBruta),destaque:true},
-    {l:'Margem sobre proposta',v:pctMargem+'%',destaque:true},
-  ].map(function(r){
-    return '<div class="comp-row"><span class="comp-l">'+r.l+'</span><span class="comp-v" style="color:'+(r.destaque?'var(--green)':'var(--text)')+'">'+r.v+'</span></div>';
-  }).join('');
-
-  // ── RESUMO ───────────────────────────────────────────────────────
-  var resRows=[
-    {l:'Implantação (pago na assinatura)',v:brl(totalImpl)},
-  ];
-  if(togs['tog-manutencao']&&totalManut>0){
-    resRows.push({l:'Manutenção mensal recorrente',v:brl(totalManut)});
-  }
-  document.getElementById('res-rows').innerHTML=resRows.map(function(r){
-    return '<div class="res-row"><span class="res-lbl">'+r.l+'</span><span class="res-val">'+r.v+'</span></div>';
-  }).join('');
-  document.getElementById('res-impl-final').textContent=brl(totalImpl);
-
-  var resManutEl=document.getElementById('res-manut-total');
-  if(togs['tog-manutencao']&&totalManut>0){
-    resManutEl.style.display='flex';
-    document.getElementById('res-manut-val').textContent=brl(totalManut);
-  } else {
-    resManutEl.style.display='none';
-  }
-
-  var nota='Implantação: '+brl(totalImpl);
-  if(togs['tog-manutencao']&&totalManut>0) nota+=' · Manutenção: '+brl(totalManut)+'/mês';
-  nota+=' · Prazo NR-1: 26/mai/2026';
-  document.getElementById('res-note').textContent=nota;
-
-  // Salvar estado global
-  window._nr1={
-    empresa,decisor,colab,grau,docs,
-    togs:JSON.parse(JSON.stringify(togs)),
-    totalImpl,totalManut,margemBruta,pctMargem,
-    vAEP,vPGRsst,vAET,totalParceiro,
-    obs:val('obs'),
-  };
+  calcular();
 }
 
 function setTab(t){
@@ -555,178 +456,311 @@ function setTab(t){
   });
 }
 
-// ── GERAR PROPOSTA ───────────────────────────────────────────────────
-function gerarProposta(){
-  var s=window._nr1;
-  if(!s){calcular();s=window._nr1;}
+function calcular(){
+  var colab = num('sl-colab');
+  var grau = parseInt(val('sel-grau'))||2;
+  var docs = val('sel-docs');
+  var desconto = Math.min(50,Math.max(0,num('inp-desc')||0));
+  var seg = segSel ? SEGMENTOS.find(function(s){return s.id===segSel;}) : null;
 
-  var modulosInclusos=[];
-  modulosInclusos.push('Diagnóstico Psicossocial com metodologia documentada');
-  if(s.togs['tog-pgr']) modulosInclusos.push('PGR — Programa de Gerenciamento de Riscos (elaboração e assinatura técnica)');
-  if(s.togs['tog-canal']) modulosInclusos.push('Canal de Denúncias — implantação, protocolo de acolhimento e gestão externa pela Azumi RH');
-  if(s.togs['tog-plano']) modulosInclusos.push('Plano de Ação documentado (metodologia 5W2H) com prazos e responsáveis');
-  if(s.togs['tog-treino']) modulosInclusos.push('Treinamento de lideranças sobre riscos psicossociais e uso do canal de denúncias');
-  if(s.togs['tog-monit']) modulosInclusos.push('Monitoramento periódico de indicadores e relatórios de conformidade');
+  document.getElementById('v-colab').textContent = colab+' colaboradores';
 
-  var manutInclusos=[];
-  if(s.togs['tog-manutencao']){
-    if(s.togs['tog-canal']) manutInclusos.push('Gestão mensal do canal de denúncias — recebimento, apuração e relatório à Diretoria');
-    if(s.togs['tog-monit']) manutInclusos.push('Revisão periódica do PGR e monitoramento de indicadores');
+  // ── ALERTAS ──────────────────────────────────────────────────────
+  var alertas = [];
+
+  if(!segSel){
+    alertas.push({tipo:'amber', txt:'⚠ Selecione o segmento da empresa para alertas personalizados e grau de risco sugerido.'});
   }
 
-  var grauLabel={1:'Grau 1',2:'Grau 2 — Comércio varejista',3:'Grau 3',4:'Grau 4'};
-  var docsLabel={nenhum:'Sem documentação prévia',parcial:'Documentação parcial',completo:'PGR e PCMSO vigentes'};
+  // CIPA
+  if(grau<=2 && colab>=51){
+    alertas.push({tipo:'red', txt:'🚨 CIPA obrigatória — '+colab+' colaboradores, grau de risco '+grau+'. Exige constituição formal da CIPA/CIPAA com eleição e treinamento (NR-5).'});
+  } else if(grau>=3 && colab>=20){
+    alertas.push({tipo:'red', txt:'🚨 CIPA obrigatória — grau de risco '+grau+' com '+colab+' colaboradores (NR-5). Incluir na proposta ou orientar o cliente.'});
+  } else if(colab<20){
+    alertas.push({tipo:'amber', txt:'⚠ Empresa com '+colab+' colaboradores: não obrigada a CIPA formal, mas deve nomear um Designado CIPA por escrito (NR-5). Azumi pode apoiar essa estruturação.'});
+  } else {
+    alertas.push({tipo:'amber', txt:'⚠ Verificar enquadramento CIPA — '+colab+' colaboradores, grau '+grau+'.'});
+  }
 
-  var html=`<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8"/>
-<title>Proposta Azumi RH — Adequação NR-1${s.empresa?' | '+s.empresa:''}</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-<style>
-:root{--blue:#034C8B;--blue2:#3B82F6;--violet:#8B5CF6;--gray:#778082;--light:#EDEDED;--white:#FAFAFA;--text:#222;
-  --gm:linear-gradient(135deg,#034C8B 0%,#3B82F6 50%,#8B5CF6 100%);
-  --gh:linear-gradient(135deg,#031D38 0%,#034C8B 40%,#3B82F6 75%,#8B5CF6 100%);
+  // AEP/AET por segmento
+  if(seg){
+    if(seg.aet_alerta){
+      alertas.push({tipo:'amber', txt:'⚠ '+seg.aet_msg+' Confirmar com parceiro SST antes de fechar proposta.'});
+    } else {
+      alertas.push({tipo:'green', txt:'✓ '+seg.aet_msg});
+    }
+  }
+
+  // Prazo
+  alertas.push({tipo:'blue', txt:'📅 Prazo de fiscalização punitiva da NR-1: 26 de maio de 2026. Urgência real para o cliente.'});
+
+  // Sem documentação
+  if(docs==='nenhum'){
+    alertas.push({tipo:'red', txt:'🚨 Empresa sem PGR ou PCMSO — acréscimo de documentação desorganizada aplicado automaticamente.'});
+  } else if(docs==='parcial'){
+    alertas.push({tipo:'amber', txt:'⚠ Documentação parcial — necessário revisar e atualizar antes de incluir riscos psicossociais.'});
+  }
+
+  // Canal sem manutenção
+  if(togs['tog-canal'] && !togs['tog-manut']){
+    alertas.push({tipo:'amber', txt:'⚠ Canal de denúncias sem manutenção mensal — um canal sem gestão não funciona. Recomendar fortemente a manutenção.'});
+  }
+
+  document.getElementById('alertas').innerHTML = alertas.map(function(a){
+    return '<div class="alert alert-'+a.tipo+'">'+a.txt+'</div>';
+  }).join('');
+
+  // ── MÓDULOS ──────────────────────────────────────────────────────
+  var mods = [
+    {nome:'Diagnóstico Psicossocial', ativo:true},
+    {nome:'PGR — elaboração e assinatura técnica (parceiro SST)', ativo:togs['tog-pgr']},
+    {nome:'Canal de Denúncias — implantação + gestão Azumi', ativo:togs['tog-canal']},
+    {nome:'Plano de Ação 5W2H', ativo:togs['tog-plano']},
+    {nome:'Treinamento de Lideranças (remoto)', ativo:togs['tog-treino']},
+    {nome:'Treinamento Presencial (adicional)', ativo:togs['tog-treino-pres']},
+    {nome:'Monitoramento e Relatórios', ativo:togs['tog-monit']},
+  ];
+  document.getElementById('modulos').innerHTML = mods.map(function(m){
+    return '<div class="chk-row"><span class="chk-lbl">'+m.nome+'</span><span class="chk-v" style="color:'+(m.ativo?'var(--green)':'#ccc')+'">'+(m.ativo?'✓':'–')+'</span></div>';
+  }).join('');
+
+  // ── CÁLCULO ──────────────────────────────────────────────────────
+  var base = num('p-base')||4800;
+  var perColab = num('p-percolab')||60;
+  var semDocPct = (num('p-semdoc')||25)/100;
+  var vAEP = num('p-aep')||0;
+  var vPGRsst = num('p-pgr-sst')||0;
+  var vAET = num('p-aet')||0;
+  var vTreinoPres = num('p-treino-pres')||800;
+  var vCanalMes = num('p-canal-mes')||900;
+  var vMonitMes = num('p-monit-mes')||600;
+
+  var baseAzumi = base + (colab>20 ? Math.ceil(colab-20)*perColab : 0);
+  var acrescimoDoc = docs==='nenhum' ? r50(baseAzumi*semDocPct) : (docs==='parcial' ? r50(baseAzumi*semDocPct/2) : 0);
+  var totalParceiro = (togs['tog-pgr'] ? (vAEP+vPGRsst+vAET) : 0);
+  var extraTreinoPres = (togs['tog-treino-pres'] ? vTreinoPres : 0);
+
+  var totalImplBruto = r50(baseAzumi + acrescimoDoc + totalParceiro + extraTreinoPres);
+  var totalImpl = desconto>0 ? r50(totalImplBruto*(1-desconto/100)) : totalImplBruto;
+
+  var totalManut = 0;
+  if(togs['tog-manut']){
+    if(togs['tog-canal']) totalManut += vCanalMes;
+    if(togs['tog-monit']) totalManut += vMonitMes;
+  }
+
+  // Composição
+  var compRows = [
+    {l:'Base Azumi (diagnóstico + doc.)', v:brl(base)},
+  ];
+  if(colab>20) compRows.push({l:'+ '+(colab-20)+' colaboradores adicionais', v:brl(Math.ceil(colab-20)*perColab), c:'var(--blue)'});
+  if(acrescimoDoc>0) compRows.push({l:'+ Acréscimo documentação desorganizada', v:brl(acrescimoDoc), c:'var(--amber)'});
+  if(togs['tog-pgr']){
+    if(totalParceiro>0) compRows.push({l:'+ Parceiro SST (AEP+PGR'+(vAET>0?'+AET':'')+')', v:brl(totalParceiro), c:'var(--gray)'});
+    else compRows.push({l:'+ Parceiro SST — valor a preencher', v:'⚠ A definir', c:'var(--amber)'});
+  }
+  if(togs['tog-treino-pres']) compRows.push({l:'+ Treinamento presencial', v:brl(extraTreinoPres), c:'var(--blue)'});
+  if(desconto>0) compRows.push({l:'— Desconto '+desconto+'%', v:'–'+brl(r50(totalImplBruto*desconto/100)), c:'var(--green)'});
+
+  document.getElementById('comp-impl').innerHTML = compRows.map(function(r){
+    return '<div class="comp-row"><span class="comp-l">'+r.l+'</span><span class="comp-v" style="color:'+(r.c||'var(--text)')+'">'+r.v+'</span></div>';
+  }).join('');
+  document.getElementById('t-impl').textContent = brl(totalImpl);
+
+  var tdr = document.getElementById('t-desc-row');
+  if(desconto>0){
+    tdr.style.display='flex';
+    document.getElementById('t-desc-lbl').textContent='COM '+desconto+'% DESCONTO';
+    document.getElementById('t-desc-val').textContent=brl(totalImpl);
+  } else { tdr.style.display='none'; }
+
+  var dn = document.getElementById('desc-note');
+  if(desconto>0) dn.textContent='Economia: '+brl(r50(totalImplBruto*desconto/100));
+  else dn.textContent='';
+
+  var compManut = document.getElementById('comp-manut');
+  if(togs['tog-manut']){ compManut.style.display='block'; document.getElementById('t-manut').textContent=brl(totalManut); }
+  else compManut.style.display='none';
+
+  // Margem
+  var custoAzumi = baseAzumi + acrescimoDoc + extraTreinoPres;
+  var margemBruta = totalImpl - totalParceiro;
+  var pctMargem = totalImpl>0 ? Math.round((margemBruta/totalImpl)*100) : 0;
+  document.getElementById('margem-rows').innerHTML = [
+    {l:'Custo Azumi (sem parceiro)',v:brl(custoAzumi)},
+    {l:'Custo parceiro SST',v:brl(totalParceiro)},
+    {l:'Receita bruta Azumi',v:brl(margemBruta),d:true},
+    {l:'Margem sobre proposta',v:pctMargem+'%',d:true},
+  ].map(function(r){
+    return '<div class="comp-row"><span class="comp-l">'+r.l+'</span><span class="comp-v" style="color:'+(r.d?'var(--green)':'var(--text)')+'">'+r.v+'</span></div>';
+  }).join('');
+
+  // Resumo
+  document.getElementById('res-rows').innerHTML = [
+    {l:'Ativação (na assinatura)',v:brl(totalImpl)},
+    togs['tog-manut']&&totalManut>0 ? {l:'Manutenção mensal',v:brl(totalManut)} : null,
+  ].filter(Boolean).map(function(r){
+    return '<div class="res-row"><span class="res-lbl">'+r.l+'</span><span class="res-val">'+r.v+'</span></div>';
+  }).join('');
+
+  var ro = document.getElementById('res-orig');
+  if(desconto>0){ ro.style.display='block'; ro.textContent=brl(totalImplBruto); }
+  else ro.style.display='none';
+  document.getElementById('res-impl-final').textContent = brl(totalImpl);
+
+  var rmt = document.getElementById('res-manut-total');
+  if(togs['tog-manut']&&totalManut>0){ rmt.style.display='flex'; document.getElementById('res-manut-val').textContent=brl(totalManut); }
+  else rmt.style.display='none';
+
+  var nota = 'Ativação: '+brl(totalImpl);
+  if(togs['tog-manut']&&totalManut>0) nota += ' · Manutenção: '+brl(totalManut)+'/mês';
+  if(desconto>0) nota += ' · Desconto '+desconto+'% aplicado';
+  nota += ' · Prazo NR-1: 26/mai/2026';
+  document.getElementById('res-note').textContent = nota;
+
+  window._nr1 = {
+    empresa:val('empresa'), decisor:val('decisor'), obs:val('obs'),
+    colab, grau, docs, desconto, seg,
+    togs:JSON.parse(JSON.stringify(togs)),
+    totalImpl, totalImplBruto, totalManut, totalParceiro,
+    margemBruta, pctMargem, vAEP, vPGRsst, vAET,
+  };
 }
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Space Grotesk',Verdana,sans-serif;background:#f0f2f7;color:#222}
-.no-print{max-width:860px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;background:var(--gh);border-radius:12px;padding:10px 20px;position:relative;overflow:hidden}
-.no-print::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90%,rgba(139,92,246,.2) 0%,transparent 60%)}
-.np-inner{position:relative;display:flex;justify-content:space-between;align-items:center;width:100%}
-.np-logo{display:flex;align-items:center;gap:8px}
-.np-az{font-family:'Poppins',sans-serif;font-weight:600;font-size:20px;color:#fff}
-.np-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;font-size:20px;background:var(--gm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.btn-print{background:#fff;color:var(--blue);border:none;border-radius:100px;padding:8px 20px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif}
-.page{width:210mm;min-height:297mm;margin:0 auto;background:#fff;box-shadow:0 0 24px rgba(0,0,0,.15)}
-.p-hdr{background:#031D38;padding:24px 40px 20px;position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:flex-start}
-.p-hdr::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.25) 0%,transparent 60%)}
-.p-hdr-inner{position:relative;display:flex;justify-content:space-between;align-items:flex-start;width:100%}
-.p-title{font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:#fff;margin-bottom:3px}
-.p-sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(147,197,253,.7);letter-spacing:.1em;text-transform:uppercase}
-.p-logo-az{font-family:'Poppins',sans-serif;font-weight:600;font-size:26px;color:#fff}
-.p-logo-rh{font-family:'Poppins',sans-serif;font-style:italic;font-weight:400;font-size:26px;color:#93C5FD}
-.p-body{padding:22px 40px 32px}
-.valid-bar{background:#fff8e1;border:1px solid #ffd54f;border-radius:8px;padding:7px 12px;margin-bottom:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:10px;color:#7c6200;font-family:'Space Grotesk',sans-serif}
-.p-stitle{font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:var(--blue);border-bottom:2px solid;border-image:var(--gm) 1;padding-bottom:5px;margin-bottom:12px;margin-top:20px}
-.p-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:16px}
-.p-gi{padding:6px 9px;border-radius:6px;border:1px solid var(--light);background:#fafafa}
-.p-gl{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--gray);font-weight:500;text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px}
-.p-gv{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;color:#222}
-.mod-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--light)}
-.mod-icon{width:20px;height:20px;background:var(--gm);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0;margin-top:1px}
-.mod-txt{font-family:'Space Grotesk',sans-serif;font-size:11px;color:#222;line-height:1.55}
-.inv-row{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:1px solid var(--light);background:var(--white)}
-.inv-l{font-family:'Space Grotesk',sans-serif;font-size:11px;color:#222}
-.inv-v{font-family:'Sora',sans-serif;font-size:13px;font-weight:700}
-.total-bar{background:var(--gh);padding:12px 14px;position:relative;overflow:hidden}
-.total-bar::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 50% 80% at 90%,rgba(139,92,246,.2) 0%,transparent 60%)}
-.total-bar-inner{position:relative;display:flex;justify-content:space-between;align-items:center}
-.total-l{font-family:'Sora',sans-serif;font-size:15px;font-weight:800;color:#fff}
-.total-v{font-family:'Sora',sans-serif;font-size:22px;font-weight:800;color:#fff}
-.p-cond{font-family:'Space Grotesk',sans-serif;font-size:10.5px;color:#333;padding:6px 0 6px 16px;border-bottom:1px solid var(--light);position:relative;line-height:1.65}
-.p-cond::before{content:"·";position:absolute;left:0;color:var(--blue);font-weight:900;font-size:14px;top:5px}
-.nr-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,rgba(3,76,139,.08),rgba(139,92,246,.08));border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:6px 12px;margin-bottom:14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:.04em}
-.greet-banner{background:#031D38;padding:20px 40px 18px;position:relative;overflow:hidden}
-.greet-banner::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.15) 0%,transparent 60%)}
-.greet-inner{position:relative}
-.greet-name{font-family:'Sora',sans-serif;font-size:26px;font-weight:800;color:rgba(255,255,255,.92);line-height:1.1}
-.greet-name span{color:#93C5FD}
-.greet-co{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(147,197,253,.6);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
-.prazo-box{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-family:'Space Grotesk',sans-serif;font-size:11px;color:#7f1d1d;line-height:1.6}
-.prazo-box strong{color:#dc2626}
-@media print{body{background:#fff!important}.no-print{display:none!important}.page{box-shadow:none!important;margin:0!important;width:100%!important}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}@page{size:A4;margin:8mm}}
-</style>
-</head>
-<body>
-<div class="no-print">
-  <div class="np-inner">
-    <div class="np-logo">
-      <svg width="28" height="22" viewBox="0 0 120 96" fill="none"><defs><linearGradient id="npg" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><circle cx="44" cy="48" r="34" fill="url(#npg)" opacity=".9"/><circle cx="76" cy="48" r="34" fill="url(#npg)" opacity=".7"/></svg>
-      <span class="np-az">azumi</span><span class="np-rh">RH</span>
-    </div>
-    <button class="btn-print" onclick="window.print()">🖨 Salvar como PDF (Ctrl+P)</button>
-  </div>
-</div>
-<div class="page">
-  <div class="p-hdr">
-    <div class="p-hdr-inner">
-      <div>
-        <div class="p-title">Proposta Comercial</div>
-        <div class="p-sub">ADEQUAÇÃO NR-1 · RISCOS PSICOSSOCIAIS · GOVERNANÇA</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
-        <svg width="30" height="24" viewBox="0 0 120 96" fill="none"><defs><linearGradient id="pg" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><circle cx="44" cy="48" r="34" fill="url(#pg)" opacity=".9"/><circle cx="76" cy="48" r="34" fill="url(#pg)" opacity=".7"/></svg>
-        <span class="p-logo-az">azumi</span><span class="p-logo-rh">RH</span>
-      </div>
-    </div>
-  </div>
-  ${(s.empresa||s.decisor)?`<div class="greet-banner"><div class="greet-inner"><div class="greet-name">Olá, <span>${s.decisor||s.empresa}</span>!</div>${s.empresa&&s.decisor?`<div class="greet-co">${s.empresa}</div>`:''}</div></div>`:''}
-  <div class="p-body">
-    <div class="valid-bar">
-      <span>📅 Emissão: <strong>${dataHoje()}</strong></span>
-      <span>⏳ Válida até: <strong>${data15()}</strong> — 15 dias</span>
-    </div>
-    <div class="nr-badge">📋 Adequação à NR-1 — Portaria MTE nº 1.419/2024 · Vigência punitiva: 26 de maio de 2026</div>
-    <div class="prazo-box">⏰ <strong>O prazo de adequação está se aproximando.</strong> A NR-1 exige que todas as empresas com empregados CLT incluam formalmente os riscos psicossociais no Programa de Gerenciamento de Riscos (PGR) até 26 de maio de 2026. Empresas que não se adequarem ficam expostas a autuações do MTE e passivos trabalhistas em ações por burnout e adoecimento ocupacional.</div>
-    ${s.obs?`<div style="background:#f8f9fb;border-left:3px solid var(--blue2);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:16px"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Observações</div><div style="font-family:'Space Grotesk',sans-serif;font-size:11px;color:#333;line-height:1.75">${s.obs.replace(/\n/g,'<br>')}</div></div>`:''}
-    <div class="p-stitle">Dados da Empresa</div>
-    <div class="p-grid">
-      ${s.empresa?`<div class="p-gi"><div class="p-gl">Empresa</div><div class="p-gv">${s.empresa}</div></div>`:''}
-      ${s.decisor?`<div class="p-gi"><div class="p-gl">Responsável</div><div class="p-gv">${s.decisor}</div></div>`:''}
-      <div class="p-gi"><div class="p-gl">Colaboradores</div><div class="p-gv">${s.colab} pessoas</div></div>
-      <div class="p-gi"><div class="p-gl">Grau de Risco</div><div class="p-gv">${{1:'Grau 1',2:'Grau 2 — Comércio varejista',3:'Grau 3',4:'Grau 4'}[s.grau]||'Grau 2'}</div></div>
-      <div class="p-gi"><div class="p-gl">Situação documental atual</div><div class="p-gv">${{nenhum:'Sem documentação prévia',parcial:'Documentação parcial',completo:'PGR e PCMSO vigentes'}[s.docs]||'—'}</div></div>
-      <div class="p-gi"><div class="p-gl">Prazo NR-1</div><div class="p-gv" style="color:#dc2626;font-weight:700">26 de maio de 2026</div></div>
-    </div>
-    <div class="p-stitle">Módulos Incluídos nesta Proposta</div>
-    ${modulosInclusos.map(function(m,i){return '<div class="mod-row"><div class="mod-icon">'+(i+1)+'</div><div class="mod-txt">'+m+'</div></div>';}).join('')}
-    ${manutInclusos.length?`<div class="p-stitle">Manutenção Mensal Recorrente</div>${manutInclusos.map(function(m,i){return '<div class="mod-row"><div class="mod-icon" style="background:var(--blue2)">'+(i+1)+'</div><div class="mod-txt">'+m+'</div></div>';}).join('')}`:''}
-    <div class="p-stitle">Investimento</div>
-    <div class="inv-row"><span class="inv-l">Implantação — pago na assinatura</span><span class="inv-v">${brl(s.totalImpl)}</span></div>
-    ${s.togs['tog-manutencao']&&s.totalManut>0?`<div class="inv-row"><span class="inv-l">Manutenção mensal recorrente</span><span class="inv-v" style="color:var(--blue)">${brl(s.totalManut)}/mês</span></div>`:''}
-    <div class="total-bar"><div class="total-bar-inner"><span class="total-l">IMPLANTAÇÃO TOTAL</span><span class="total-v">${brl(s.totalImpl)}</span></div></div>
-    ${s.togs['tog-manutencao']&&s.totalManut>0?`<div style="background:#eff6ff;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:.03em">Manutenção mensal: ${brl(s.totalManut)}/mês · Renovação automática</div>`:''}
-    <div class="p-stitle">O que esta proposta não inclui</div>
-    <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;margin-bottom:14px">
-      <div style="font-family:'Space Grotesk',sans-serif;font-size:10.5px;color:#7f1d1d;line-height:1.8">
-        Departamento Pessoal, folha de pagamento e eSocial (responsabilidade da contabilidade contratada).<br>
-        Representação jurídica trabalhista ou contencioso.<br>
-        PCMSO — Programa de Controle Médico de Saúde Ocupacional (elaborado por médico do trabalho, pode ser incluído em proposta complementar).<br>
-        Treinamentos externos com certificação ou cursos de terceiros.<br>
-        Softwares de SST ou sistemas de gestão de riscos.
-      </div>
-    </div>
-    <div class="p-stitle">Condições Gerais</div>
-    <div class="p-cond">O valor de implantação é pago integralmente na assinatura e não é reembolsável.</div>
-    <div class="p-cond">A manutenção mensal (quando contratada) é renovada automaticamente e pode ser cancelada com 30 dias de aviso prévio.</div>
-    <div class="p-cond">A adequação à NR-1 é um processo contínuo — o PGR deve ser revisado periodicamente e sempre que houver mudança significativa na organização.</div>
-    <div class="p-cond">O canal de denúncias é gerido externamente pela Azumi RH, garantindo anonimato e imparcialidade. Os dados tratados seguem a LGPD (Lei 13.709/2018).</div>
-    <div class="p-cond">A Azumi RH atua em parceria com profissional de SST habilitado para a elaboração e assinatura técnica do PGR — exigência legal da norma.</div>
-    <div class="p-cond">Informações e dados da empresa tratados com sigilo e em conformidade com a LGPD.</div>
-    <div style="margin-top:22px;background:#031D38;border-radius:10px;padding:20px 24px;position:relative;overflow:hidden">
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 90% 30%,rgba(139,92,246,.2) 0%,transparent 60%);pointer-events:none"></div>
-      <div style="position:relative">
-        <div style="font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:#fff;margin-bottom:6px">Adequar-se antes do prazo é uma vantagem competitiva.</div>
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;color:rgba(147,197,253,.8);line-height:1.65;max-width:480px">Empresas que se antecipam evitam autuações, reduzem passivos trabalhistas e constroem ambientes mais saudáveis — o que se traduz em menor absenteísmo e maior retenção de pessoas.</div>
-        <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(147,197,253,.15)">
-          <div style="font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:#fff">Equipe Azumi RH</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(147,197,253,.6);letter-spacing:.05em;margin-top:3px">contato@azumirh.com.br · azumirh.com.br · +55 41 98835-0743</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</body>
-</html>`;
 
-  var blob=new Blob([html],{type:'text/html;charset=utf-8'});
-  var url=URL.createObjectURL(blob);
+function gerarProposta(){
+  var s = window._nr1;
+  if(!s){ calcular(); s=window._nr1; }
+
+  var segNome = s.seg ? s.seg.nome : 'Não especificado';
+  var segIcon = s.seg ? s.seg.icon : '🏢';
+  var grauLabel = {1:'Grau 1 — Baixo risco',2:'Grau 2 — Médio-baixo',3:'Grau 3 — Médio-alto',4:'Grau 4 — Alto risco'};
+  var docsLabel = {nenhum:'Sem documentação prévia',parcial:'Documentação parcial',completo:'PGR e PCMSO vigentes'};
+
+  var modIncl = [];
+  modIncl.push('Diagnóstico Psicossocial com metodologia documentada');
+  if(s.togs['tog-pgr']) modIncl.push('PGR — elaboração e assinatura técnica pelo parceiro SST habilitado');
+  if(s.togs['tog-canal']) modIncl.push('Canal de Denúncias — implantação, protocolo de acolhimento e gestão externa pela Azumi RH');
+  if(s.togs['tog-plano']) modIncl.push('Plano de Ação documentado (5W2H) com prazos e responsáveis');
+  if(s.togs['tog-treino']) modIncl.push('Treinamento de Lideranças sobre riscos psicossociais — formato remoto');
+  if(s.togs['tog-treino-pres']) modIncl.push('Treinamento Presencial — inclui deslocamento da consultora');
+  if(s.togs['tog-monit']) modIncl.push('Monitoramento periódico de indicadores e relatórios de conformidade');
+
+  var manutIncl = [];
+  if(s.togs['tog-manut']){
+    if(s.togs['tog-canal']) manutIncl.push('Gestão mensal do canal de denúncias — recebimento, apuração e relatório à Diretoria com anonimato garantido');
+    if(s.togs['tog-monit']) manutIncl.push('Revisão periódica do PGR e monitoramento de indicadores de saúde organizacional');
+  }
+
+  var html = '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"/><title>Proposta Azumi RH — NR-1'+(s.empresa?' | '+s.empresa:'')+'</title>'+
+  '<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;1,400&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>'+
+  '<style>:root{--blue:#034C8B;--blue2:#3B82F6;--gray:#778082;--light:#EDEDED;--white:#FAFAFA;--text:#222;--gm:linear-gradient(135deg,#034C8B 0%,#3B82F6 50%,#8B5CF6 100%);--gh:linear-gradient(135deg,#031D38 0%,#034C8B 40%,#3B82F6 75%,#8B5CF6 100%);--green:#16a34a;}'+
+  '*{margin:0;padding:0;box-sizing:border-box}body{font-family:\'Space Grotesk\',Verdana,sans-serif;background:#f0f2f7;color:#222}'+
+  '.np{max-width:860px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;background:var(--gh);border-radius:12px;padding:10px 20px;position:relative;overflow:hidden}'+
+  '.np::before{content:\'\';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90%,rgba(139,92,246,.2) 0%,transparent 60%)}'+
+  '.np-i{position:relative;display:flex;justify-content:space-between;align-items:center;width:100%}'+
+  '.np-l{display:flex;align-items:center;gap:8px}.np-az{font-family:\'Poppins\',sans-serif;font-weight:600;font-size:20px;color:#fff}'+
+  '.np-rh{font-family:\'Poppins\',sans-serif;font-style:italic;font-weight:400;font-size:20px;background:var(--gm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}'+
+  '.btn-p{background:#fff;color:var(--blue);border:none;border-radius:100px;padding:8px 20px;font-size:12px;font-weight:700;cursor:pointer;font-family:\'Space Grotesk\',sans-serif}'+
+  '.page{width:210mm;min-height:297mm;margin:0 auto;background:#fff;box-shadow:0 0 24px rgba(0,0,0,.15)}'+
+  '.p-hdr{background:#031D38;padding:24px 40px 20px;position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:flex-start}'+
+  '.p-hdr::before{content:\'\';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.25) 0%,transparent 60%)}'+
+  '.p-hi{position:relative;display:flex;justify-content:space-between;align-items:flex-start;width:100%}'+
+  '.pt{font-family:\'Sora\',sans-serif;font-size:20px;font-weight:800;color:#fff;margin-bottom:3px}'+
+  '.ps{font-family:\'JetBrains Mono\',monospace;font-size:10px;color:rgba(147,197,253,.7);letter-spacing:.1em;text-transform:uppercase}'+
+  '.pl-az{font-family:\'Poppins\',sans-serif;font-weight:600;font-size:26px;color:#fff}'+
+  '.pl-rh{font-family:\'Poppins\',sans-serif;font-style:italic;font-weight:400;font-size:26px;color:#93C5FD}'+
+  '.greet{background:#031D38;padding:18px 40px 16px;position:relative;overflow:hidden}'+
+  '.greet::before{content:\'\';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 40% 80% at 90% 50%,rgba(139,92,246,.15) 0%,transparent 60%)}'+
+  '.greet-i{position:relative}.gn{font-family:\'Sora\',sans-serif;font-size:24px;font-weight:800;color:rgba(255,255,255,.92)}.gn span{color:#93C5FD}'+
+  '.gc{font-family:\'JetBrains Mono\',monospace;font-size:10px;color:rgba(147,197,253,.6);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}'+
+  '.p-body{padding:22px 40px 32px}'+
+  '.vb{background:#fff8e1;border:1px solid #ffd54f;border-radius:8px;padding:7px 12px;margin-bottom:16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:10px;color:#7c6200;font-family:\'Space Grotesk\',sans-serif}'+
+  '.pst{font-family:\'Sora\',sans-serif;font-size:13px;font-weight:700;color:var(--blue);border-bottom:2px solid;border-image:var(--gm) 1;padding-bottom:5px;margin-bottom:12px;margin-top:20px}'+
+  '.pg{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:14px}'+
+  '.pgi{padding:6px 9px;border-radius:6px;border:1px solid var(--light);background:#fafafa}'+
+  '.pgl{font-family:\'JetBrains Mono\',monospace;font-size:8px;color:var(--gray);font-weight:500;text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px}'+
+  '.pgv{font-family:\'Space Grotesk\',sans-serif;font-size:11px;font-weight:600;color:#222}'+
+  '.mr{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--light)}'+
+  '.mi{width:20px;height:20px;background:var(--gm);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0;margin-top:1px}'+
+  '.mt{font-family:\'Space Grotesk\',sans-serif;font-size:11px;color:#222;line-height:1.55}'+
+  '.ir{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:1px solid var(--light);background:var(--white)}'+
+  '.il{font-family:\'Space Grotesk\',sans-serif;font-size:11px;color:#222}'+
+  '.iv{font-family:\'Sora\',sans-serif;font-size:13px;font-weight:700}'+
+  '.iv.desc{color:var(--blue)}'+
+  '.iv-orig{font-size:10px;color:#aaa;text-decoration:line-through}'+
+  '.tb{background:var(--gh);padding:12px 14px;position:relative;overflow:hidden}'+
+  '.tb::before{content:\'\';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 50% 80% at 90%,rgba(139,92,246,.2) 0%,transparent 60%)}'+
+  '.tbi{position:relative;display:flex;justify-content:space-between;align-items:center}'+
+  '.tl{font-family:\'Sora\',sans-serif;font-size:15px;font-weight:800;color:#fff}'+
+  '.tv{font-family:\'Sora\',sans-serif;font-size:22px;font-weight:800;color:#fff}'+
+  '.tv-orig{font-size:12px;color:rgba(255,255,255,.45);text-decoration:line-through;margin-bottom:2px;text-align:right}'+
+  '.pc{font-family:\'Space Grotesk\',sans-serif;font-size:10.5px;color:#333;padding:6px 0 6px 16px;border-bottom:1px solid var(--light);position:relative;line-height:1.65}'+
+  '.pc::before{content:"·";position:absolute;left:0;color:var(--blue);font-weight:900;font-size:14px;top:5px}'+
+  '.prazo{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-family:\'Space Grotesk\',sans-serif;font-size:11px;color:#7f1d1d;line-height:1.6}'+
+  '.seg-pill{display:inline-flex;align-items:center;gap:6px;background:var(--gm);border-radius:100px;padding:4px 14px;font-family:\'JetBrains Mono\',monospace;font-size:10px;color:#fff;letter-spacing:.05em;margin-bottom:14px}'+
+  '.disc-banner{background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:8px 14px;font-family:\'Space Grotesk\',sans-serif;font-size:12px;font-weight:700;color:#166534;margin-bottom:10px}'+
+  '@media print{body{background:#fff!important}.np{display:none!important}.page{box-shadow:none!important;margin:0!important;width:100%!important}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}@page{size:A4;margin:8mm}}'+
+  '</style></head><body>'+
+  '<div class="np"><div class="np-i">'+
+  '<div class="np-l"><svg width="28" height="22" viewBox="0 0 120 96" fill="none"><defs><linearGradient id="npg" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><circle cx="44" cy="48" r="34" fill="url(#npg)" opacity=".9"/><circle cx="76" cy="48" r="34" fill="url(#npg)" opacity=".7"/></svg>'+
+  '<span class="np-az">azumi</span><span class="np-rh">RH</span></div>'+
+  '<button class="btn-p" onclick="window.print()">🖨 Salvar como PDF</button></div></div>'+
+  '<div class="page">'+
+  '<div class="p-hdr"><div class="p-hi"><div><div class="pt">Proposta Comercial</div><div class="ps">ADEQUAÇÃO NR-1 · GOVERNANÇA · RISCOS PSICOSSOCIAIS</div></div>'+
+  '<div style="display:flex;align-items:center;gap:8px;flex-shrink:0"><svg width="30" height="24" viewBox="0 0 120 96" fill="none"><defs><linearGradient id="pg" x1="0" y1="0" x2="120" y2="96" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#034C8B"/><stop offset="50%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><circle cx="44" cy="48" r="34" fill="url(#pg)" opacity=".9"/><circle cx="76" cy="48" r="34" fill="url(#pg)" opacity=".7"/></svg>'+
+  '<span class="pl-az">azumi</span><span class="pl-rh">RH</span></div></div></div>'+
+  ((s.empresa||s.decisor)?'<div class="greet"><div class="greet-i"><div class="gn">Olá, <span>'+(s.decisor||s.empresa)+'</span>!</div>'+(s.empresa&&s.decisor?'<div class="gc">'+s.empresa+'</div>':'')+'</div></div>':'')+
+  '<div class="p-body">'+
+  '<div class="vb"><span>📅 Emissão: <strong>'+dataHoje()+'</strong></span><span>⏳ Válida até: <strong>'+data15()+'</strong> — 15 dias</span></div>'+
+  '<div class="prazo">⏰ <strong>Prazo de adequação: 26 de maio de 2026.</strong> A NR-1 exige que todas as empresas com empregados CLT incluam formalmente os riscos psicossociais no PGR. Empresas não conformes ficam expostas a autuações do MTE e passivos trabalhistas.</div>'+
+  (s.obs?'<div style="background:#f8f9fb;border-left:3px solid var(--blue2);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:16px"><div style="font-family:\'JetBrains Mono\',monospace;font-size:8px;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Observações</div><div style="font-family:\'Space Grotesk\',sans-serif;font-size:11px;color:#333;line-height:1.75">'+s.obs.replace(/\n/g,'<br>')+'</div></div>':'')+
+  '<div class="pst">Dados da Empresa</div>'+
+  '<div class="seg-pill">'+segIcon+' '+segNome+'</div>'+
+  '<div class="pg">'+
+  (s.empresa?'<div class="pgi"><div class="pgl">Empresa</div><div class="pgv">'+s.empresa+'</div></div>':'')+
+  (s.decisor?'<div class="pgi"><div class="pgl">Decisor</div><div class="pgv">'+s.decisor+'</div></div>':'')+
+  '<div class="pgi"><div class="pgl">Colaboradores</div><div class="pgv">'+s.colab+' pessoas</div></div>'+
+  '<div class="pgi"><div class="pgl">Grau de Risco</div><div class="pgv">'+(grauLabel[s.grau]||'—')+'</div></div>'+
+  '<div class="pgi"><div class="pgl">Situação documental</div><div class="pgv">'+(docsLabel[s.docs]||'—')+'</div></div>'+
+  '<div class="pgi"><div class="pgl">Prazo NR-1</div><div class="pgv" style="color:#dc2626;font-weight:700">26 de maio de 2026</div></div>'+
+  '</div>'+
+  '<div class="pst">Módulos Incluídos</div>'+
+  modIncl.map(function(m,i){return '<div class="mr"><div class="mi">'+(i+1)+'</div><div class="mt">'+m+'</div></div>';}).join('')+
+  (manutIncl.length?'<div class="pst">Manutenção Mensal Recorrente</div>'+manutIncl.map(function(m,i){return '<div class="mr"><div class="mi" style="background:var(--blue2)">'+(i+1)+'</div><div class="mt">'+m+'</div></div>';}).join(''):'')+
+  '<div class="pst">Investimento</div>'+
+  (s.desconto>0?'<div class="disc-banner">🎁 Desconto especial de '+s.desconto+'% aplicado nesta proposta.</div>':'')+
+  '<div class="ir"><span class="il">Ativação — pago na assinatura</span><div style="text-align:right">'+(s.desconto>0?'<div class="iv-orig">'+brl(s.totalImplBruto)+'</div>':'')+' <span class="iv'+(s.desconto>0?' desc':'')+'">'+brl(s.totalImpl)+'</span></div></div>'+
+  (s.togs['tog-manut']&&s.totalManut>0?'<div class="ir"><span class="il">Manutenção mensal recorrente</span><span class="iv" style="color:var(--blue)">'+brl(s.totalManut)+'/mês</span></div>':'')+
+  '<div class="tb"><div class="tbi"><span class="tl">ATIVAÇÃO TOTAL</span><div style="text-align:right">'+(s.desconto>0?'<div class="tv-orig">'+brl(s.totalImplBruto)+'</div>':'')+' <span class="tv">'+brl(s.totalImpl)+'</span></div></div></div>'+
+  (s.togs['tog-manut']&&s.totalManut>0?'<div style="background:#eff6ff;padding:8px 14px;font-family:\'JetBrains Mono\',monospace;font-size:10px;color:var(--blue);letter-spacing:.03em">Manutenção mensal: '+brl(s.totalManut)+'/mês · Renovação automática</div>':'')+
+  '<div class="pst">O que esta proposta não inclui</div>'+
+  '<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;margin-bottom:14px">'+
+  '<div style="font-family:\'Space Grotesk\',sans-serif;font-size:10.5px;color:#7f1d1d;line-height:1.8">'+
+  'Departamento Pessoal, folha de pagamento e eSocial (responsabilidade da contabilidade contratada).<br>'+
+  'PCMSO — Programa de Controle Médico de Saúde Ocupacional (médico do trabalho — pode ser incluído em proposta complementar).<br>'+
+  'Representação jurídica trabalhista ou contencioso.<br>'+
+  'Softwares ou sistemas de gestão de riscos ocupacionais.</div></div>'+
+  '<div class="pst">Condições Gerais</div>'+
+  '<div class="pc">Ativação paga integralmente na assinatura — não reembolsável. Pode ser parcelada em 2× (1ª na assinatura, 2ª após 15 dias).</div>'+
+  '<div class="pc">Manutenção mensal (quando contratada) renovada automaticamente — cancelamento com 30 dias de aviso prévio.</div>'+
+  '<div class="pc">A adequação à NR-1 é processo contínuo — PGR revisado periodicamente e sempre que houver mudança organizacional relevante.</div>'+
+  '<div class="pc">Canal de denúncias gerido externamente pela Azumi RH, com anonimato e imparcialidade garantidos. Dados tratados conforme LGPD (Lei 13.709/2018).</div>'+
+  '<div class="pc">PGR elaborado e assinado por profissional de SST habilitado em parceria com a Azumi RH — exigência legal da NR-1.</div>'+
+  '<div style="margin-top:22px;background:#031D38;border-radius:10px;padding:20px 24px;position:relative;overflow:hidden">'+
+  '<div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 90% 30%,rgba(139,92,246,.2) 0%,transparent 60%);pointer-events:none"></div>'+
+  '<div style="position:relative"><div style="font-family:\'Sora\',sans-serif;font-size:14px;font-weight:800;color:#fff;margin-bottom:6px">Adequar-se antes do prazo é uma vantagem competitiva.</div>'+
+  '<div style="font-family:\'Space Grotesk\',sans-serif;font-size:11px;color:rgba(147,197,253,.8);line-height:1.65;max-width:480px">Empresas que se antecipam evitam autuações, reduzem passivos trabalhistas e constroem ambientes mais saudáveis — com impacto direto em retenção e absenteísmo.</div>'+
+  '<div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(147,197,253,.15)">'+
+  '<div style="font-family:\'Sora\',sans-serif;font-size:12px;font-weight:700;color:#fff">Equipe Azumi RH</div>'+
+  '<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;color:rgba(147,197,253,.6);letter-spacing:.05em;margin-top:3px">contato@azumirh.com.br · azumirh.com.br · +55 41 98835-0743</div>'+
+  '</div></div></div></div></div></body></html>';
+
+  var blob = new Blob([html],{type:'text/html;charset=utf-8'});
+  var url = URL.createObjectURL(blob);
   window.open(url,'_blank');
   setTimeout(function(){URL.revokeObjectURL(url);},120000);
 }
-
-// INIT
-window.onload=function(){calcular();};
 </script>
 </body>
 </html>
