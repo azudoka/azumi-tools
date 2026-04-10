@@ -317,9 +317,9 @@ input,select,button,textarea{font-family:'Space Grotesk',Verdana,sans-serif}
             <span style="font-family:'Sora',sans-serif;font-size:13px;font-weight:700">ATIVAÇÃO</span>
             <span style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;background:var(--gm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" id="t-impl">R$ 0</span>
           </div>
-          <div id="t-desc-row" style="display:none;flex-direction:row;justify-content:space-between;margin-top:4px">
-            <span style="font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:#166534" id="t-desc-lbl"></span>
-            <span style="font-family:'Sora',sans-serif;font-size:16px;font-weight:800;color:#166534" id="t-desc-val"></span>
+          <div id="t-desc-row" style="display:none;flex-direction:row;justify-content:space-between;margin-top:4px;padding-top:4px;border-top:1px solid var(--light)">
+            <span style="font-family:'Sora',sans-serif;font-size:11px;font-weight:700;color:#166534" id="t-desc-lbl"></span>
+            <span style="font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:#166534" id="t-desc-val"></span>
           </div>
           <div id="comp-manut" style="display:none;margin-top:8px">
             <div style="display:flex;justify-content:space-between">
@@ -566,14 +566,18 @@ function calcular(){
   document.getElementById('comp-impl').innerHTML = compRows.map(function(r){
     return '<div class="comp-row"><span class="comp-l">'+r.l+'</span><span class="comp-v" style="color:'+(r.c||'var(--text)')+'">'+r.v+'</span></div>';
   }).join('');
-  document.getElementById('t-impl').textContent = brl(totalImpl);
+  document.getElementById('t-impl').textContent = desconto>0 ? brl(totalImplBruto) : brl(totalImpl);
 
   var tdr = document.getElementById('t-desc-row');
   if(desconto>0){
     tdr.style.display='flex';
     document.getElementById('t-desc-lbl').textContent='COM '+desconto+'% DESCONTO';
     document.getElementById('t-desc-val').textContent=brl(totalImpl);
-  } else { tdr.style.display='none'; }
+    document.getElementById('t-impl').style.cssText='font-family:Sora,sans-serif;font-size:18px;font-weight:800;color:#aaa;text-decoration:line-through';
+  } else {
+    tdr.style.display='none';
+    document.getElementById('t-impl').style.cssText='font-family:Sora,sans-serif;font-size:18px;font-weight:800;background:var(--gm);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text';
+  }
 
   var dn = document.getElementById('desc-note');
   if(desconto>0) dn.textContent='Economia: '+brl(r50(totalImplBruto*desconto/100));
@@ -598,7 +602,6 @@ function calcular(){
 
   // Resumo
   document.getElementById('res-rows').innerHTML = [
-    {l:'Ativação (na assinatura)',v:brl(totalImpl)},
     togs['tog-manut']&&totalManut>0 ? {l:'Manutenção mensal',v:brl(totalManut)} : null,
   ].filter(Boolean).map(function(r){
     return '<div class="res-row"><span class="res-lbl">'+r.l+'</span><span class="res-val">'+r.v+'</span></div>';
@@ -728,11 +731,13 @@ function gerarProposta(){
   '<div class="pst">Módulos Incluídos</div>'+
   modIncl.map(function(m,i){return '<div class="mr"><div class="mi">'+(i+1)+'</div><div class="mt">'+m+'</div></div>';}).join('')+
   (manutIncl.length?'<div class="pst">Manutenção Mensal Recorrente</div>'+manutIncl.map(function(m,i){return '<div class="mr"><div class="mi" style="background:var(--blue2)">'+(i+1)+'</div><div class="mt">'+m+'</div></div>';}).join(''):'')+
+  (s.togs['tog-canal']&&!s.togs['tog-manut']?'<div style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-family:'Space Grotesk',sans-serif;font-size:11px;color:#92400e;line-height:1.6"><strong>⚠ Atenção — Canal de Denúncias sem manutenção mensal:</strong> Um canal implantado sem gestão contínua não cumpre sua função — denúncias sem acompanhamento geram mais frustração do que não ter canal. Recomendamos fortemente a manutenção mensal para garantir efetividade e conformidade legal.</div>':'')+
   '<div class="pst">Investimento</div>'+
   (s.desconto>0?'<div class="disc-banner">🎁 Desconto especial de '+s.desconto+'% aplicado nesta proposta.</div>':'')+
-  '<div class="ir"><span class="il">Ativação — pago na assinatura</span><div style="text-align:right">'+(s.desconto>0?'<div class="iv-orig">'+brl(s.totalImplBruto)+'</div>':'')+' <span class="iv'+(s.desconto>0?' desc':'')+'">'+brl(s.totalImpl)+'</span></div></div>'+
+  (s.desconto>0?'<div class="ir"><span class="il">Valor total</span><span class="iv" style="color:#aaa;text-decoration:line-through">'+brl(s.totalImplBruto)+'</span></div>':'')+
+  (s.desconto>0?'<div class="ir"><span class="il" style="color:#166534;font-weight:700">Com desconto de '+s.desconto+'%</span><span class="iv desc" style="color:#166534">'+brl(s.totalImpl)+'</span></div>':'')+
   (s.togs['tog-manut']&&s.totalManut>0?'<div class="ir"><span class="il">Manutenção mensal recorrente</span><span class="iv" style="color:var(--blue)">'+brl(s.totalManut)+'/mês</span></div>':'')+
-  '<div class="tb"><div class="tbi"><span class="tl">ATIVAÇÃO TOTAL</span><div style="text-align:right">'+(s.desconto>0?'<div class="tv-orig">'+brl(s.totalImplBruto)+'</div>':'')+' <span class="tv">'+brl(s.totalImpl)+'</span></div></div></div>'+
+  '<div class="tb"><div class="tbi"><span class="tl">INVESTIMENTO TOTAL</span><span class="tv">'+brl(s.totalImpl)+'</span></div></div>'+
   (s.togs['tog-manut']&&s.totalManut>0?'<div style="background:#eff6ff;padding:8px 14px;font-family:\'JetBrains Mono\',monospace;font-size:10px;color:var(--blue);letter-spacing:.03em">Manutenção mensal: '+brl(s.totalManut)+'/mês · Renovação automática</div>':'')+
   '<div class="pst">O que esta proposta não inclui</div>'+
   '<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;margin-bottom:14px">'+
@@ -742,8 +747,9 @@ function gerarProposta(){
   'Representação jurídica trabalhista ou contencioso.<br>'+
   'Softwares ou sistemas de gestão de riscos ocupacionais.</div></div>'+
   '<div class="pst">Condições Gerais</div>'+
-  '<div class="pc">Ativação paga integralmente na assinatura — não reembolsável. Pode ser parcelada em 2× (1ª na assinatura, 2ª após 15 dias).</div>'+
+  '<div class="pc">Ativação paga em 2 parcelas: 50% na assinatura do contrato · 50% na entrega do PGR assinado.</div>'+
   '<div class="pc">Manutenção mensal (quando contratada) renovada automaticamente — cancelamento com 30 dias de aviso prévio.</div>'+
+  '<div class="pc">Prazo médio de execução: 45 a 60 dias — pode ser menor ou maior conforme disponibilidade de agenda do cliente e complexidade identificada no diagnóstico. Não se trata de uma previsão definitiva.</div>'+
   '<div class="pc">A adequação à NR-1 é processo contínuo — PGR revisado periodicamente e sempre que houver mudança organizacional relevante.</div>'+
   '<div class="pc">Canal de denúncias gerido externamente pela Azumi RH, com anonimato e imparcialidade garantidos. Dados tratados conforme LGPD (Lei 13.709/2018).</div>'+
   '<div class="pc">PGR elaborado e assinado por profissional de SST habilitado em parceria com a Azumi RH — exigência legal da NR-1.</div>'+
