@@ -263,10 +263,6 @@ textarea{resize:vertical;min-height:80px;font-size:.84em;line-height:1.5}
           <input type="text" id="cargoConsultor" placeholder="Ex: Consultora de RH"/>
         </div>
       </div>
-      <div class="form-group">
-        <label>Local e Data <span class="required">*</span></label>
-        <input type="text" id="localData" placeholder="Ex: Curitiba, 13 de fevereiro de 2026"/>
-      </div>
     </div>
 
   </div>
@@ -1318,13 +1314,6 @@ function gerarHTMLRelatorio(dados) {
   // ── BLOCO: RELATÓRIO DE CANDIDATO ────────────────────────────────────────
   if (dados.tipoServico === 'relatorioCandidato') {
 
-    // Política de privacidade
-    conteudo += `
-      <div style="background:#fff3cd;border:1.5px solid #f59e0b;border-radius:10px;padding:13px 18px;margin-bottom:22px;font-size:.84em;line-height:1.6">
-        <strong style="color:#92400e">Política de privacidade:</strong>
-        <span style="color:#78350f"> Este relatório é de uso interno exclusivo da Azumi RH e do cliente contratante. As informações do candidato são tratadas com confidencialidade conforme a LGPD. E-mail e telefone são liberados somente após a contratação do candidato.</span>
-      </div>`;
-
     // Identificação do candidato (sem e-mail / telefone)
     conteudo += `<div class="section"><h2 class="section-title">Candidato</h2>
       <div style="display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap">
@@ -1675,7 +1664,7 @@ body{font-family:'Space Grotesk',sans-serif;line-height:1.5;color:#222;backgroun
   font-size:.84em;border-left:3px solid var(--blue2);font-family:'Space Grotesk',sans-serif;}
 .empresa-info strong{color:var(--blue)}
 .protocolo-info{font-family:'JetBrains Mono',monospace;font-size:.72em;letter-spacing:.07em;color:var(--gray);margin-top:5px;}
-.section{margin-bottom:22px;page-break-inside:avoid}
+.section{margin-bottom:22px}
 .section-title{font-family:'Sora',sans-serif;font-size:1em;font-weight:700;color:var(--blue);
   padding-bottom:6px;margin-bottom:11px;border-bottom:2px solid;border-image:linear-gradient(90deg,#034C8B,#8B5CF6) 1;}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;margin-bottom:10px}
@@ -1703,9 +1692,8 @@ body{font-family:'Space Grotesk',sans-serif;line-height:1.5;color:#222;backgroun
   body{padding:0;background:#fff!important}
   .print-bar{display:none!important}
   .page{box-shadow:none!important;margin:0!important;width:100%!important}
-  .section{page-break-inside:avoid}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  @page{size:A4;margin:0}
+  @page{size:A4;margin:15mm 15mm 15mm 15mm}
 }
 </style>
 </head>
@@ -1752,8 +1740,7 @@ body{font-family:'Space Grotesk',sans-serif;line-height:1.5;color:#222;backgroun
 
   <div class="p-body">
     <div class="empresa-info">
-      <strong>AKAYKO AZUMI RH LTDA.</strong> | CNPJ: 56.660.675/0001-11 | Consultoria: Azumi RH
-      <div class="protocolo-info">Protocolo: ${dados.protocolo} · Emitido em: ${new Date().toLocaleDateString('pt-BR')}</div>
+      Protocolo: <strong>${dados.protocolo}</strong> · Emitido em: ${new Date().toLocaleDateString('pt-BR')} · Azumi RH
     </div>
 
     <div class="section">
@@ -1773,11 +1760,16 @@ body{font-family:'Space Grotesk',sans-serif;line-height:1.5;color:#222;backgroun
     ${dados.consideracoes?`<div class="section"><h2 class="section-title">Considerações Finais</h2>
       <div class="text-content">${dados.consideracoes}</div></div>`:''}
 
+    ${dados.tipoServico === 'relatorioCandidato' ? `
+    <div style="background:#fff3cd;border:1.5px solid #f59e0b;border-radius:10px;padding:11px 16px;margin:18px 0;font-size:.82em;line-height:1.6;color:#78350f">
+      <strong>Política de privacidade:</strong> Este relatório é de uso interno exclusivo da Azumi RH e do cliente contratante. As informações do candidato são tratadas com confidencialidade conforme a LGPD. E-mail e telefone são liberados somente após a contratação do candidato.
+    </div>` : ''}
+
     <div class="signature">
       <div class="signature-line">
         ${dados.nomeConsultor?`<div class="signature-name">${dados.nomeConsultor}</div>`:''}
         ${dados.cargoConsultor?`<div class="signature-role">${dados.cargoConsultor}</div>`:''}
-        ${dados.localData?`<div class="signature-role">${dados.localData}</div>`:''}
+        <div class="signature-role">${new Date().toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'})}</div>
       </div>
     </div>
 
