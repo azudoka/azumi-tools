@@ -1170,7 +1170,7 @@ function salvarRascunho() {
     consideracoes: document.getElementById('consideracoes').value,
     nomeConsultor: document.getElementById('nomeConsultor').value,
     cargoConsultor: document.getElementById('cargoConsultor').value,
-    localData: document.getElementById('localData').value,
+    localData: document.getElementById('localData')?.value || '',
     protocolo: protocoloAtual,
     dadosDinamicos
   };
@@ -1189,7 +1189,8 @@ function carregarRascunho() {
   document.getElementById('consideracoes').value = dados.consideracoes || '';
   document.getElementById('nomeConsultor').value = dados.nomeConsultor || '';
   document.getElementById('cargoConsultor').value = dados.cargoConsultor || '';
-  document.getElementById('localData').value = dados.localData || '';
+  const elLocalData = document.getElementById('localData');
+  if (elLocalData) elLocalData.value = dados.localData || '';
   if (dados.protocolo) {
     protocoloAtual = dados.protocolo;
     document.getElementById('protocolo-display').textContent = 'Protocolo: ' + protocoloAtual;
@@ -1244,7 +1245,7 @@ function coletarTodosDados() {
     consideracoes: document.getElementById('consideracoes').value,
     nomeConsultor: document.getElementById('nomeConsultor').value,
     cargoConsultor: document.getElementById('cargoConsultor').value,
-    localData: document.getElementById('localData').value,
+    localData: document.getElementById('localData')?.value || '',
     protocolo: protocoloAtual,
     // campos entrevista comportamental
     areaEntrevista: document.getElementById('areaEntrevista')?.value || '',
