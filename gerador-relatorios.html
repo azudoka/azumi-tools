@@ -798,26 +798,19 @@ const templatesCampos = {
       <div class="form-group"><label>Alinhamento com a Vaga — Pontos de Atenção</label>
         <textarea id="rc_atencaoVaga" placeholder="Descreva o que precisa ser testado ou aprofundado nas próximas etapas..." style="min-height:100px"></textarea></div></div>
 
-    <div class="section"><h2 class="section-title">Avaliação do Questionário</h2>
-      <div class="hint">O questionário é respondido pelo candidato antes da entrevista. Avalie a qualidade das respostas e registre sua leitura aqui.</div>
-      <div class="grid-2">
-        <div class="form-group"><label>Nota do Questionário (1 a 5)</label>
-          <select id="rc_notaQuestionario">
-            <option value="">Selecione...</option>
-            <option value="1">1 — Abaixo do esperado</option>
-            <option value="2">2 — Abaixo da média</option>
-            <option value="3">3 — Dentro do esperado</option>
-            <option value="4">4 — Acima da média</option>
-            <option value="5">5 — Excelente</option>
-          </select></div>
-        <div class="form-group"><label>Avaliação Resumida do Questionário</label>
-          <input type="text" id="rc_resumoQuestionario" placeholder="Ex: Respostas estruturadas, com exemplos concretos e postura consultiva"/></div></div>
-      <div class="form-group"><label>Comentário do Recrutador sobre as Respostas</label>
-        <textarea id="rc_comentarioQuestionario" placeholder="Descreva sua leitura sobre a qualidade, profundidade e coerência das respostas do candidato..." style="min-height:100px"></textarea></div></div>
-
-    <div class="section"><h2 class="section-title">Impressão do Recrutador</h2>
-      <div class="form-group"><label>Impressão Geral</label>
-        <textarea id="rc_impressaoRecrutador" placeholder="Descreva sua impressão geral do candidato: postura, comunicação, fit, potencial..." style="min-height:100px"></textarea></div></div>
+    <div class="section"><h2 class="section-title">Avaliação do Questionário e Impressão do Recrutador</h2>
+      <div class="hint">O questionário é respondido pelo candidato antes da entrevista. Registre a nota e sua impressão geral.</div>
+      <div class="form-group"><label>Nota do Questionário (1 a 5)</label>
+        <select id="rc_notaQuestionario">
+          <option value="">Selecione...</option>
+          <option value="1">1 — Abaixo do esperado</option>
+          <option value="2">2 — Abaixo da média</option>
+          <option value="3">3 — Dentro do esperado</option>
+          <option value="4">4 — Acima da média</option>
+          <option value="5">5 — Excelente</option>
+        </select></div>
+      <div class="form-group"><label>Impressão do Recrutador</label>
+        <textarea id="rc_impressaoRecrutador" placeholder="Descreva sua impressão geral do candidato: postura, comunicação, fit, potencial, qualidade das respostas do questionário..." style="min-height:120px"></textarea></div></div>
 
     <div class="section"><h2 class="section-title">Conclusão e Recomendação</h2>
       <div class="grid-2">
@@ -1296,8 +1289,6 @@ function coletarTodosDados() {
     rc_aderencias: document.getElementById('rc_aderencias')?.value || '',
     rc_atencaoVaga: document.getElementById('rc_atencaoVaga')?.value || '',
     rc_notaQuestionario: document.getElementById('rc_notaQuestionario')?.value || '',
-    rc_resumoQuestionario: document.getElementById('rc_resumoQuestionario')?.value || '',
-    rc_comentarioQuestionario: document.getElementById('rc_comentarioQuestionario')?.value || '',
     rc_impressaoRecrutador: document.getElementById('rc_impressaoRecrutador')?.value || '',
     rc_estrelas: document.getElementById('rc_estrelas')?.value || '',
     rc_recomendacao: document.getElementById('rc_recomendacao')?.value || '',
@@ -1419,48 +1410,41 @@ function gerarHTMLRelatorio(dados) {
     if (dados.rc_experiencia || dados.rc_aderencias || dados.rc_atencaoVaga) {
       conteudo += `<div class="section"><h2 class="section-title">Avaliação Interna — Azumi RH</h2>`;
       if (dados.rc_experiencia) {
-        conteudo += `<div style="margin-bottom:14px">
-          <div class="info-label">Experiência e Observações</div>
+        conteudo += `<div style="margin-bottom:16px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.72em;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Experiência e Observações</div>
           <div class="text-content">${dados.rc_experiencia}</div></div>`;
       }
       if (dados.rc_aderencias) {
-        conteudo += `<div style="margin-bottom:14px">
-          <div class="info-label">Alinhamento com a Vaga — Aderências</div>
+        conteudo += `<div style="margin-bottom:16px;background:#f0fdf4;border-left:4px solid #22c55e;border-radius:0 8px 8px 0;padding:12px 16px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.72em;font-weight:700;color:#15803d;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">✓ Alinhamento com a Vaga — Aderências</div>
           <div class="text-content">${dados.rc_aderencias}</div></div>`;
       }
       if (dados.rc_atencaoVaga) {
-        conteudo += `<div>
-          <div class="info-label">Alinhamento com a Vaga — Pontos de Atenção</div>
+        conteudo += `<div style="background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:12px 16px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.72em;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">⚠ Alinhamento com a Vaga — Pontos de Atenção</div>
           <div class="text-content">${dados.rc_atencaoVaga}</div></div>`;
       }
       conteudo += `</div>`;
     }
 
-    // Avaliação do questionário
+    // Avaliação do questionário — simplificado: só nota + impressão do recrutador
     const notaQ = parseInt(dados.rc_notaQuestionario) || 0;
-    if (notaQ || dados.rc_resumoQuestionario || dados.rc_comentarioQuestionario) {
+    if (notaQ || dados.rc_impressaoRecrutador) {
       const notaLabel = ['','Abaixo do esperado','Abaixo da média','Dentro do esperado','Acima da média','Excelente'][notaQ] || '';
       const notaCor = notaQ >= 4 ? '#22c55e' : notaQ === 3 ? '#3B82F6' : '#dc3545';
-      conteudo += `<div class="section"><h2 class="section-title">Avaliação do Questionário</h2>`;
+      conteudo += `<div class="section"><h2 class="section-title">Avaliação do Questionário e Impressão do Recrutador</h2>`;
       if (notaQ) {
-        conteudo += `<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-          <div style="background:${notaCor};color:#fff;border-radius:100px;padding:4px 16px;font-family:'Sora',sans-serif;font-weight:800;font-size:.95em">${notaQ}/5</div>
-          <span style="font-size:.86em;color:#374151">${notaLabel}</span>
-          ${dados.rc_resumoQuestionario?`<span style="font-size:.83em;color:#778082;font-style:italic">${dados.rc_resumoQuestionario}</span>`:''}
+        conteudo += `<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+          <div style="background:${notaCor};color:#fff;border-radius:100px;padding:5px 18px;font-family:'Sora',sans-serif;font-weight:800;font-size:1em">${notaQ}/5</div>
+          <span style="font-size:.88em;font-weight:600;color:#374151">${notaLabel}</span>
         </div>`;
       }
-      if (dados.rc_comentarioQuestionario) {
+      if (dados.rc_impressaoRecrutador) {
         conteudo += `<div>
-          <div class="info-label">Comentário do Recrutador</div>
-          <div class="text-content">${dados.rc_comentarioQuestionario}</div></div>`;
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.72em;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Impressão do Recrutador</div>
+          <div class="text-content">${dados.rc_impressaoRecrutador}</div></div>`;
       }
       conteudo += `</div>`;
-    }
-
-    // Impressão do recrutador
-    if (dados.rc_impressaoRecrutador) {
-      conteudo += `<div class="section"><h2 class="section-title">Impressão do Recrutador</h2>
-        <div class="text-content">${dados.rc_impressaoRecrutador}</div></div>`;
     }
 
     // Conclusão
@@ -1675,7 +1659,7 @@ body{font-family:'Space Grotesk',sans-serif;line-height:1.5;color:#222;backgroun
 .print-hint{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(147,197,253,.7);letter-spacing:.04em}
 .btn-print{background:#fff;color:var(--blue);border:none;border-radius:100px;padding:8px 20px;
   font-size:12px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif}
-.page{max-width:210mm;min-height:297mm;margin:0 auto;background:#fff;box-shadow:0 0 24px rgba(0,0,0,.15)}
+.page{max-width:210mm;margin:0 auto;background:#fff;box-shadow:0 0 24px rgba(0,0,0,.15)}
 .p-hdr{background:var(--gh);padding:26px 40px;display:flex;justify-content:space-between;align-items:center;
   position:relative;overflow:hidden;}
 .p-hdr::before{content:'';position:absolute;inset:0;pointer-events:none;
@@ -1696,7 +1680,7 @@ body{font-family:'Space Grotesk',sans-serif;line-height:1.5;color:#222;backgroun
   padding-bottom:6px;margin-bottom:11px;border-bottom:2px solid;border-image:linear-gradient(90deg,#034C8B,#8B5CF6) 1;}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;margin-bottom:10px}
 .info-item{margin-bottom:6px}
-.info-label{font-family:'JetBrains Mono',monospace;font-size:.7em;font-weight:500;color:var(--gray);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px}
+.info-label{font-family:'JetBrains Mono',monospace;font-size:.72em;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
 .info-value{font-family:'Space Grotesk',sans-serif;font-size:.88em;color:#222}
 .text-content{font-size:.88em;line-height:1.6;color:#222;text-align:justify}
 .item-list{margin:10px 0}
